@@ -185,6 +185,157 @@ function streamLog() {
 }
 setTimeout(streamLog, 3000);
 
+// ===== Pan / Zoom world engine =====
+const viewport = document.getElementById('viewport');
+const world = document.getElementById('world');
+const miniView = document.getElementById('miniView');
+const WORLD_W = 2400, WORLD_H = 1600;
+const MINI_W = 180, MINI_H = 120, MINI_SCALE = MINI_W / WORLD_W; // 0.075
+
+let scale = 1, tx = 0, ty = 0;
+const MIN_SCALE = 0.35, MAX_SCALE = 2.2;
+
+function clampPan() {
+  const vw = viewport.clientWidth, vh = viewport.clientHeight;
+  const worldW = WORLD_W * scale, worldH = WORLD_H * scale;
+  // allow some margin; keep world from drifting fully off-screen
+  if (worldW <= vw) tx = (vw - worldW) / 2;
+  else tx = Math.min(0, Math.max(vw - worldW, tx));
+  if (worldH <= vh) ty = (vh - worldH) / 2;
+  else ty = Math.min(0, Math.max(vh - worldH, ty));
+}
+
+function applyTransform() {
+  clampPan();
+  world.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+  // minimap viewport rectangle
+  const vw = viewport.clientWidth, vh = viewport.clientHeight;
+  const viewWorldX = -tx / scale, viewWorldY = -ty / scale;
+  const viewWorldW = vw / scale, viewWorldH = vh / scale;
+  // clamp the minimap rectangle inside the minimap bounds
+  let mx = Math.max(0, viewWorldX * MINI_SCALE);
+  let my = Math.max(0, viewWorldY * MINI_SCALE);
+  let mw = Math.min(MINI_W - mx, viewWorldW * MINI_SCALE);
+  let mh = Math.min(MINI_H - my, viewWorldH * MINI_SCALE);
+  miniView.style.left = mx + 'px';
+  miniView.style.top = my + 'px';
+  miniView.style.width = Math.max(0, mw) + 'px';
+  miniView.style.height = Math.max(0, mh) + 'px';
+}
+
+function zoomAt(cx, cy, newScale) {
+  newScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, newScale));
+  // keep the world point under cursor fixed
+  const worldX = (cx - tx) / scale;
+  const worldY = (cy - ty) / scale;
+  scale = newScale;
+  tx = cx - worldX * scale;
+  ty = cy - worldY * scale;
+  applyTransform();
+}
+
+// Fit world to viewport, centered on plaza
+function fitView() {
+  const vw = viewport.clientWidth, vh = viewport.clientHeight;
+  scale = Math.min(vw / WORLD_W, vh / WORLD_H) * 0.98;
+  scale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, scale));
+  tx = (vw - WORLD_W * scale) / 2;
+  ty = (vh - WORLD_H * scale) / 2;
+  applyTransform();
+}
+
+// Focus a world coordinate at a given scale (used when opening a deity)
+function focusWorld(wx, wy, targetScale) {
+  const vw = viewport.clientWidth, vh = viewport.clientHeight;
+  scale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, targetScale));
+  tx = vw / 2 - wx * scale;
+  ty = vh / 2 - wy * scale;
+  applyTransform();
+}
+
+// Wheel zoom
+viewport.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const rect = viewport.getBoundingClientRect();
+  const cx = e.clientX - rect.left, cy = e.clientY - rect.top;
+  const factor = e.deltaY < 0 ? 1.12 : 0.89;
+  zoomAt(cx, cy, scale * factor);
+}, { passive: false });
+
+// Drag to pan (pointer events) — suppress click if dragged
+let dragging = false, dragMoved = false, startX = 0, startY = 0, startTx = 0, startTy = 0;
+let pointers = new Map();
+let pinchDist = 0;
+
+viewport.addEventListener('pointerdown', (e) => {
+  pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (pointers.size === 1) {
+    dragging = true; dragMoved = false;
+    startX = e.clientX; startY = e.clientY;
+    startTx = tx; startTy = ty;
+    viewport.classList.add('grabbing');
+  } else if (pointers.size === 2) {
+    const pts = [...pointers.values()];
+    pinchDist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+  }
+});
+
+viewport.addEventListener('pointermove', (e) => {
+  if (!pointers.has(e.pointerId)) return;
+  pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+  if (pointers.size === 2) {
+    const pts = [...pointers.values()];
+    const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+    if (pinchDist > 0) {
+      const rect = viewport.getBoundingClientRect();
+      const midX = (pts[0].x + pts[1].x) / 2 - rect.left;
+      const midY = (pts[0].y + pts[1].y) / 2 - rect.top;
+      zoomAt(midX, midY, scale * (dist / pinchDist));
+    }
+    pinchDist = dist;
+    dragMoved = true;
+    return;
+  }
+
+  if (dragging) {
+    const dx = e.clientX - startX, dy = e.clientY - startY;
+    if (Math.abs(dx) > 4 || Math.abs(dy) > 4) dragMoved = true;
+    tx = startTx + dx; ty = startTy + dy;
+    applyTransform();
+  }
+});
+
+function endPointer(e) {
+  pointers.delete(e.pointerId);
+  if (pointers.size < 2) pinchDist = 0;
+  if (pointers.size === 0) { dragging = false; viewport.classList.remove('grabbing'); }
+}
+viewport.addEventListener('pointerup', endPointer);
+viewport.addEventListener('pointercancel', endPointer);
+viewport.addEventListener('pointerleave', (e) => { if (pointers.size === 0) { dragging = false; viewport.classList.remove('grabbing'); } });
+
+// Zoom buttons
+document.getElementById('zoomIn').addEventListener('click', () => {
+  zoomAt(viewport.clientWidth / 2, viewport.clientHeight / 2, scale * 1.25);
+});
+document.getElementById('zoomOut').addEventListener('click', () => {
+  zoomAt(viewport.clientWidth / 2, viewport.clientHeight / 2, scale * 0.8);
+});
+document.getElementById('zoomReset').addEventListener('click', fitView);
+
+// Minimap click-to-navigate
+document.getElementById('minimap').addEventListener('click', (e) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const wx = (e.clientX - rect.left) / MINI_SCALE;
+  const wy = (e.clientY - rect.top) / MINI_SCALE;
+  focusWorld(wx, wy, Math.max(scale, 0.9));
+});
+
+window.addEventListener('resize', applyTransform);
+// init after layout
+requestAnimationFrame(fitView);
+
 // ===== Modal =====
 const modal = document.getElementById('modal');
 const modalName = document.getElementById('modalName');
@@ -219,7 +370,10 @@ function openDeityModal(key) {
 }
 
 document.querySelectorAll('[data-deity]').forEach(btn => {
-  btn.addEventListener('click', () => openDeityModal(btn.dataset.deity));
+  btn.addEventListener('click', () => {
+    if (dragMoved) return; // ignore click that ended a pan/pinch
+    openDeityModal(btn.dataset.deity);
+  });
 });
 
 document.getElementById('modalClose').addEventListener('click', () => modal.hidden = true);

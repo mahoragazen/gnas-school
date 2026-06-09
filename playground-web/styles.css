@@ -94,35 +94,115 @@ h1, h2, h3 { font-weight: 800; line-height: 1.2; }
 }
 .phase-icon { font-size: 20px; }
 
-/* ===== Garden ===== */
-.garden {
-  position: relative;
-  width: 100%;
-  max-width: var(--garden-w);
-  height: var(--garden-h);
-  margin: 0 auto;
+/* ===== Viewport (clips) + World (pan/zoom canvas) ===== */
+.viewport {
+  position: fixed;
+  top: 88px; left: 0; right: 0; bottom: 0;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(42, 37, 32, 0.25);
-  border-bottom: var(--pixel) solid var(--border);
-  background-image: url('assets/eden-v1-master.png');
-  background-size: cover;
-  background-position: center;
-  background-color: var(--parchment-dark);
-}
-.garden::after {
-  content: '';
-  position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse at top, rgba(244, 236, 216, 0.55), transparent 60%),
-    radial-gradient(ellipse at bottom, rgba(244, 236, 216, 0.4), transparent 70%);
+    radial-gradient(ellipse 70% 50% at 50% 0%, #f4ecd8, transparent 70%),
+    linear-gradient(180deg, #e6d6b2 0%, #d2bf90 100%);
+  cursor: grab;
+  touch-action: none;
+}
+.viewport.grabbing { cursor: grabbing; }
+.world {
+  position: absolute;
+  top: 0; left: 0;
+  width: 2400px; height: 1600px;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+.world-bg {
+  position: absolute; inset: 0;
+  width: 2400px; height: 1600px;
   pointer-events: none;
 }
-.garden-bg {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
+
+/* ===== Zones ===== */
+.zone {
+  position: absolute;
+  border: 3px dashed;
+  border-radius: 24px;
+  background: rgba(255,255,255,0.04);
+  box-shadow: inset 0 0 60px rgba(255,255,255,0.15);
   pointer-events: none;
-  opacity: 0.55;
-  mix-blend-mode: multiply;
+}
+.zone-content  { border-color: rgba(255,126,182,0.55); background: rgba(255,126,182,0.07); }
+.zone-commerce { border-color: rgba(212,175,55,0.55);  background: rgba(212,175,55,0.07); }
+.zone-plaza    { border-color: rgba(193,77,58,0.6);    background: rgba(193,77,58,0.06); border-style: solid; border-width: 4px; }
+.zone-ops      { border-color: rgba(109,214,107,0.5);  background: rgba(109,214,107,0.07); }
+.zone-banner {
+  position: absolute;
+  top: -18px; left: 24px;
+  font-family: 'Sarabun', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--parchment);
+  background: var(--ink-deep);
+  padding: 6px 16px;
+  border: 3px solid var(--border);
+  box-shadow: 3px 3px 0 var(--border);
+  letter-spacing: 0.5px;
+}
+.plaza-banner {
+  left: 50%; transform: translateX(-50%);
+  background: var(--torii);
+  color: var(--gold);
+}
+.zone-prop {
+  position: absolute;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: var(--ink-deep);
+  background: rgba(244,236,216,0.85);
+  padding: 4px 12px;
+  border: 2px solid var(--border);
+  box-shadow: 2px 2px 0 rgba(42,37,32,0.3);
+  white-space: nowrap;
+}
+
+/* ===== Zoom controls ===== */
+.zoom-controls {
+  position: fixed;
+  left: 16px; bottom: 16px;
+  display: flex; flex-direction: column; gap: 6px;
+  z-index: 60;
+}
+.zoom-controls button {
+  width: 44px; height: 44px;
+  background: var(--ink-deep);
+  color: var(--parchment);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 16px;
+  border: 3px solid var(--border);
+  box-shadow: 3px 3px 0 var(--border);
+}
+.zoom-controls button:hover { background: var(--ink-mid); transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--border); }
+.zoom-controls button:active { transform: translate(2px,2px); box-shadow: 0 0 0 var(--border); }
+
+/* ===== Minimap ===== */
+.minimap {
+  position: fixed;
+  right: 16px; top: 104px;
+  width: 180px; height: 120px;
+  background: rgba(42,37,32,0.85);
+  border: 3px solid var(--gold);
+  box-shadow: 4px 4px 0 var(--border);
+  z-index: 60;
+}
+.mini-zone { position: absolute; border-radius: 3px; }
+/* world 2400x1600 -> minimap 180x120 (scale 0.075) */
+.mini-content  { left:9px;  top:9px;   width:72px;  height:34.5px; background: rgba(255,126,182,0.5); }
+.mini-commerce { left:99px; top:9px;   width:72px;  height:34.5px; background: rgba(212,175,55,0.5); }
+.mini-plaza    { left:63px; top:48px;  width:54px;  height:36px;   background: rgba(193,77,58,0.6); }
+.mini-ops      { left:9px;  top:88.5px;width:162px; height:27px;   background: rgba(109,214,107,0.5); }
+.mini-view {
+  position: absolute;
+  border: 2px solid var(--neon-teal);
+  background: rgba(94,227,216,0.15);
+  box-shadow: 0 0 8px rgba(94,227,216,0.5);
+  pointer-events: none;
 }
 
 /* Animated falling petals */
@@ -142,12 +222,10 @@ h1, h2, h3 { font-weight: 800; line-height: 1.2; }
   100% { transform: translate(-50px, 800px) rotate(720deg); opacity: 0; }
 }
 
-/* ===== Torii altar (Mercury orchestrator at center top) ===== */
+/* ===== Torii altar (Mercury orchestrator at plaza center) ===== */
 .torii-altar {
   position: absolute;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   width: 440px;
   height: 380px;
   z-index: 10;
@@ -510,9 +588,9 @@ h1, h2, h3 { font-weight: 800; line-height: 1.2; }
 
 /* ===== Mobile responsive ===== */
 @media (max-width: 900px) {
-  .garden { height: 1200px; }
-  .char-svg { width: 80px; height: 100px; }
-  .deity.mercury .char-svg { width: 110px; height: 140px; }
-  .deity-label .thai { font-size: 13px; }
-  .deity-label .role { font-size: 6px; }
+  .minimap { width: 120px; height: 80px; }
+  .mini-content  { left:6px;  top:6px;   width:48px; height:23px; }
+  .mini-commerce { left:66px; top:6px;   width:48px; height:23px; }
+  .mini-plaza    { left:42px; top:32px;  width:36px; height:24px; }
+  .mini-ops      { left:6px;  top:59px;  width:108px; height:18px; }
 }
