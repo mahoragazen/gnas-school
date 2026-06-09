@@ -3,82 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>龍 Business Playground — Pantheon HQ</title>
+  <title>🌳 Business Playground — Eden Pantheon</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Sarabun:wght@400;600;800&family=VT323&family=Noto+Serif+JP:wght@700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Sarabun:wght@400;600;800&family=VT323&family=Noto+Serif+JP:wght@700;900&family=Cinzel:wght@600;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- ===== Sumi-e ink wash background ===== -->
-  <div class="ink-bg" aria-hidden="true">
-    <svg class="ink-cloud" viewBox="0 0 1600 300" preserveAspectRatio="xMidYMin slice">
-      <defs>
-        <filter id="cloud-blur"><feGaussianBlur stdDeviation="14"/></filter>
-      </defs>
-      <ellipse cx="200" cy="60" rx="180" ry="36" fill="#5c5048" opacity="0.13" filter="url(#cloud-blur)"/>
-      <ellipse cx="700" cy="40" rx="220" ry="28" fill="#5c5048" opacity="0.10" filter="url(#cloud-blur)"/>
-      <ellipse cx="1300" cy="80" rx="160" ry="32" fill="#5c5048" opacity="0.12" filter="url(#cloud-blur)"/>
-    </svg>
-    <svg class="ink-mountain" viewBox="0 0 1600 500" preserveAspectRatio="xMidYMax slice">
-      <defs>
-        <filter id="ink-blur"><feGaussianBlur stdDeviation="3"/></filter>
-        <linearGradient id="mist" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0%" stop-color="#f4ecd8" stop-opacity="0.8"/>
-          <stop offset="60%" stop-color="#f4ecd8" stop-opacity="0.2"/>
-          <stop offset="100%" stop-color="#f4ecd8" stop-opacity="0"/>
-        </linearGradient>
-      </defs>
-      <!-- distant mountain layer -->
-      <path d="M0,360 L80,280 L160,330 L260,220 L380,300 L500,250 L640,330 L780,260 L920,200 L1080,280 L1240,240 L1400,310 L1540,270 L1600,290 L1600,500 L0,500 Z"
-            fill="#5c5048" opacity="0.16" filter="url(#ink-blur)"/>
-      <!-- mid mountain -->
-      <path d="M0,400 L120,310 L240,360 L380,260 L520,340 L680,290 L820,380 L980,310 L1140,250 L1300,340 L1460,300 L1600,360 L1600,500 L0,500 Z"
-            fill="#3d342c" opacity="0.18"/>
-      <!-- foreground mist -->
-      <rect width="100%" height="100%" fill="url(#mist)"/>
-    </svg>
-    <!-- bamboo silhouettes -->
-    <svg class="bamboo bamboo-left" viewBox="0 0 100 600" preserveAspectRatio="xMinYMax">
-      <g opacity="0.18" fill="#3d342c">
-        <rect x="22" y="0" width="6" height="600"/>
-        <rect x="14" y="60" width="22" height="4"/>
-        <rect x="14" y="180" width="22" height="4"/>
-        <rect x="14" y="300" width="22" height="4"/>
-        <rect x="14" y="420" width="22" height="4"/>
-        <rect x="14" y="540" width="22" height="4"/>
-        <path d="M28,80 Q60,70 80,40 L80,46 Q60,76 28,86 Z"/>
-        <path d="M28,200 Q60,190 86,160 L86,166 Q60,196 28,206 Z"/>
-        <path d="M28,320 Q56,310 76,280 L76,286 Q56,316 28,326 Z"/>
-        <rect x="52" y="0" width="4" height="600" opacity="0.6"/>
-        <rect x="46" y="120" width="14" height="3"/>
-        <rect x="46" y="240" width="14" height="3"/>
-        <rect x="46" y="360" width="14" height="3"/>
-        <rect x="46" y="480" width="14" height="3"/>
-      </g>
-    </svg>
-    <svg class="bamboo bamboo-right" viewBox="0 0 100 600" preserveAspectRatio="xMaxYMax">
-      <g opacity="0.16" fill="#3d342c">
-        <rect x="72" y="0" width="6" height="600"/>
-        <rect x="64" y="80" width="22" height="4"/>
-        <rect x="64" y="200" width="22" height="4"/>
-        <rect x="64" y="320" width="22" height="4"/>
-        <rect x="64" y="440" width="22" height="4"/>
-        <path d="M72,100 Q40,90 20,60 L20,66 Q40,96 72,106 Z"/>
-        <path d="M72,220 Q40,210 14,180 L14,186 Q40,216 72,226 Z"/>
-        <rect x="46" y="0" width="4" height="600" opacity="0.6"/>
-      </g>
-    </svg>
-    <div class="ink-grain"></div>
-  </div>
-
   <!-- ===== TOP BAR ===== -->
   <header class="topbar">
     <div class="brand">
-      <span class="brand-mark">龍</span>
+      <span class="brand-mark">⛩</span>
       <div class="brand-text">
         <h1>Business Playground</h1>
-        <p>ศูนย์บัญชาการเทพปกรณัม · เก้า's HQ</p>
+        <p>สวนอีเดน · 10 เทพปกรณัม · โรมัน × ญี่ปุ่น × จีน</p>
       </div>
     </div>
     <div class="stats">
@@ -100,554 +38,1040 @@
     </div>
   </header>
 
-  <!-- ===== HERMES TORII ALTAR ===== -->
-  <section class="altar">
-    <!-- Torii gate SVG -->
-    <svg class="torii" viewBox="0 0 400 320" preserveAspectRatio="xMidYMax meet">
+  <!-- ===== EDEN GARDEN ===== -->
+  <main class="garden" aria-label="Eden Garden">
+    <!-- Background SVG layers -->
+    <svg class="garden-bg" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
-        <linearGradient id="toriiGrad" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0%" stop-color="#a13d2d"/>
-          <stop offset="100%" stop-color="#7a2a1f"/>
+        <!-- Sky gradient -->
+        <linearGradient id="skyGrad" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#f4ecd8"/>
+          <stop offset="40%" stop-color="#ead8b6"/>
+          <stop offset="100%" stop-color="#d8c498"/>
         </linearGradient>
+        <!-- Ground gradient -->
+        <linearGradient id="groundGrad" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#a8a06a" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#7a7050" stop-opacity="0.85"/>
+        </linearGradient>
+        <!-- Water gradient -->
+        <radialGradient id="pondGrad" cx="50%" cy="50%" r="60%">
+          <stop offset="0%" stop-color="#5ee3d8" stop-opacity="0.4"/>
+          <stop offset="80%" stop-color="#3a8b85" stop-opacity="0.5"/>
+        </radialGradient>
+        <filter id="inkBlur"><feGaussianBlur stdDeviation="4"/></filter>
+        <filter id="softBlur"><feGaussianBlur stdDeviation="8"/></filter>
+        <!-- Cherry blossom petal -->
+        <symbol id="petal" viewBox="0 0 8 8">
+          <path d="M4,1 Q6,2 6,4 Q6,6 4,7 Q2,6 2,4 Q2,2 4,1 Z" fill="#ff9ec7" opacity="0.85"/>
+        </symbol>
+        <!-- Stone (mossy) -->
+        <symbol id="stone" viewBox="0 0 24 16">
+          <ellipse cx="12" cy="10" rx="11" ry="5" fill="#6b6357"/>
+          <ellipse cx="12" cy="9" rx="11" ry="5" fill="#8a7e72"/>
+          <ellipse cx="9" cy="7" rx="4" ry="2" fill="#a8987c"/>
+          <circle cx="14" cy="11" r="1" fill="#6dd66b"/>
+          <circle cx="6" cy="11" r="0.8" fill="#6dd66b"/>
+        </symbol>
+        <!-- Sakura tree branch -->
+        <symbol id="sakuraBranch" viewBox="0 0 200 120">
+          <path d="M0,60 Q40,40 80,55 Q120,30 160,45 Q180,40 200,30" stroke="#5c4030" stroke-width="3" fill="none"/>
+          <path d="M40,55 Q50,40 60,30" stroke="#5c4030" stroke-width="2" fill="none"/>
+          <path d="M100,45 Q110,30 120,15" stroke="#5c4030" stroke-width="2" fill="none"/>
+          <path d="M160,40 Q170,25 180,10" stroke="#5c4030" stroke-width="2" fill="none"/>
+          <circle cx="60" cy="30" r="8" fill="#ff9ec7" opacity="0.8"/>
+          <circle cx="65" cy="25" r="6" fill="#ffb8d6" opacity="0.7"/>
+          <circle cx="120" cy="15" r="9" fill="#ff9ec7" opacity="0.8"/>
+          <circle cx="125" cy="20" r="6" fill="#ffb8d6" opacity="0.7"/>
+          <circle cx="180" cy="10" r="8" fill="#ff9ec7" opacity="0.8"/>
+          <circle cx="40" cy="55" r="7" fill="#ff9ec7" opacity="0.7"/>
+          <circle cx="100" cy="45" r="8" fill="#ff9ec7" opacity="0.7"/>
+          <circle cx="160" cy="45" r="6" fill="#ffb8d6" opacity="0.6"/>
+        </symbol>
       </defs>
-      <!-- top crossbeam (kasagi) -->
-      <path d="M20,40 Q200,10 380,40 L400,60 Q200,30 0,60 Z" fill="url(#toriiGrad)"/>
-      <!-- second beam (nuki) -->
-      <rect x="40" y="80" width="320" height="22" fill="url(#toriiGrad)"/>
-      <!-- left pillar -->
-      <rect x="70" y="60" width="34" height="240" fill="url(#toriiGrad)"/>
-      <!-- right pillar -->
-      <rect x="296" y="60" width="34" height="240" fill="url(#toriiGrad)"/>
-      <!-- center plaque -->
-      <rect x="180" y="58" width="40" height="32" fill="#2a2520"/>
-      <text x="200" y="80" text-anchor="middle" font-family="Noto Serif JP, serif" font-size="22" fill="#d4af37" font-weight="900">神</text>
-      <!-- pillar bases -->
-      <rect x="60" y="290" width="54" height="14" fill="#2a2520"/>
-      <rect x="286" y="290" width="54" height="14" fill="#2a2520"/>
+
+      <!-- Sky -->
+      <rect width="1400" height="500" fill="url(#skyGrad)"/>
+
+      <!-- Distant mountains -->
+      <path d="M0,300 L150,200 L280,260 L420,180 L560,250 L720,170 L880,230 L1040,150 L1200,220 L1400,180 L1400,500 L0,500 Z"
+            fill="#5c5048" opacity="0.18" filter="url(#inkBlur)"/>
+      <path d="M0,340 L180,260 L320,300 L470,220 L620,290 L780,210 L940,280 L1100,200 L1260,260 L1400,240 L1400,500 L0,500 Z"
+            fill="#3d342c" opacity="0.22"/>
+
+      <!-- Mist over mountains -->
+      <ellipse cx="200" cy="320" rx="200" ry="30" fill="#f4ecd8" opacity="0.6" filter="url(#softBlur)"/>
+      <ellipse cx="700" cy="280" rx="240" ry="25" fill="#f4ecd8" opacity="0.5" filter="url(#softBlur)"/>
+      <ellipse cx="1100" cy="310" rx="200" ry="28" fill="#f4ecd8" opacity="0.6" filter="url(#softBlur)"/>
+
+      <!-- Garden ground curve -->
+      <path d="M0,440 Q200,420 400,440 Q700,460 1000,430 Q1200,420 1400,440 L1400,900 L0,900 Z"
+            fill="url(#groundGrad)"/>
+
+      <!-- Distant temple silhouette -->
+      <g opacity="0.4">
+        <rect x="640" y="350" width="120" height="60" fill="#3d342c"/>
+        <polygon points="630,360 700,300 770,360" fill="#3d342c"/>
+        <polygon points="640,330 700,290 760,330" fill="#3d342c"/>
+        <rect x="690" y="370" width="20" height="40" fill="#1a1a1a"/>
+      </g>
+
+      <!-- Sakura branches top -->
+      <g transform="translate(0, 0)">
+        <use href="#sakuraBranch" x="-20" y="40" width="280" height="160"/>
+      </g>
+      <g transform="translate(1180, 20) scale(-1, 1)">
+        <use href="#sakuraBranch" x="0" y="0" width="280" height="160"/>
+      </g>
+
+      <!-- Big koi pond center bottom -->
+      <ellipse cx="700" cy="780" rx="380" ry="80" fill="url(#pondGrad)" stroke="#5c5048" stroke-width="3"/>
+      <ellipse cx="700" cy="775" rx="370" ry="74" fill="none" stroke="#fff" stroke-width="1" opacity="0.4"/>
+
+      <!-- Koi fish in pond -->
+      <g transform="translate(620, 770)">
+        <ellipse cx="0" cy="0" rx="18" ry="6" fill="#ff7a4a"/>
+        <ellipse cx="-18" cy="0" rx="6" ry="4" fill="#ff7a4a"/>
+        <circle cx="6" cy="-1" r="1" fill="#2a2520"/>
+        <ellipse cx="0" cy="0" rx="18" ry="6" fill="none" stroke="#fff" stroke-width="1" opacity="0.6"/>
+      </g>
+      <g transform="translate(780, 790)">
+        <ellipse cx="0" cy="0" rx="14" ry="5" fill="#fff"/>
+        <ellipse cx="-14" cy="0" rx="5" ry="3" fill="#fff"/>
+        <circle cx="4" cy="-1" r="0.8" fill="#2a2520"/>
+        <ellipse cx="-2" cy="-2" rx="3" ry="2" fill="#ff7a4a"/>
+      </g>
+
+      <!-- Stone bridge over pond -->
+      <g transform="translate(700, 740)">
+        <path d="M-80,0 Q0,-20 80,0 L80,15 Q0,-5 -80,15 Z" fill="#8a7e72" stroke="#5c5048" stroke-width="2"/>
+        <line x1="-60" y1="-3" x2="-60" y2="8" stroke="#5c5048" stroke-width="1.5"/>
+        <line x1="-30" y1="-12" x2="-30" y2="-1" stroke="#5c5048" stroke-width="1.5"/>
+        <line x1="0" y1="-18" x2="0" y2="-3" stroke="#5c5048" stroke-width="1.5"/>
+        <line x1="30" y1="-12" x2="30" y2="-1" stroke="#5c5048" stroke-width="1.5"/>
+        <line x1="60" y1="-3" x2="60" y2="8" stroke="#5c5048" stroke-width="1.5"/>
+      </g>
+
+      <!-- Stones scattered -->
+      <use href="#stone" x="100" y="500" width="48" height="32"/>
+      <use href="#stone" x="240" y="540" width="36" height="24"/>
+      <use href="#stone" x="1180" y="520" width="48" height="32"/>
+      <use href="#stone" x="1280" y="560" width="32" height="22"/>
+      <use href="#stone" x="50" y="700" width="40" height="28"/>
+      <use href="#stone" x="1310" y="700" width="44" height="30"/>
+      <use href="#stone" x="320" y="690" width="32" height="22"/>
+      <use href="#stone" x="1080" y="690" width="32" height="22"/>
+
+      <!-- Bamboo cluster left -->
+      <g opacity="0.6" transform="translate(20, 380)">
+        <rect x="0" y="0" width="6" height="380" fill="#3d342c"/>
+        <rect x="-6" y="60" width="18" height="3" fill="#3d342c"/>
+        <rect x="-6" y="160" width="18" height="3" fill="#3d342c"/>
+        <rect x="-6" y="260" width="18" height="3" fill="#3d342c"/>
+        <path d="M6,30 Q40,20 60,0 L60,8 Q40,28 6,38 Z" fill="#3d342c"/>
+        <path d="M6,180 Q40,170 64,150 L64,158 Q40,178 6,188 Z" fill="#3d342c"/>
+        <rect x="30" y="0" width="4" height="380" fill="#3d342c" opacity="0.7"/>
+        <rect x="24" y="120" width="14" height="3" fill="#3d342c"/>
+        <rect x="24" y="220" width="14" height="3" fill="#3d342c"/>
+        <rect x="24" y="320" width="14" height="3" fill="#3d342c"/>
+      </g>
+      <!-- Bamboo cluster right -->
+      <g opacity="0.55" transform="translate(1340, 380) scale(-1, 1)">
+        <rect x="0" y="0" width="6" height="380" fill="#3d342c"/>
+        <rect x="-6" y="80" width="18" height="3" fill="#3d342c"/>
+        <rect x="-6" y="200" width="18" height="3" fill="#3d342c"/>
+        <rect x="-6" y="300" width="18" height="3" fill="#3d342c"/>
+        <path d="M6,40 Q40,30 60,10 L60,18 Q40,38 6,48 Z" fill="#3d342c"/>
+        <path d="M6,200 Q40,190 64,170 L64,178 Q40,198 6,208 Z" fill="#3d342c"/>
+        <rect x="30" y="0" width="4" height="380" fill="#3d342c" opacity="0.7"/>
+      </g>
+
+      <!-- Lanterns hanging from sakura -->
+      <g transform="translate(170, 200)">
+        <line x1="0" y1="0" x2="0" y2="30" stroke="#3d342c" stroke-width="1.5"/>
+        <ellipse cx="0" cy="40" rx="14" ry="18" fill="#ff7eb6" opacity="0.85" stroke="#3d342c" stroke-width="2"/>
+        <line x1="-14" y1="40" x2="14" y2="40" stroke="#3d342c" stroke-width="1"/>
+      </g>
+      <g transform="translate(1180, 220)">
+        <line x1="0" y1="0" x2="0" y2="30" stroke="#3d342c" stroke-width="1.5"/>
+        <ellipse cx="0" cy="40" rx="14" ry="18" fill="#ffb84d" opacity="0.85" stroke="#3d342c" stroke-width="2"/>
+        <line x1="-14" y1="40" x2="14" y2="40" stroke="#3d342c" stroke-width="1"/>
+      </g>
+
+      <!-- Falling petals (animated via CSS) -->
+      <g class="petals">
+        <use href="#petal" x="200" y="100" width="14" height="14" class="petal p1"/>
+        <use href="#petal" x="500" y="60" width="10" height="10" class="petal p2"/>
+        <use href="#petal" x="800" y="80" width="12" height="12" class="petal p3"/>
+        <use href="#petal" x="1100" y="120" width="14" height="14" class="petal p4"/>
+        <use href="#petal" x="350" y="200" width="10" height="10" class="petal p5"/>
+        <use href="#petal" x="950" y="220" width="12" height="12" class="petal p6"/>
+      </g>
+
+      <!-- Sun behind clouds -->
+      <circle cx="1100" cy="120" r="55" fill="#ffb84d" opacity="0.55" filter="url(#softBlur)"/>
+      <circle cx="1100" cy="120" r="42" fill="#ffd87a" opacity="0.6"/>
     </svg>
 
-    <button class="hermes" data-deity="hermes" aria-label="Hermes Orchestrator">
-      <div class="hermes-halo"></div>
-      <div class="hermes-sprite">
-        <svg viewBox="0 0 64 80" class="hermes-svg" shape-rendering="crispEdges">
-          <!-- helmet -->
-          <rect x="22" y="6" width="20" height="4" fill="#d4af37"/>
-          <rect x="20" y="10" width="24" height="2" fill="#3d342c"/>
-          <!-- wings on helmet -->
-          <rect x="16" y="10" width="2" height="6" fill="#fff"/>
-          <rect x="14" y="12" width="2" height="4" fill="#fff"/>
-          <rect x="12" y="14" width="2" height="2" fill="#fff"/>
-          <rect x="46" y="10" width="2" height="6" fill="#fff"/>
-          <rect x="48" y="12" width="2" height="4" fill="#fff"/>
-          <rect x="50" y="14" width="2" height="2" fill="#fff"/>
-          <!-- face -->
-          <rect x="22" y="12" width="20" height="14" fill="#e8c79a"/>
-          <rect x="26" y="18" width="2" height="2" fill="#2a2520"/>
-          <rect x="36" y="18" width="2" height="2" fill="#2a2520"/>
-          <rect x="30" y="22" width="4" height="1" fill="#a13d2d"/>
-          <!-- body / tunic -->
-          <rect x="18" y="26" width="28" height="22" fill="#d4af37"/>
-          <rect x="20" y="28" width="24" height="2" fill="#fff" opacity="0.4"/>
-          <rect x="22" y="30" width="20" height="16" fill="#d4af37"/>
-          <!-- belt -->
-          <rect x="18" y="42" width="28" height="3" fill="#7a2a1f"/>
-          <!-- legs -->
-          <rect x="22" y="48" width="8" height="20" fill="#e8c79a"/>
-          <rect x="34" y="48" width="8" height="20" fill="#e8c79a"/>
-          <rect x="20" y="68" width="12" height="4" fill="#3d342c"/>
-          <rect x="32" y="68" width="12" height="4" fill="#3d342c"/>
-          <!-- caduceus staff -->
-          <rect x="50" y="20" width="2" height="44" fill="#d4af37"/>
-          <rect x="48" y="18" width="6" height="2" fill="#d4af37"/>
-          <path d="M48,24 Q52,28 50,32 Q48,36 52,40 Q56,44 52,48" stroke="#5c5048" stroke-width="1.5" fill="none"/>
-          <!-- big wings on back -->
+    <!-- ===== TORII GATE + MERCURY (Orchestrator at center top) ===== -->
+    <div class="torii-altar">
+      <svg class="torii-svg" viewBox="0 0 440 360" aria-hidden="true">
+        <defs>
+          <linearGradient id="toriiG" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#c14d3a"/>
+            <stop offset="100%" stop-color="#7a2a1f"/>
+          </linearGradient>
+        </defs>
+        <!-- top kasagi curve -->
+        <path d="M20,60 Q220,20 420,60 L440,90 Q220,40 0,90 Z" fill="url(#toriiG)"/>
+        <!-- nuki crossbeam -->
+        <rect x="40" y="110" width="360" height="24" fill="url(#toriiG)"/>
+        <!-- pillars -->
+        <rect x="76" y="84" width="38" height="260" fill="url(#toriiG)"/>
+        <rect x="326" y="84" width="38" height="260" fill="url(#toriiG)"/>
+        <!-- plaque -->
+        <rect x="200" y="84" width="40" height="36" fill="#2a2520"/>
+        <text x="220" y="110" text-anchor="middle" font-family="Noto Serif JP, serif" font-size="22" fill="#d4af37" font-weight="900">神</text>
+        <!-- pillar bases -->
+        <rect x="64" y="334" width="64" height="14" fill="#2a2520"/>
+        <rect x="312" y="334" width="64" height="14" fill="#2a2520"/>
+      </svg>
+      <button class="deity mercury" data-deity="mercury" aria-label="Mercury — Orchestrator">
+        <div class="deity-glow"></div>
+        <!-- HIGH DETAIL Mercury character SVG -->
+        <svg viewBox="0 0 128 160" class="char-svg" shape-rendering="crispEdges">
+          <!-- Halo glow ring -->
+          <circle cx="64" cy="34" r="36" fill="none" stroke="#ffb84d" stroke-width="1.5" opacity="0.5"/>
+          <circle cx="64" cy="34" r="28" fill="none" stroke="#ffb84d" stroke-width="1" opacity="0.7"/>
+
+          <!-- Winged helmet (petasos) -->
+          <rect x="42" y="22" width="44" height="4" fill="#d4af37"/>
+          <rect x="38" y="26" width="52" height="3" fill="#b8932e"/>
+          <rect x="46" y="20" width="36" height="2" fill="#e8c54a"/>
+          <!-- Helmet wings left -->
+          <rect x="30" y="22" width="3" height="8" fill="#fff"/>
+          <rect x="27" y="24" width="3" height="6" fill="#fff"/>
+          <rect x="24" y="26" width="3" height="4" fill="#fff"/>
+          <rect x="21" y="28" width="3" height="2" fill="#e8e8e8"/>
+          <!-- Helmet wings right -->
+          <rect x="95" y="22" width="3" height="8" fill="#fff"/>
+          <rect x="98" y="24" width="3" height="6" fill="#fff"/>
+          <rect x="101" y="26" width="3" height="4" fill="#fff"/>
+          <rect x="104" y="28" width="3" height="2" fill="#e8e8e8"/>
+
+          <!-- Face shadow row -->
+          <rect x="42" y="30" width="44" height="2" fill="#3d342c"/>
+          <!-- Face -->
+          <rect x="42" y="32" width="44" height="22" fill="#e8c79a"/>
+          <rect x="40" y="34" width="2" height="20" fill="#d4a87a"/>
+          <rect x="86" y="34" width="2" height="20" fill="#d4a87a"/>
+          <!-- Eyes -->
+          <rect x="50" y="40" width="4" height="4" fill="#fff"/>
+          <rect x="52" y="42" width="2" height="2" fill="#2a5b7a"/>
+          <rect x="74" y="40" width="4" height="4" fill="#fff"/>
+          <rect x="76" y="42" width="2" height="2" fill="#2a5b7a"/>
+          <!-- Eyebrows -->
+          <rect x="48" y="38" width="6" height="1" fill="#3d342c"/>
+          <rect x="74" y="38" width="6" height="1" fill="#3d342c"/>
+          <!-- Mouth -->
+          <rect x="58" y="48" width="12" height="1" fill="#a13d2d"/>
+          <rect x="60" y="49" width="8" height="1" fill="#7a2a1f"/>
+          <!-- Cheek blush -->
+          <rect x="46" y="46" width="3" height="2" fill="#ff9ec7" opacity="0.5"/>
+          <rect x="79" y="46" width="3" height="2" fill="#ff9ec7" opacity="0.5"/>
+          <!-- Chin shadow -->
+          <rect x="42" y="54" width="44" height="2" fill="#3d342c"/>
+
+          <!-- Neck -->
+          <rect x="56" y="56" width="16" height="6" fill="#e8c79a"/>
+
+          <!-- Tunic / chiton (Roman) -->
+          <rect x="36" y="62" width="56" height="44" fill="#d4af37"/>
+          <rect x="38" y="64" width="52" height="40" fill="#c69a26"/>
+          <!-- Highlight -->
+          <rect x="40" y="64" width="20" height="2" fill="#e8c54a"/>
+          <!-- Belt -->
+          <rect x="36" y="96" width="56" height="5" fill="#7a2a1f"/>
+          <rect x="60" y="96" width="8" height="5" fill="#d4af37"/>
+          <!-- Tunic folds -->
+          <rect x="46" y="68" width="2" height="28" fill="#a8801f" opacity="0.7"/>
+          <rect x="80" y="68" width="2" height="28" fill="#a8801f" opacity="0.7"/>
+          <rect x="62" y="72" width="3" height="24" fill="#a8801f" opacity="0.5"/>
+
+          <!-- Arms -->
+          <rect x="28" y="64" width="8" height="22" fill="#e8c79a"/>
+          <rect x="26" y="66" width="2" height="20" fill="#d4a87a"/>
+          <rect x="92" y="64" width="8" height="22" fill="#e8c79a"/>
+          <rect x="100" y="66" width="2" height="20" fill="#d4a87a"/>
+          <!-- Forearms (Mercury holding caduceus + bag) -->
+          <rect x="30" y="86" width="6" height="18" fill="#e8c79a"/>
+          <rect x="92" y="86" width="6" height="18" fill="#e8c79a"/>
+
+          <!-- Caduceus staff (left hand) -->
+          <rect x="30" y="50" width="2" height="56" fill="#d4af37"/>
+          <rect x="28" y="48" width="6" height="3" fill="#d4af37"/>
+          <!-- Caduceus wings -->
+          <rect x="22" y="52" width="3" height="4" fill="#fff"/>
+          <rect x="20" y="54" width="2" height="2" fill="#fff"/>
+          <rect x="37" y="52" width="3" height="4" fill="#fff"/>
+          <rect x="40" y="54" width="2" height="2" fill="#fff"/>
+          <!-- Serpents winding -->
+          <path d="M30,60 Q34,64 30,68 Q26,72 30,76 Q34,80 30,84" stroke="#3d342c" stroke-width="1" fill="none"/>
+          <path d="M32,60 Q28,64 32,68 Q36,72 32,76 Q28,80 32,84" stroke="#5c5048" stroke-width="1" fill="none"/>
+
+          <!-- Money pouch (right hand) -->
+          <rect x="96" y="100" width="14" height="12" fill="#8b6240"/>
+          <rect x="94" y="98" width="18" height="3" fill="#5c4030"/>
+          <text x="103" y="111" text-anchor="middle" font-size="6" fill="#d4af37" font-weight="900">$</text>
+
+          <!-- Big wings on back -->
           <g opacity="0.9">
-            <path d="M14,30 Q4,30 0,40 Q4,38 14,38 Z" fill="#fff" stroke="#3d342c" stroke-width="0.8"/>
-            <path d="M14,36 Q2,38 -2,48 Q4,46 14,44 Z" fill="#fff" stroke="#3d342c" stroke-width="0.8"/>
+            <path d="M28,72 Q12,68 6,80 Q4,84 12,82 Q22,82 28,80 Z" fill="#fff" stroke="#3d342c" stroke-width="0.8"/>
+            <path d="M28,78 Q10,78 4,90 Q4,94 12,90 Q22,88 28,86 Z" fill="#fff" stroke="#3d342c" stroke-width="0.8"/>
+            <path d="M100,72 Q116,68 122,80 Q124,84 116,82 Q106,82 100,80 Z" fill="#fff" stroke="#3d342c" stroke-width="0.8"/>
+            <path d="M100,78 Q118,78 124,90 Q124,94 116,90 Q106,88 100,86 Z" fill="#fff" stroke="#3d342c" stroke-width="0.8"/>
+            <!-- Feather details -->
+            <line x1="14" y1="80" x2="20" y2="78" stroke="#3d342c" stroke-width="0.4"/>
+            <line x1="14" y1="84" x2="20" y2="82" stroke="#3d342c" stroke-width="0.4"/>
+            <line x1="114" y1="80" x2="108" y2="78" stroke="#3d342c" stroke-width="0.4"/>
+            <line x1="114" y1="84" x2="108" y2="82" stroke="#3d342c" stroke-width="0.4"/>
           </g>
+
+          <!-- Legs -->
+          <rect x="46" y="106" width="14" height="32" fill="#e8c79a"/>
+          <rect x="68" y="106" width="14" height="32" fill="#e8c79a"/>
+          <rect x="44" y="108" width="2" height="28" fill="#d4a87a"/>
+          <rect x="80" y="108" width="2" height="28" fill="#d4a87a"/>
+          <!-- Winged sandals -->
+          <rect x="42" y="136" width="20" height="6" fill="#8b6240"/>
+          <rect x="66" y="136" width="20" height="6" fill="#8b6240"/>
+          <rect x="38" y="134" width="4" height="3" fill="#fff"/>
+          <rect x="36" y="136" width="2" height="2" fill="#fff"/>
+          <rect x="86" y="134" width="4" height="3" fill="#fff"/>
+          <rect x="90" y="136" width="2" height="2" fill="#fff"/>
         </svg>
+        <div class="deity-label">
+          <span class="thai">เมอร์คิวรี</span>
+          <span class="en">MERCURY ⚡</span>
+          <span class="role">ORCHESTRATOR</span>
+        </div>
+      </button>
+    </div>
+
+    <!-- ===== 9 DEITIES IN GARDEN ===== -->
+
+    <!-- UZUME (Japanese) - TikTok Live - left of pond -->
+    <button class="deity uzume" data-deity="uzume" aria-label="Uzume — TikTok Live" style="--x: 12%; --y: 50%; --accent: #ff7eb6;">
+      <div class="deity-glow"></div>
+      <svg viewBox="0 0 128 160" class="char-svg" shape-rendering="crispEdges">
+        <circle cx="64" cy="34" r="28" fill="none" stroke="#ff7eb6" stroke-width="1.2" opacity="0.6"/>
+        <!-- Hair ornament -->
+        <rect x="56" y="14" width="16" height="2" fill="#a13d2d"/>
+        <rect x="60" y="10" width="8" height="4" fill="#ff7eb6"/>
+        <!-- Hair top -->
+        <rect x="40" y="16" width="48" height="8" fill="#2a2520"/>
+        <rect x="38" y="20" width="52" height="6" fill="#2a2520"/>
+        <!-- Face -->
+        <rect x="42" y="26" width="44" height="22" fill="#f0d2a0"/>
+        <rect x="40" y="28" width="2" height="18" fill="#d8b888"/>
+        <rect x="86" y="28" width="2" height="18" fill="#d8b888"/>
+        <!-- Eyes (smiling/closed for joy) -->
+        <path d="M48,38 Q52,34 56,38" stroke="#2a2520" stroke-width="1.5" fill="none"/>
+        <path d="M72,38 Q76,34 80,38" stroke="#2a2520" stroke-width="1.5" fill="none"/>
+        <!-- Mouth (big smile) -->
+        <path d="M56,46 Q64,52 72,46" stroke="#a13d2d" stroke-width="1.5" fill="none"/>
+        <rect x="58" y="46" width="12" height="2" fill="#fff" opacity="0.7"/>
+        <!-- Cheek blush -->
+        <ellipse cx="48" cy="44" rx="3" ry="2" fill="#ff7eb6" opacity="0.6"/>
+        <ellipse cx="80" cy="44" rx="3" ry="2" fill="#ff7eb6" opacity="0.6"/>
+        <!-- Long hair side -->
+        <rect x="34" y="24" width="6" height="36" fill="#2a2520"/>
+        <rect x="88" y="24" width="6" height="36" fill="#2a2520"/>
+        <!-- Kimono (pink + white) -->
+        <rect x="30" y="52" width="68" height="50" fill="#ff9ec7"/>
+        <rect x="32" y="54" width="64" height="46" fill="#ff7eb6"/>
+        <!-- Kimono pattern -->
+        <use href="#petal" x="40" y="62" width="10" height="10"/>
+        <use href="#petal" x="62" y="78" width="10" height="10"/>
+        <use href="#petal" x="80" y="68" width="10" height="10"/>
+        <!-- Obi belt (white) -->
+        <rect x="30" y="86" width="68" height="8" fill="#fff"/>
+        <rect x="30" y="86" width="68" height="2" fill="#d4af37"/>
+        <rect x="30" y="92" width="68" height="2" fill="#d4af37"/>
+        <!-- Arms (dancing pose) -->
+        <rect x="20" y="56" width="10" height="6" fill="#f0d2a0" transform="rotate(-30 25 59)"/>
+        <rect x="18" y="50" width="6" height="10" fill="#f0d2a0" transform="rotate(-45 21 55)"/>
+        <rect x="98" y="56" width="10" height="6" fill="#f0d2a0" transform="rotate(30 103 59)"/>
+        <rect x="104" y="50" width="6" height="10" fill="#f0d2a0" transform="rotate(45 107 55)"/>
+        <!-- Fan in right hand -->
+        <path d="M108,42 L120,30 L122,40 L122,50 L120,58 L108,46 Z" fill="#fff" stroke="#a13d2d" stroke-width="0.8"/>
+        <line x1="108" y1="44" x2="120" y2="34" stroke="#a13d2d" stroke-width="0.5"/>
+        <line x1="108" y1="46" x2="121" y2="42" stroke="#a13d2d" stroke-width="0.5"/>
+        <line x1="108" y1="48" x2="121" y2="50" stroke="#a13d2d" stroke-width="0.5"/>
+        <!-- Legs (dancing kick) -->
+        <rect x="46" y="100" width="14" height="28" fill="#ff7eb6" transform="rotate(-15 53 114)"/>
+        <rect x="68" y="100" width="14" height="32" fill="#ff7eb6" transform="rotate(20 75 116)"/>
+        <!-- Geta sandals -->
+        <rect x="40" y="128" width="20" height="4" fill="#5c4030"/>
+        <rect x="76" y="130" width="20" height="4" fill="#5c4030"/>
+        <!-- Floating mirror (Amaterasu's mirror) -->
+        <circle cx="20" cy="100" r="6" fill="#d4af37" stroke="#2a2520" stroke-width="1"/>
+        <circle cx="20" cy="100" r="3" fill="#fff" opacity="0.6"/>
+        <!-- Music notes -->
+        <text x="100" y="80" font-size="10" fill="#ff7eb6" opacity="0.8">♪</text>
+        <text x="14" y="82" font-size="8" fill="#ff7eb6" opacity="0.7">♫</text>
+      </svg>
+      <div class="deity-label">
+        <span class="thai">อูซูเมะ</span>
+        <span class="en">UZUME 天鈿女命</span>
+        <span class="role">TIKTOK LIVE · JP</span>
       </div>
-      <div class="hermes-label">
-        <div class="thai">เฮอร์มีส</div>
-        <div class="role">⚡ ORCHESTRATOR ⚡</div>
-      </div>
-      <div class="hermes-ping"></div>
     </button>
-    <p class="altar-hint">วิหารใจกลาง — คลิกเฮอร์มีสเพื่อสั่งงานหลัก หรือคลิกเทพแต่ละองค์ด้านล่าง</p>
-  </section>
 
-  <!-- ===== PANTHEON GRID ===== -->
-  <main class="pantheon" aria-label="Deity stations">
-    <!-- Group 1: Content/Marketing -->
-    <h2 class="group-title">🎭 หมวด Content & Marketing</h2>
-    <div class="group">
-      <button class="shrine" data-deity="nataraja" style="--accent: #ff7eb6;">
-        <div class="shrine-roof"></div>
-        <div class="shrine-pillars"></div>
-        <div class="shrine-body">
-          <div class="sprite-frame">
-            <svg viewBox="0 0 64 64" shape-rendering="crispEdges" class="char-svg">
-              <!-- halo flame -->
-              <circle cx="32" cy="20" r="14" fill="none" stroke="#ff7eb6" stroke-width="1" opacity="0.6"/>
-              <!-- head -->
-              <rect x="26" y="10" width="12" height="12" fill="#e8c79a"/>
-              <rect x="24" y="22" width="16" height="2" fill="#3d342c"/>
-              <rect x="28" y="14" width="2" height="2" fill="#2a2520"/>
-              <rect x="34" y="14" width="2" height="2" fill="#2a2520"/>
-              <rect x="30" y="18" width="4" height="1" fill="#a13d2d"/>
-              <!-- crown -->
-              <rect x="28" y="8" width="2" height="4" fill="#d4af37"/>
-              <rect x="31" y="6" width="2" height="6" fill="#d4af37"/>
-              <rect x="34" y="8" width="2" height="4" fill="#d4af37"/>
-              <!-- body -->
-              <rect x="24" y="24" width="16" height="14" fill="#ff7eb6"/>
-              <rect x="26" y="26" width="12" height="10" fill="#ff5e9f"/>
-              <!-- 4 arms - dance pose -->
-              <rect x="14" y="26" width="4" height="10" fill="#e8c79a" transform="rotate(-25 16 31)"/>
-              <rect x="46" y="26" width="4" height="10" fill="#e8c79a" transform="rotate(25 48 31)"/>
-              <rect x="18" y="28" width="3" height="8" fill="#e8c79a" transform="rotate(35 19 32)"/>
-              <rect x="43" y="28" width="3" height="8" fill="#e8c79a" transform="rotate(-35 44 32)"/>
-              <!-- legs dance -->
-              <rect x="24" y="38" width="6" height="14" fill="#e8c79a" transform="rotate(-20 27 45)"/>
-              <rect x="34" y="38" width="6" height="14" fill="#e8c79a" transform="rotate(15 37 45)"/>
-              <!-- feet -->
-              <rect x="20" y="50" width="8" height="3" fill="#3d342c"/>
-              <rect x="36" y="50" width="8" height="3" fill="#3d342c"/>
-              <!-- dance flame ring -->
-              <path d="M8,30 Q4,40 8,50 M56,30 Q60,40 56,50" stroke="#ff5e9f" stroke-width="1" fill="none" opacity="0.5"/>
-            </svg>
-          </div>
-          <div class="info">
-            <div class="deity-name">นาฏราช <span class="en">Nataraja</span></div>
-            <div class="deity-role">TikTok Live</div>
-            <div class="deity-status">
-              <span class="dot live"></span>
-              <span>เตรียม live · 19:00</span>
-            </div>
-          </div>
-        </div>
-        <div class="shrine-base"></div>
-      </button>
+    <!-- CANGJIE (Chinese) - Content - upper left -->
+    <button class="deity cangjie" data-deity="cangjie" aria-label="Cangjie — Content" style="--x: 26%; --y: 36%; --accent: #c9a26b;">
+      <div class="deity-glow"></div>
+      <svg viewBox="0 0 128 160" class="char-svg" shape-rendering="crispEdges">
+        <circle cx="64" cy="34" r="28" fill="none" stroke="#c9a26b" stroke-width="1.2" opacity="0.6"/>
+        <!-- Topknot scholar hat -->
+        <rect x="50" y="6" width="28" height="4" fill="#3d342c"/>
+        <rect x="46" y="10" width="36" height="6" fill="#3d342c"/>
+        <rect x="44" y="14" width="40" height="4" fill="#3d342c"/>
+        <rect x="58" y="2" width="12" height="4" fill="#d4af37"/>
+        <!-- Face -->
+        <rect x="42" y="18" width="44" height="32" fill="#f0d2a0"/>
+        <rect x="40" y="22" width="2" height="26" fill="#d8b888"/>
+        <rect x="86" y="22" width="2" height="26" fill="#d8b888"/>
+        <!-- FOUR EYES (Cangjie's distinguishing feature!) -->
+        <rect x="46" y="26" width="6" height="4" fill="#fff"/>
+        <rect x="48" y="27" width="3" height="3" fill="#2a2520"/>
+        <rect x="56" y="26" width="6" height="4" fill="#fff"/>
+        <rect x="58" y="27" width="3" height="3" fill="#2a2520"/>
+        <rect x="66" y="26" width="6" height="4" fill="#fff"/>
+        <rect x="68" y="27" width="3" height="3" fill="#2a2520"/>
+        <rect x="76" y="26" width="6" height="4" fill="#fff"/>
+        <rect x="78" y="27" width="3" height="3" fill="#2a2520"/>
+        <!-- Beard -->
+        <rect x="50" y="40" width="28" height="10" fill="#fff"/>
+        <rect x="54" y="48" width="20" height="4" fill="#e0e0e0"/>
+        <!-- Mouth -->
+        <rect x="60" y="40" width="8" height="1" fill="#a13d2d"/>
+        <!-- Eyebrows long -->
+        <rect x="44" y="24" width="10" height="1" fill="#fff"/>
+        <rect x="62" y="24" width="10" height="1" fill="#fff"/>
+        <!-- Robe (scholar gold/brown) -->
+        <rect x="28" y="50" width="72" height="56" fill="#c9a26b"/>
+        <rect x="30" y="52" width="68" height="52" fill="#b88a4f"/>
+        <!-- Chinese character on robe -->
+        <text x="64" y="86" text-anchor="middle" font-family="Noto Serif JP, serif" font-size="20" fill="#3d342c" font-weight="900">字</text>
+        <!-- Belt (wide sash) -->
+        <rect x="28" y="92" width="72" height="6" fill="#3d342c"/>
+        <rect x="60" y="92" width="8" height="6" fill="#d4af37"/>
+        <!-- Sleeves wide -->
+        <rect x="14" y="56" width="14" height="40" fill="#c9a26b"/>
+        <rect x="100" y="56" width="14" height="40" fill="#c9a26b"/>
+        <rect x="16" y="58" width="10" height="36" fill="#b88a4f"/>
+        <rect x="102" y="58" width="10" height="36" fill="#b88a4f"/>
+        <!-- Brush in left hand -->
+        <rect x="20" y="86" width="3" height="22" fill="#5c4030"/>
+        <ellipse cx="21" cy="110" rx="3" ry="4" fill="#2a2520"/>
+        <rect x="20" y="84" width="3" height="2" fill="#d4af37"/>
+        <!-- Scroll in right hand -->
+        <rect x="100" y="98" width="14" height="12" fill="#f4ecd8" stroke="#5c4030" stroke-width="1"/>
+        <rect x="100" y="98" width="14" height="2" fill="#5c4030"/>
+        <rect x="100" y="108" width="14" height="2" fill="#5c4030"/>
+        <line x1="103" y1="102" x2="111" y2="102" stroke="#2a2520" stroke-width="0.5"/>
+        <line x1="103" y1="105" x2="111" y2="105" stroke="#2a2520" stroke-width="0.5"/>
+        <!-- Legs -->
+        <rect x="40" y="106" width="48" height="26" fill="#c9a26b"/>
+        <!-- Shoes -->
+        <rect x="42" y="132" width="18" height="6" fill="#3d342c"/>
+        <rect x="68" y="132" width="18" height="6" fill="#3d342c"/>
+        <!-- Floating Chinese chars (his invention) -->
+        <text x="14" y="40" font-family="Noto Serif JP, serif" font-size="10" fill="#c9a26b" opacity="0.8" font-weight="700">字</text>
+        <text x="110" y="50" font-family="Noto Serif JP, serif" font-size="9" fill="#c9a26b" opacity="0.7" font-weight="700">文</text>
+        <text x="10" y="120" font-family="Noto Serif JP, serif" font-size="8" fill="#c9a26b" opacity="0.6" font-weight="700">書</text>
+      </svg>
+      <div class="deity-label">
+        <span class="thai">ฉางเจี๋ย</span>
+        <span class="en">CANGJIE 倉頡</span>
+        <span class="role">CONTENT · CN</span>
+      </div>
+    </button>
 
-      <button class="shrine" data-deity="narada" style="--accent: #c9a26b;">
-        <div class="shrine-roof"></div>
-        <div class="shrine-pillars"></div>
-        <div class="shrine-body">
-          <div class="sprite-frame">
-            <svg viewBox="0 0 64 64" shape-rendering="crispEdges" class="char-svg">
-              <!-- halo -->
-              <circle cx="32" cy="18" r="12" fill="none" stroke="#c9a26b" stroke-width="1" opacity="0.6"/>
-              <!-- head + topknot -->
-              <rect x="28" y="6" width="3" height="3" fill="#2a2520"/>
-              <rect x="26" y="10" width="12" height="12" fill="#e8c79a"/>
-              <rect x="24" y="22" width="16" height="2" fill="#3d342c"/>
-              <rect x="28" y="14" width="2" height="2" fill="#2a2520"/>
-              <rect x="34" y="14" width="2" height="2" fill="#2a2520"/>
-              <rect x="28" y="22" width="8" height="4" fill="#fff"/> <!-- beard -->
-              <!-- body / robe -->
-              <rect x="22" y="24" width="20" height="22" fill="#c9a26b"/>
-              <rect x="24" y="26" width="16" height="18" fill="#b88a4f"/>
-              <rect x="30" y="26" width="4" height="20" fill="#a8783d"/> <!-- robe stripe -->
-              <!-- arm holding veena -->
-              <rect x="40" y="28" width="4" height="14" fill="#e8c79a"/>
-              <!-- veena (Indian lute) -->
-              <rect x="42" y="20" width="3" height="26" fill="#8b6240"/>
-              <ellipse cx="44" cy="48" rx="6" ry="4" fill="#8b6240"/>
-              <rect x="42" y="22" width="3" height="1" fill="#d4af37"/>
-              <rect x="42" y="28" width="3" height="1" fill="#d4af37"/>
-              <rect x="42" y="34" width="3" height="1" fill="#d4af37"/>
-              <!-- legs (sitting) -->
-              <rect x="22" y="46" width="20" height="8" fill="#c9a26b"/>
-              <rect x="24" y="50" width="16" height="4" fill="#a8783d"/>
-              <!-- music notes -->
-              <text x="6" y="22" font-family="serif" font-size="12" fill="#c9a26b" opacity="0.8">♪</text>
-              <text x="50" y="14" font-family="serif" font-size="10" fill="#c9a26b" opacity="0.6">♫</text>
-            </svg>
-          </div>
-          <div class="info">
-            <div class="deity-name">นารท <span class="en">Narada</span></div>
-            <div class="deity-role">Content Carousel</div>
-            <div class="deity-status">
-              <span class="dot work"></span>
-              <span>1 carousel ในคิว</span>
-            </div>
-          </div>
-        </div>
-        <div class="shrine-base"></div>
-      </button>
+    <!-- EBISU (Japanese) - Product Hunter - upper center-left -->
+    <button class="deity ebisu" data-deity="ebisu" aria-label="Ebisu — Product Hunter" style="--x: 42%; --y: 44%; --accent: #f5b06e;">
+      <div class="deity-glow"></div>
+      <svg viewBox="0 0 128 160" class="char-svg" shape-rendering="crispEdges">
+        <circle cx="64" cy="34" r="28" fill="none" stroke="#f5b06e" stroke-width="1.2" opacity="0.6"/>
+        <!-- Fishing cap (eboshi) -->
+        <path d="M40,18 L88,18 L82,4 L46,4 Z" fill="#3d342c"/>
+        <rect x="38" y="18" width="52" height="4" fill="#3d342c"/>
+        <rect x="58" y="2" width="12" height="2" fill="#d4af37"/>
+        <!-- Face -->
+        <rect x="42" y="22" width="44" height="28" fill="#f0d2a0"/>
+        <rect x="40" y="24" width="2" height="24" fill="#d8b888"/>
+        <rect x="86" y="24" width="2" height="24" fill="#d8b888"/>
+        <!-- Big smile eyes (closed in joy - classic Ebisu) -->
+        <path d="M48,34 Q52,30 56,34" stroke="#2a2520" stroke-width="2" fill="none"/>
+        <path d="M72,34 Q76,30 80,34" stroke="#2a2520" stroke-width="2" fill="none"/>
+        <!-- Round chubby cheeks -->
+        <ellipse cx="48" cy="42" rx="5" ry="4" fill="#ff9ec7" opacity="0.55"/>
+        <ellipse cx="80" cy="42" rx="5" ry="4" fill="#ff9ec7" opacity="0.55"/>
+        <!-- Big laughing mouth -->
+        <path d="M52,42 Q64,52 76,42" stroke="#a13d2d" stroke-width="1.8" fill="#7a2a1f"/>
+        <!-- Beard -->
+        <path d="M48,46 Q64,56 80,46" stroke="#fff" stroke-width="2" fill="none"/>
+        <rect x="56" y="48" width="16" height="4" fill="#fff"/>
+        <!-- Body (red/orange traditional Japanese garb) -->
+        <rect x="26" y="52" width="76" height="54" fill="#f5b06e"/>
+        <rect x="28" y="54" width="72" height="50" fill="#e89344"/>
+        <!-- Round belly -->
+        <ellipse cx="64" cy="84" rx="26" ry="20" fill="#f5b06e"/>
+        <!-- Belt -->
+        <rect x="26" y="96" width="76" height="6" fill="#3d342c"/>
+        <rect x="60" y="96" width="8" height="6" fill="#d4af37"/>
+        <!-- Left arm holding fishing rod -->
+        <rect x="14" y="54" width="12" height="36" fill="#f0d2a0"/>
+        <rect x="12" y="56" width="2" height="32" fill="#d8b888"/>
+        <!-- Fishing rod -->
+        <line x1="14" y1="50" x2="6" y2="20" stroke="#5c4030" stroke-width="2"/>
+        <line x1="6" y1="20" x2="2" y2="32" stroke="#fff" stroke-width="0.5"/>
+        <!-- Right arm holding tai (sea bream) -->
+        <rect x="102" y="54" width="12" height="42" fill="#f0d2a0"/>
+        <!-- TAI fish (Ebisu's iconic catch!) -->
+        <ellipse cx="118" cy="86" rx="14" ry="8" fill="#ff5e5e"/>
+        <ellipse cx="118" cy="84" rx="14" ry="8" fill="#ff7e7e"/>
+        <!-- Tail -->
+        <polygon points="130,82 138,76 136,86 138,96 130,90" fill="#ff5e5e"/>
+        <!-- Fin -->
+        <polygon points="115,76 118,68 122,76" fill="#ff3e3e"/>
+        <!-- Fish eye -->
+        <circle cx="108" cy="84" r="2" fill="#fff"/>
+        <circle cx="108" cy="84" r="1" fill="#2a2520"/>
+        <!-- Scales -->
+        <line x1="112" y1="82" x2="116" y2="82" stroke="#a13d2d" stroke-width="0.5"/>
+        <line x1="118" y1="80" x2="124" y2="80" stroke="#a13d2d" stroke-width="0.5"/>
+        <line x1="118" y1="88" x2="124" y2="88" stroke="#a13d2d" stroke-width="0.5"/>
+        <!-- Legs -->
+        <rect x="40" y="100" width="20" height="32" fill="#e89344"/>
+        <rect x="68" y="100" width="20" height="32" fill="#e89344"/>
+        <!-- Sandals -->
+        <rect x="36" y="132" width="24" height="6" fill="#5c4030"/>
+        <rect x="68" y="132" width="24" height="6" fill="#5c4030"/>
+        <!-- Coins around -->
+        <circle cx="14" cy="120" r="3" fill="#d4af37" stroke="#2a2520" stroke-width="0.5"/>
+        <text x="14" y="123" text-anchor="middle" font-size="4" fill="#2a2520" font-weight="900">圓</text>
+        <circle cx="116" cy="124" r="3" fill="#d4af37" stroke="#2a2520" stroke-width="0.5"/>
+      </svg>
+      <div class="deity-label">
+        <span class="thai">เอบิสุ</span>
+        <span class="en">EBISU 恵比寿</span>
+        <span class="role">PRODUCT · JP</span>
+      </div>
+    </button>
 
-      <button class="shrine" data-deity="kamadeva" style="--accent: #ff9ec7;">
-        <div class="shrine-roof"></div>
-        <div class="shrine-pillars"></div>
-        <div class="shrine-body">
-          <div class="sprite-frame">
-            <svg viewBox="0 0 64 64" shape-rendering="crispEdges" class="char-svg">
-              <!-- head -->
-              <rect x="26" y="8" width="12" height="12" fill="#e8c79a"/>
-              <rect x="24" y="20" width="16" height="2" fill="#3d342c"/>
-              <rect x="28" y="12" width="2" height="2" fill="#2a2520"/>
-              <rect x="34" y="12" width="2" height="2" fill="#2a2520"/>
-              <!-- hair -->
-              <rect x="24" y="6" width="16" height="4" fill="#2a2520"/>
-              <rect x="26" y="4" width="12" height="4" fill="#2a2520"/>
-              <!-- body -->
-              <rect x="22" y="22" width="20" height="14" fill="#ff9ec7"/>
-              <rect x="24" y="24" width="16" height="10" fill="#ff7eb6"/>
-              <!-- heart on chest -->
-              <text x="32" y="34" text-anchor="middle" font-size="8" fill="#a13d2d">♥</text>
-              <!-- bow + arrow -->
-              <path d="M44,16 Q56,28 44,44" stroke="#8b6240" stroke-width="2.5" fill="none"/>
-              <line x1="46" y1="18" x2="46" y2="42" stroke="#fff" stroke-width="0.8"/>
-              <rect x="28" y="28" width="20" height="1.5" fill="#8b6240"/>
-              <polygon points="48,28 52,29 48,30" fill="#a13d2d"/>
-              <!-- legs -->
-              <rect x="24" y="36" width="6" height="16" fill="#e8c79a"/>
-              <rect x="34" y="36" width="6" height="16" fill="#e8c79a"/>
-              <rect x="22" y="50" width="10" height="3" fill="#3d342c"/>
-              <rect x="32" y="50" width="10" height="3" fill="#3d342c"/>
-              <!-- floating hearts -->
-              <text x="6" y="14" font-size="6" fill="#ff7eb6">♥</text>
-              <text x="14" y="50" font-size="5" fill="#ff7eb6" opacity="0.7">♥</text>
-            </svg>
-          </div>
-          <div class="info">
-            <div class="deity-name">กามเทพ <span class="en">Kamadeva</span></div>
-            <div class="deity-role">Facebook Ads</div>
-            <div class="deity-status">
-              <span class="dot ok"></span>
-              <span>ROAS 2.3 · 3 campaign</span>
-            </div>
-          </div>
-        </div>
-        <div class="shrine-base"></div>
-      </button>
-    </div>
+    <!-- CUPID (Roman) - FB Ads - upper right -->
+    <button class="deity cupid" data-deity="cupid" aria-label="Cupid — Facebook Ads" style="--x: 58%; --y: 36%; --accent: #ff9ec7;">
+      <div class="deity-glow"></div>
+      <svg viewBox="0 0 128 160" class="char-svg" shape-rendering="crispEdges">
+        <circle cx="64" cy="30" r="28" fill="none" stroke="#ff9ec7" stroke-width="1.2" opacity="0.7"/>
+        <!-- Curly blond hair -->
+        <ellipse cx="64" cy="20" rx="26" ry="14" fill="#e8c54a"/>
+        <circle cx="44" cy="18" r="6" fill="#e8c54a"/>
+        <circle cx="50" cy="12" r="5" fill="#e8c54a"/>
+        <circle cx="64" cy="8" r="6" fill="#e8c54a"/>
+        <circle cx="78" cy="12" r="5" fill="#e8c54a"/>
+        <circle cx="84" cy="18" r="6" fill="#e8c54a"/>
+        <!-- Cupid wreath -->
+        <ellipse cx="64" cy="14" rx="22" ry="6" fill="none" stroke="#6dd66b" stroke-width="1"/>
+        <circle cx="48" cy="13" r="2" fill="#6dd66b"/>
+        <circle cx="64" cy="9" r="2" fill="#6dd66b"/>
+        <circle cx="80" cy="13" r="2" fill="#6dd66b"/>
+        <!-- Face round baby -->
+        <ellipse cx="64" cy="36" rx="22" ry="20" fill="#fdd8b0"/>
+        <!-- Eyes -->
+        <rect x="50" y="32" width="4" height="4" fill="#fff"/>
+        <rect x="52" y="33" width="2" height="3" fill="#3a7a3a"/>
+        <rect x="74" y="32" width="4" height="4" fill="#fff"/>
+        <rect x="76" y="33" width="2" height="3" fill="#3a7a3a"/>
+        <!-- Blush -->
+        <ellipse cx="48" cy="40" rx="4" ry="3" fill="#ff7eb6" opacity="0.6"/>
+        <ellipse cx="80" cy="40" rx="4" ry="3" fill="#ff7eb6" opacity="0.6"/>
+        <!-- Mischievous smirk -->
+        <path d="M56,46 Q64,50 72,46" stroke="#a13d2d" stroke-width="1.5" fill="none"/>
+        <rect x="62" y="48" width="6" height="1" fill="#7a2a1f"/>
+        <!-- Naked baby body (just diaper-style cloth) -->
+        <ellipse cx="64" cy="74" rx="22" ry="20" fill="#fdd8b0"/>
+        <!-- Pink cloth diaper -->
+        <path d="M44,74 Q64,82 84,74 L84,90 Q64,98 44,90 Z" fill="#ff9ec7"/>
+        <path d="M44,74 Q64,82 84,74 L84,90 Q64,98 44,90 Z" fill="none" stroke="#a13d2d" stroke-width="0.8"/>
+        <!-- Belly button -->
+        <circle cx="64" cy="78" r="1" fill="#a13d2d"/>
+        <!-- Big white wings spread -->
+        <g opacity="0.95">
+          <path d="M44,60 Q20,52 8,68 Q4,80 14,80 Q28,76 44,70 Z" fill="#fff" stroke="#5c5048" stroke-width="0.8"/>
+          <path d="M44,70 Q22,72 10,90 Q12,98 22,92 Q34,84 44,78 Z" fill="#fff" stroke="#5c5048" stroke-width="0.8"/>
+          <path d="M84,60 Q108,52 120,68 Q124,80 114,80 Q100,76 84,70 Z" fill="#fff" stroke="#5c5048" stroke-width="0.8"/>
+          <path d="M84,70 Q106,72 118,90 Q116,98 106,92 Q94,84 84,78 Z" fill="#fff" stroke="#5c5048" stroke-width="0.8"/>
+          <!-- Feather lines -->
+          <line x1="16" y1="72" x2="26" y2="68" stroke="#5c5048" stroke-width="0.5"/>
+          <line x1="16" y1="76" x2="26" y2="72" stroke="#5c5048" stroke-width="0.5"/>
+          <line x1="112" y1="72" x2="102" y2="68" stroke="#5c5048" stroke-width="0.5"/>
+          <line x1="112" y1="76" x2="102" y2="72" stroke="#5c5048" stroke-width="0.5"/>
+        </g>
+        <!-- Bow (cupid's bow) -->
+        <path d="M16,90 Q4,108 16,124" stroke="#8b6240" stroke-width="3" fill="none"/>
+        <line x1="14" y1="92" x2="14" y2="122" stroke="#fff" stroke-width="0.8"/>
+        <!-- Arrow nocked -->
+        <line x1="14" y1="106" x2="44" y2="106" stroke="#8b6240" stroke-width="2"/>
+        <polygon points="44,103 52,106 44,109" fill="#a13d2d"/>
+        <polygon points="14,103 8,106 14,109" fill="#fff"/>
+        <!-- Pink hearts floating -->
+        <text x="100" y="50" font-size="14" fill="#ff7eb6" opacity="0.9">♥</text>
+        <text x="110" y="36" font-size="8" fill="#ff7eb6" opacity="0.7">♥</text>
+        <text x="106" y="64" font-size="10" fill="#ff7eb6" opacity="0.6">♥</text>
+        <!-- Legs (chubby baby legs) -->
+        <rect x="48" y="92" width="14" height="22" fill="#fdd8b0"/>
+        <rect x="66" y="92" width="14" height="22" fill="#fdd8b0"/>
+        <ellipse cx="55" cy="116" rx="8" ry="3" fill="#fdd8b0"/>
+        <ellipse cx="73" cy="116" rx="8" ry="3" fill="#fdd8b0"/>
+      </svg>
+      <div class="deity-label">
+        <span class="thai">คิวปิด</span>
+        <span class="en">CUPID</span>
+        <span class="role">FB ADS · RM</span>
+      </div>
+    </button>
 
-    <!-- Group 2: Commerce -->
-    <h2 class="group-title">💰 หมวด Commerce</h2>
-    <div class="group">
-      <button class="shrine" data-deity="lakshmi" style="--accent: #f5b06e;">
-        <div class="shrine-roof"></div>
-        <div class="shrine-pillars"></div>
-        <div class="shrine-body">
-          <div class="sprite-frame">
-            <svg viewBox="0 0 64 64" shape-rendering="crispEdges" class="char-svg">
-              <circle cx="32" cy="20" r="13" fill="none" stroke="#f5b06e" stroke-width="1" opacity="0.7"/>
-              <!-- crown -->
-              <rect x="24" y="4" width="16" height="3" fill="#d4af37"/>
-              <rect x="26" y="2" width="2" height="2" fill="#d4af37"/>
-              <rect x="31" y="2" width="2" height="2" fill="#d4af37"/>
-              <rect x="36" y="2" width="2" height="2" fill="#d4af37"/>
-              <!-- head -->
-              <rect x="26" y="8" width="12" height="12" fill="#e8c79a"/>
-              <rect x="28" y="14" width="2" height="2" fill="#2a2520"/>
-              <rect x="34" y="14" width="2" height="2" fill="#2a2520"/>
-              <rect x="30" y="18" width="4" height="1" fill="#a13d2d"/>
-              <!-- hair sides -->
-              <rect x="22" y="10" width="4" height="14" fill="#2a2520"/>
-              <rect x="38" y="10" width="4" height="14" fill="#2a2520"/>
-              <!-- body / sari -->
-              <rect x="20" y="22" width="24" height="22" fill="#f5b06e"/>
-              <rect x="22" y="24" width="20" height="18" fill="#e89344"/>
-              <!-- jewelry -->
-              <rect x="28" y="24" width="8" height="2" fill="#d4af37"/>
-              <!-- 4 arms with offerings -->
-              <rect x="14" y="24" width="3" height="10" fill="#e8c79a"/>
-              <rect x="47" y="24" width="3" height="10" fill="#e8c79a"/>
-              <rect x="16" y="22" width="3" height="8" fill="#e8c79a" transform="rotate(-30 17 26)"/>
-              <rect x="45" y="22" width="3" height="8" fill="#e8c79a" transform="rotate(30 46 26)"/>
-              <!-- coin in right hand -->
-              <circle cx="50" cy="34" r="3" fill="#d4af37" stroke="#2a2520" stroke-width="0.5"/>
-              <!-- lotus in left hand -->
-              <ellipse cx="14" cy="34" rx="3" ry="2" fill="#ff9ec7"/>
-              <ellipse cx="14" cy="33" rx="2" ry="3" fill="#ff7eb6"/>
-              <!-- legs -->
-              <rect x="22" y="44" width="20" height="8" fill="#f5b06e"/>
-              <!-- coins falling -->
-              <circle cx="8" cy="46" r="1.5" fill="#d4af37"/>
-              <circle cx="6" cy="52" r="1.5" fill="#d4af37"/>
-              <circle cx="58" cy="48" r="1.5" fill="#d4af37"/>
-              <circle cx="56" cy="54" r="1.5" fill="#d4af37"/>
-            </svg>
-          </div>
-          <div class="info">
-            <div class="deity-name">ลักษมี <span class="en">Lakshmi</span></div>
-            <div class="deity-role">Product Hunter</div>
-            <div class="deity-status">
-              <span class="dot ok"></span>
-              <span>เจอ 5 lead วันนี้</span>
-            </div>
-          </div>
-        </div>
-        <div class="shrine-base"></div>
-      </button>
+    <!-- VULCAN (Roman) - Inventory - mid right -->
+    <button class="deity vulcan" data-deity="vulcan" aria-label="Vulcan — Inventory" style="--x: 76%; --y: 50%; --accent: #8dd9c9;">
+      <div class="deity-glow"></div>
+      <svg viewBox="0 0 128 160" class="char-svg" shape-rendering="crispEdges">
+        <circle cx="64" cy="34" r="28" fill="none" stroke="#8dd9c9" stroke-width="1.2" opacity="0.6"/>
+        <!-- Smith's leather cap -->
+        <rect x="40" y="14" width="48" height="6" fill="#5c4030"/>
+        <rect x="38" y="20" width="52" height="4" fill="#3d342c"/>
+        <rect x="48" y="10" width="32" height="4" fill="#5c4030"/>
+        <!-- Face (sooty from forge) -->
+        <rect x="42" y="24" width="44" height="26" fill="#d8b888"/>
+        <rect x="40" y="26" width="2" height="22" fill="#a8987c"/>
+        <rect x="86" y="26" width="2" height="22" fill="#a8987c"/>
+        <!-- Soot smudges -->
+        <rect x="46" y="44" width="4" height="2" fill="#5c5048" opacity="0.5"/>
+        <rect x="78" y="44" width="4" height="2" fill="#5c5048" opacity="0.5"/>
+        <!-- Eyes (intense focus) -->
+        <rect x="48" y="32" width="6" height="4" fill="#fff"/>
+        <rect x="50" y="33" width="3" height="3" fill="#3d342c"/>
+        <rect x="74" y="32" width="6" height="4" fill="#fff"/>
+        <rect x="76" y="33" width="3" height="3" fill="#3d342c"/>
+        <!-- Bushy eyebrows -->
+        <rect x="46" y="30" width="8" height="2" fill="#3d342c"/>
+        <rect x="74" y="30" width="8" height="2" fill="#3d342c"/>
+        <!-- Big beard (orange/red) -->
+        <path d="M40,42 Q40,56 64,60 Q88,56 88,42 L88,50 L40,50 Z" fill="#c8553d"/>
+        <rect x="40" y="48" width="48" height="10" fill="#c8553d"/>
+        <rect x="44" y="56" width="40" height="6" fill="#a8443d"/>
+        <!-- Mouth in beard -->
+        <rect x="60" y="44" width="8" height="2" fill="#7a2a1f"/>
+        <!-- Body (sleeveless work tunic teal) -->
+        <rect x="26" y="62" width="76" height="56" fill="#8dd9c9"/>
+        <rect x="28" y="64" width="72" height="52" fill="#6cc4b2"/>
+        <!-- Highlight -->
+        <rect x="30" y="64" width="20" height="2" fill="#a8e6d8"/>
+        <!-- Brawny chest -->
+        <rect x="50" y="64" width="28" height="20" fill="#6cc4b2"/>
+        <rect x="50" y="68" width="2" height="14" fill="#3d8b7a"/>
+        <rect x="74" y="68" width="2" height="14" fill="#3d8b7a"/>
+        <!-- Leather apron -->
+        <path d="M44,72 L84,72 L88,112 L40,112 Z" fill="#5c4030"/>
+        <path d="M44,72 L84,72 L88,112 L40,112 Z" fill="none" stroke="#3d342c" stroke-width="1"/>
+        <!-- Apron strap -->
+        <rect x="40" y="72" width="48" height="4" fill="#3d342c"/>
+        <rect x="62" y="68" width="4" height="6" fill="#3d342c"/>
+        <!-- Bulging arms -->
+        <ellipse cx="20" cy="80" rx="10" ry="18" fill="#d8b888"/>
+        <ellipse cx="108" cy="80" rx="10" ry="18" fill="#d8b888"/>
+        <!-- Arm muscle shading -->
+        <rect x="14" y="72" width="2" height="20" fill="#a8987c"/>
+        <rect x="112" y="72" width="2" height="20" fill="#a8987c"/>
+        <!-- Forearms -->
+        <rect x="14" y="90" width="14" height="20" fill="#d8b888"/>
+        <rect x="100" y="90" width="14" height="20" fill="#d8b888"/>
+        <!-- HUGE HAMMER (Vulcan's icon!) -->
+        <rect x="98" y="50" width="22" height="14" fill="#8a7e72" stroke="#3d342c" stroke-width="1"/>
+        <rect x="100" y="52" width="18" height="3" fill="#a8a098"/>
+        <rect x="100" y="60" width="18" height="2" fill="#3d342c"/>
+        <rect x="108" y="64" width="4" height="32" fill="#5c4030"/>
+        <rect x="106" y="64" width="2" height="32" fill="#3d342c"/>
+        <!-- Sparks from hammer -->
+        <text x="98" y="48" font-size="10" fill="#ffb84d">✦</text>
+        <text x="118" y="44" font-size="8" fill="#ff7e4a">✦</text>
+        <text x="122" y="58" font-size="7" fill="#ffd87a">✦</text>
+        <!-- Gear in left hand -->
+        <circle cx="16" cy="106" r="8" fill="none" stroke="#5ee3d8" stroke-width="2"/>
+        <circle cx="16" cy="106" r="4" fill="#5ee3d8"/>
+        <rect x="14" y="96" width="4" height="3" fill="#5ee3d8"/>
+        <rect x="14" y="113" width="4" height="3" fill="#5ee3d8"/>
+        <rect x="6" y="104" width="3" height="4" fill="#5ee3d8"/>
+        <rect x="23" y="104" width="3" height="4" fill="#5ee3d8"/>
+        <!-- Legs -->
+        <rect x="40" y="116" width="20" height="28" fill="#5c4030"/>
+        <rect x="68" y="116" width="20" height="28" fill="#5c4030"/>
+        <!-- Heavy boots -->
+        <rect x="36" y="142" width="26" height="8" fill="#3d342c"/>
+        <rect x="66" y="142" width="26" height="8" fill="#3d342c"/>
+        <rect x="36" y="142" width="26" height="2" fill="#5c5048"/>
+        <rect x="66" y="142" width="26" height="2" fill="#5c5048"/>
+        <!-- Anvil at his feet -->
+        <rect x="40" y="148" width="48" height="6" fill="#5c5048"/>
+        <rect x="50" y="146" width="28" height="2" fill="#8a7e72"/>
+      </svg>
+      <div class="deity-label">
+        <span class="thai">วัลแคน</span>
+        <span class="en">VULCAN Vulcanus</span>
+        <span class="role">INVENTORY · RM</span>
+      </div>
+    </button>
 
-      <button class="shrine" data-deity="kubera" style="--accent: #d4af37;">
-        <div class="shrine-roof"></div>
-        <div class="shrine-pillars"></div>
-        <div class="shrine-body">
-          <div class="sprite-frame">
-            <svg viewBox="0 0 64 64" shape-rendering="crispEdges" class="char-svg">
-              <!-- crown -->
-              <rect x="22" y="6" width="20" height="2" fill="#d4af37"/>
-              <rect x="24" y="4" width="16" height="2" fill="#d4af37"/>
-              <!-- head -->
-              <rect x="22" y="8" width="20" height="14" fill="#e8c79a"/>
-              <rect x="20" y="22" width="24" height="2" fill="#3d342c"/>
-              <rect x="26" y="14" width="2" height="2" fill="#2a2520"/>
-              <rect x="36" y="14" width="2" height="2" fill="#2a2520"/>
-              <rect x="28" y="18" width="8" height="2" fill="#a13d2d"/>
-              <!-- big belly merchant body -->
-              <rect x="14" y="24" width="36" height="24" fill="#d4af37"/>
-              <rect x="16" y="26" width="32" height="20" fill="#c69a26"/>
-              <ellipse cx="32" cy="36" rx="14" ry="10" fill="#d4af37"/>
-              <!-- belt -->
-              <rect x="14" y="40" width="36" height="3" fill="#7a2a1f"/>
-              <rect x="30" y="40" width="4" height="3" fill="#d4af37"/>
-              <!-- arms holding money pouch -->
-              <rect x="8" y="28" width="6" height="14" fill="#e8c79a"/>
-              <rect x="50" y="28" width="6" height="14" fill="#e8c79a"/>
-              <!-- money pouch -->
-              <ellipse cx="8" cy="44" rx="6" ry="6" fill="#8b6240"/>
-              <rect x="6" y="40" width="4" height="2" fill="#3d342c"/>
-              <text x="8" y="48" text-anchor="middle" font-size="6" fill="#d4af37" font-weight="900">$</text>
-              <!-- gem in other hand -->
-              <polygon points="53,44 56,40 59,44 56,50" fill="#5ee3d8" stroke="#2a2520" stroke-width="0.5"/>
-              <!-- legs -->
-              <rect x="20" y="48" width="10" height="14" fill="#e8c79a"/>
-              <rect x="34" y="48" width="10" height="14" fill="#e8c79a"/>
-              <rect x="18" y="60" width="12" height="3" fill="#3d342c"/>
-              <rect x="34" y="60" width="12" height="3" fill="#3d342c"/>
-              <!-- coins around -->
-              <circle cx="4" cy="58" r="1.5" fill="#d4af37"/>
-              <circle cx="60" cy="58" r="1.5" fill="#d4af37"/>
-            </svg>
-          </div>
-          <div class="info">
-            <div class="deity-name">กุเวร <span class="en">Kubera</span></div>
-            <div class="deity-role">Accountant</div>
-            <div class="deity-status">
-              <span class="dot ok"></span>
-              <span>+฿4,200 วันนี้</span>
-            </div>
-          </div>
-        </div>
-        <div class="shrine-base"></div>
-      </button>
+    <!-- CAISHEN (Chinese) - Accountant - mid left -->
+    <button class="deity caishen" data-deity="caishen" aria-label="Caishen — Accountant" style="--x: 18%; --y: 64%; --accent: #d4af37;">
+      <div class="deity-glow"></div>
+      <svg viewBox="0 0 128 160" class="char-svg" shape-rendering="crispEdges">
+        <circle cx="64" cy="34" r="28" fill="none" stroke="#d4af37" stroke-width="1.2" opacity="0.7"/>
+        <!-- Tall ceremonial hat (Chinese god of wealth's mianguan) -->
+        <rect x="48" y="2" width="32" height="6" fill="#3d342c"/>
+        <rect x="46" y="8" width="36" height="4" fill="#a13d2d"/>
+        <rect x="44" y="12" width="40" height="6" fill="#3d342c"/>
+        <rect x="42" y="18" width="44" height="3" fill="#d4af37"/>
+        <!-- Hat tassels -->
+        <line x1="44" y1="14" x2="40" y2="22" stroke="#d4af37" stroke-width="1"/>
+        <line x1="84" y1="14" x2="88" y2="22" stroke="#d4af37" stroke-width="1"/>
+        <circle cx="40" cy="24" r="1.5" fill="#d4af37"/>
+        <circle cx="88" cy="24" r="1.5" fill="#d4af37"/>
+        <!-- Face (jolly red) -->
+        <rect x="42" y="22" width="44" height="28" fill="#f0d2a0"/>
+        <rect x="42" y="22" width="44" height="4" fill="#e8a87c" opacity="0.6"/>
+        <rect x="40" y="24" width="2" height="24" fill="#d8b888"/>
+        <rect x="86" y="24" width="2" height="24" fill="#d8b888"/>
+        <!-- Big jovial smile eyes (squinted from smile) -->
+        <path d="M48,34 Q52,30 56,34" stroke="#2a2520" stroke-width="2" fill="none"/>
+        <path d="M72,34 Q76,30 80,34" stroke="#2a2520" stroke-width="2" fill="none"/>
+        <!-- Red cheeks -->
+        <ellipse cx="48" cy="42" rx="4" ry="3" fill="#c8553d" opacity="0.7"/>
+        <ellipse cx="80" cy="42" rx="4" ry="3" fill="#c8553d" opacity="0.7"/>
+        <!-- Big smile -->
+        <path d="M52,42 Q64,52 76,42" stroke="#7a2a1f" stroke-width="2" fill="#7a2a1f"/>
+        <!-- Long black beard -->
+        <rect x="50" y="46" width="28" height="6" fill="#2a2520"/>
+        <path d="M50,48 Q64,68 78,48" stroke="#2a2520" stroke-width="3" fill="#2a2520"/>
+        <rect x="56" y="50" width="16" height="12" fill="#2a2520"/>
+        <!-- Imperial red and gold robe -->
+        <rect x="22" y="60" width="84" height="60" fill="#c8553d"/>
+        <rect x="24" y="62" width="80" height="56" fill="#a13d2d"/>
+        <!-- Gold trim -->
+        <rect x="22" y="60" width="84" height="4" fill="#d4af37"/>
+        <rect x="22" y="116" width="84" height="4" fill="#d4af37"/>
+        <!-- Chinese wealth character on chest -->
+        <rect x="50" y="74" width="28" height="32" fill="#d4af37" stroke="#3d342c" stroke-width="1"/>
+        <text x="64" y="98" text-anchor="middle" font-family="Noto Serif JP, serif" font-size="22" fill="#3d342c" font-weight="900">財</text>
+        <!-- Wide sleeves with gold trim -->
+        <rect x="10" y="64" width="14" height="48" fill="#c8553d"/>
+        <rect x="104" y="64" width="14" height="48" fill="#c8553d"/>
+        <rect x="10" y="64" width="14" height="3" fill="#d4af37"/>
+        <rect x="104" y="64" width="14" height="3" fill="#d4af37"/>
+        <rect x="10" y="108" width="14" height="4" fill="#d4af37"/>
+        <rect x="104" y="108" width="14" height="4" fill="#d4af37"/>
+        <!-- Hands holding gold ingot (yuanbao) -->
+        <ellipse cx="16" cy="118" rx="10" ry="6" fill="#d4af37" stroke="#3d342c" stroke-width="1"/>
+        <ellipse cx="16" cy="114" rx="6" ry="4" fill="#e8c54a"/>
+        <!-- Right hand holding scroll of wealth -->
+        <rect x="106" y="110" width="14" height="22" fill="#f4ecd8" stroke="#5c4030" stroke-width="1"/>
+        <rect x="106" y="110" width="14" height="3" fill="#5c4030"/>
+        <rect x="106" y="128" width="14" height="3" fill="#5c4030"/>
+        <line x1="109" y1="116" x2="117" y2="116" stroke="#2a2520" stroke-width="0.5"/>
+        <line x1="109" y1="120" x2="117" y2="120" stroke="#2a2520" stroke-width="0.5"/>
+        <line x1="109" y1="124" x2="115" y2="124" stroke="#2a2520" stroke-width="0.5"/>
+        <!-- Legs (sitting on tiger - cropped) -->
+        <rect x="36" y="120" width="56" height="22" fill="#a13d2d"/>
+        <!-- Tiger stripes peeking -->
+        <rect x="40" y="142" width="48" height="8" fill="#e89344"/>
+        <rect x="44" y="142" width="4" height="8" fill="#2a2520"/>
+        <rect x="56" y="142" width="4" height="8" fill="#2a2520"/>
+        <rect x="68" y="142" width="4" height="8" fill="#2a2520"/>
+        <rect x="80" y="142" width="4" height="8" fill="#2a2520"/>
+        <!-- Coins floating -->
+        <g opacity="0.9">
+          <circle cx="14" cy="80" r="4" fill="#d4af37" stroke="#3d342c" stroke-width="0.6"/>
+          <rect x="13" y="78" width="2" height="4" fill="#3d342c"/>
+          <circle cx="116" cy="80" r="4" fill="#d4af37" stroke="#3d342c" stroke-width="0.6"/>
+          <rect x="115" y="78" width="2" height="4" fill="#3d342c"/>
+          <circle cx="10" cy="100" r="3" fill="#d4af37" stroke="#3d342c" stroke-width="0.5"/>
+          <circle cx="120" cy="100" r="3" fill="#d4af37" stroke="#3d342c" stroke-width="0.5"/>
+        </g>
+      </svg>
+      <div class="deity-label">
+        <span class="thai">ไฉเสิน</span>
+        <span class="en">CAISHEN 財神</span>
+        <span class="role">ACCOUNTANT · CN</span>
+      </div>
+    </button>
 
-      <button class="shrine" data-deity="vishvakarma" style="--accent: #8dd9c9;">
-        <div class="shrine-roof"></div>
-        <div class="shrine-pillars"></div>
-        <div class="shrine-body">
-          <div class="sprite-frame">
-            <svg viewBox="0 0 64 64" shape-rendering="crispEdges" class="char-svg">
-              <!-- helmet/turban -->
-              <rect x="24" y="6" width="16" height="4" fill="#5c5048"/>
-              <rect x="26" y="4" width="12" height="3" fill="#8a7e72"/>
-              <!-- head -->
-              <rect x="26" y="10" width="12" height="12" fill="#e8c79a"/>
-              <rect x="24" y="22" width="16" height="2" fill="#3d342c"/>
-              <rect x="28" y="14" width="2" height="2" fill="#2a2520"/>
-              <rect x="34" y="14" width="2" height="2" fill="#2a2520"/>
-              <rect x="30" y="18" width="4" height="1" fill="#a13d2d"/>
-              <!-- beard -->
-              <rect x="28" y="22" width="8" height="4" fill="#8a7e72"/>
-              <!-- body - work apron -->
-              <rect x="20" y="24" width="24" height="20" fill="#8dd9c9"/>
-              <rect x="22" y="26" width="20" height="16" fill="#6cc4b2"/>
-              <!-- tool belt -->
-              <rect x="20" y="38" width="24" height="3" fill="#5c5048"/>
-              <rect x="26" y="36" width="3" height="6" fill="#d4af37"/>
-              <rect x="35" y="36" width="3" height="6" fill="#d4af37"/>
-              <!-- arm with hammer -->
-              <rect x="14" y="26" width="4" height="14" fill="#e8c79a"/>
-              <rect x="46" y="26" width="4" height="14" fill="#e8c79a"/>
-              <!-- big hammer -->
-              <rect x="46" y="14" width="14" height="8" fill="#8a7e72" stroke="#2a2520" stroke-width="0.5"/>
-              <rect x="48" y="22" width="2" height="14" fill="#8b6240"/>
-              <!-- gear in other hand -->
-              <circle cx="14" cy="38" r="4" fill="none" stroke="#5ee3d8" stroke-width="1"/>
-              <circle cx="14" cy="38" r="2" fill="#5ee3d8"/>
-              <!-- legs -->
-              <rect x="22" y="44" width="8" height="14" fill="#e8c79a"/>
-              <rect x="34" y="44" width="8" height="14" fill="#e8c79a"/>
-              <rect x="20" y="56" width="12" height="4" fill="#3d342c"/>
-              <rect x="32" y="56" width="12" height="4" fill="#3d342c"/>
-              <!-- sparks -->
-              <text x="6" y="14" font-size="8" fill="#ffb84d">✦</text>
-              <text x="56" y="50" font-size="6" fill="#5ee3d8">✦</text>
-            </svg>
-          </div>
-          <div class="info">
-            <div class="deity-name">วิศวกรรม <span class="en">Vishvakarma</span></div>
-            <div class="deity-role">Inventory</div>
-            <div class="deity-status">
-              <span class="dot warn"></span>
-              <span>2 SKU stock ต่ำ</span>
-            </div>
-          </div>
-        </div>
-        <div class="shrine-base"></div>
-      </button>
-    </div>
+    <!-- CERES (Roman) - Delivery - lower center-right -->
+    <button class="deity ceres" data-deity="ceres" aria-label="Ceres — Delivery" style="--x: 50%; --y: 70%; --accent: #e8a87c;">
+      <div class="deity-glow"></div>
+      <svg viewBox="0 0 128 160" class="char-svg" shape-rendering="crispEdges">
+        <circle cx="64" cy="34" r="28" fill="none" stroke="#e8a87c" stroke-width="1.2" opacity="0.6"/>
+        <!-- Wheat crown -->
+        <g>
+          <rect x="40" y="10" width="2" height="14" fill="#d4af37" transform="rotate(-20 41 17)"/>
+          <rect x="48" y="6" width="2" height="14" fill="#d4af37" transform="rotate(-10 49 13)"/>
+          <rect x="58" y="4" width="2" height="14" fill="#d4af37"/>
+          <rect x="68" y="4" width="2" height="14" fill="#d4af37"/>
+          <rect x="78" y="6" width="2" height="14" fill="#d4af37" transform="rotate(10 79 13)"/>
+          <rect x="86" y="10" width="2" height="14" fill="#d4af37" transform="rotate(20 87 17)"/>
+          <!-- Wheat grains -->
+          <ellipse cx="41" cy="12" rx="2" ry="3" fill="#e8c54a" transform="rotate(-20 41 12)"/>
+          <ellipse cx="49" cy="8" rx="2" ry="3" fill="#e8c54a" transform="rotate(-10 49 8)"/>
+          <ellipse cx="59" cy="6" rx="2" ry="3" fill="#e8c54a"/>
+          <ellipse cx="69" cy="6" rx="2" ry="3" fill="#e8c54a"/>
+          <ellipse cx="79" cy="8" rx="2" ry="3" fill="#e8c54a" transform="rotate(10 79 8)"/>
+          <ellipse cx="87" cy="12" rx="2" ry="3" fill="#e8c54a" transform="rotate(20 87 12)"/>
+        </g>
+        <!-- Long flowing hair -->
+        <rect x="32" y="22" width="64" height="6" fill="#c89030"/>
+        <rect x="32" y="24" width="6" height="32" fill="#c89030"/>
+        <rect x="90" y="24" width="6" height="32" fill="#c89030"/>
+        <!-- Face -->
+        <rect x="42" y="24" width="44" height="26" fill="#f0d2a0"/>
+        <rect x="40" y="26" width="2" height="22" fill="#d8b888"/>
+        <rect x="86" y="26" width="2" height="22" fill="#d8b888"/>
+        <!-- Eyes (warm) -->
+        <rect x="48" y="32" width="5" height="4" fill="#fff"/>
+        <rect x="50" y="33" width="2" height="3" fill="#5a8b3a"/>
+        <rect x="75" y="32" width="5" height="4" fill="#fff"/>
+        <rect x="77" y="33" width="2" height="3" fill="#5a8b3a"/>
+        <!-- Soft smile -->
+        <path d="M56,42 Q64,46 72,42" stroke="#a13d2d" stroke-width="1" fill="none"/>
+        <!-- Blush -->
+        <ellipse cx="48" cy="42" rx="3" ry="2" fill="#ff9ec7" opacity="0.5"/>
+        <ellipse cx="80" cy="42" rx="3" ry="2" fill="#ff9ec7" opacity="0.5"/>
+        <!-- Toga (white/peach) -->
+        <rect x="28" y="52" width="72" height="56" fill="#e8a87c"/>
+        <rect x="30" y="54" width="68" height="52" fill="#d99762"/>
+        <!-- Toga drape -->
+        <path d="M28,52 L100,52 L96,68 L32,68 Z" fill="#f4d4a8"/>
+        <path d="M40,68 L88,68 L86,90 L42,90 Z" fill="#e8a87c" opacity="0.5"/>
+        <!-- Gold belt -->
+        <rect x="28" y="86" width="72" height="5" fill="#d4af37"/>
+        <!-- Arms holding cornucopia (horn of plenty) -->
+        <rect x="14" y="58" width="14" height="50" fill="#f0d2a0"/>
+        <rect x="100" y="58" width="14" height="42" fill="#f0d2a0"/>
+        <!-- CORNUCOPIA (horn) -->
+        <path d="M2,88 Q-2,80 8,72 Q18,68 26,72 L24,100 Q20,108 12,108 Q4,108 2,88 Z" fill="#8b6240" stroke="#5c4030" stroke-width="1"/>
+        <path d="M6,76 Q14,72 22,76" stroke="#a8845a" stroke-width="0.8" fill="none"/>
+        <!-- Fruits spilling -->
+        <circle cx="8" cy="74" r="3" fill="#ff5e5e"/>
+        <circle cx="14" cy="70" r="3" fill="#ffb84d"/>
+        <circle cx="20" cy="74" r="3" fill="#a13d2d"/>
+        <circle cx="2" cy="80" r="2" fill="#6dd66b"/>
+        <circle cx="0" cy="86" r="2" fill="#e8c54a"/>
+        <!-- Right hand holding bowl of rice -->
+        <ellipse cx="110" cy="106" rx="14" ry="6" fill="#fff" stroke="#3d342c" stroke-width="1"/>
+        <ellipse cx="110" cy="102" rx="14" ry="3" fill="#fff"/>
+        <!-- Steam from bowl -->
+        <path d="M104,98 Q102,90 104,84" stroke="#a8987c" stroke-width="0.8" fill="none" opacity="0.6"/>
+        <path d="M110,96 Q108,86 110,80" stroke="#a8987c" stroke-width="0.8" fill="none" opacity="0.6"/>
+        <path d="M116,98 Q118,90 116,84" stroke="#a8987c" stroke-width="0.8" fill="none" opacity="0.6"/>
+        <!-- Legs -->
+        <rect x="40" y="108" width="20" height="32" fill="#e8a87c"/>
+        <rect x="68" y="108" width="20" height="32" fill="#e8a87c"/>
+        <!-- Sandals -->
+        <rect x="36" y="140" width="26" height="6" fill="#5c4030"/>
+        <rect x="66" y="140" width="26" height="6" fill="#5c4030"/>
+        <line x1="48" y1="140" x2="44" y2="130" stroke="#5c4030" stroke-width="1.5"/>
+        <line x1="78" y1="140" x2="82" y2="130" stroke="#5c4030" stroke-width="1.5"/>
+      </svg>
+      <div class="deity-label">
+        <span class="thai">เซเรส</span>
+        <span class="en">CERES</span>
+        <span class="role">DELIVERY · RM</span>
+      </div>
+    </button>
 
-    <!-- Group 3: Operations -->
-    <h2 class="group-title">🛠 หมวด Operations</h2>
-    <div class="group">
-      <button class="shrine" data-deity="annapurna" style="--accent: #e8a87c;">
-        <div class="shrine-roof"></div>
-        <div class="shrine-pillars"></div>
-        <div class="shrine-body">
-          <div class="sprite-frame">
-            <svg viewBox="0 0 64 64" shape-rendering="crispEdges" class="char-svg">
-              <circle cx="32" cy="20" r="12" fill="none" stroke="#e8a87c" stroke-width="1" opacity="0.7"/>
-              <!-- head -->
-              <rect x="26" y="10" width="12" height="12" fill="#e8c79a"/>
-              <rect x="24" y="22" width="16" height="2" fill="#3d342c"/>
-              <rect x="28" y="14" width="2" height="2" fill="#2a2520"/>
-              <rect x="34" y="14" width="2" height="2" fill="#2a2520"/>
-              <rect x="30" y="18" width="4" height="1" fill="#a13d2d"/>
-              <!-- hair bun -->
-              <rect x="22" y="8" width="20" height="4" fill="#2a2520"/>
-              <rect x="20" y="10" width="3" height="6" fill="#2a2520"/>
-              <rect x="41" y="10" width="3" height="6" fill="#2a2520"/>
-              <!-- body sari -->
-              <rect x="20" y="24" width="24" height="20" fill="#e8a87c"/>
-              <rect x="22" y="26" width="20" height="16" fill="#d99762"/>
-              <rect x="30" y="26" width="4" height="18" fill="#c8855a"/>
-              <!-- arms holding bowl -->
-              <rect x="16" y="28" width="4" height="10" fill="#e8c79a"/>
-              <rect x="44" y="28" width="4" height="10" fill="#e8c79a"/>
-              <!-- big rice bowl -->
-              <path d="M14,38 Q32,46 50,38 L48,44 Q32,50 16,44 Z" fill="#fff" stroke="#3d342c" stroke-width="0.8"/>
-              <ellipse cx="32" cy="36" rx="14" ry="2" fill="#fff"/>
-              <!-- steam -->
-              <path d="M22,30 Q24,26 22,22 M30,28 Q32,24 30,20 M40,30 Q42,26 40,22" stroke="#8a7e72" stroke-width="0.8" fill="none" opacity="0.6"/>
-              <!-- legs -->
-              <rect x="22" y="44" width="20" height="10" fill="#e8a87c"/>
-              <rect x="24" y="52" width="6" height="6" fill="#e8c79a"/>
-              <rect x="34" y="52" width="6" height="6" fill="#e8c79a"/>
-            </svg>
-          </div>
-          <div class="info">
-            <div class="deity-name">อันนปุรณา <span class="en">Annapurna</span></div>
-            <div class="deity-role">Delivery</div>
-            <div class="deity-status">
-              <span class="dot work"></span>
-              <span>12 order รอจัดส่ง</span>
-            </div>
-          </div>
-        </div>
-        <div class="shrine-base"></div>
-      </button>
+    <!-- TENJIN (Japanese) - GNAS School - lower left -->
+    <button class="deity tenjin" data-deity="tenjin" aria-label="Tenjin — School" style="--x: 30%; --y: 78%; --accent: #b8d8d8;">
+      <div class="deity-glow"></div>
+      <svg viewBox="0 0 128 160" class="char-svg" shape-rendering="crispEdges">
+        <circle cx="64" cy="34" r="28" fill="none" stroke="#b8d8d8" stroke-width="1.2" opacity="0.6"/>
+        <!-- Court noble hat (kanmuri) -->
+        <rect x="50" y="2" width="28" height="4" fill="#2a2520"/>
+        <rect x="46" y="6" width="36" height="6" fill="#2a2520"/>
+        <rect x="42" y="12" width="44" height="3" fill="#2a2520"/>
+        <!-- Tall part of hat -->
+        <rect x="58" y="-4" width="12" height="6" fill="#2a2520"/>
+        <!-- Hat strings -->
+        <line x1="46" y1="14" x2="42" y2="24" stroke="#2a2520" stroke-width="1"/>
+        <line x1="82" y1="14" x2="86" y2="24" stroke="#2a2520" stroke-width="1"/>
+        <!-- Face (pale scholar) -->
+        <rect x="42" y="18" width="44" height="32" fill="#f4e8d0"/>
+        <rect x="40" y="22" width="2" height="26" fill="#d8c8a8"/>
+        <rect x="86" y="22" width="2" height="26" fill="#d8c8a8"/>
+        <!-- Eyes (serious, scholarly) -->
+        <rect x="48" y="30" width="6" height="4" fill="#fff"/>
+        <rect x="50" y="31" width="3" height="3" fill="#2a2520"/>
+        <rect x="74" y="30" width="6" height="4" fill="#fff"/>
+        <rect x="76" y="31" width="3" height="3" fill="#2a2520"/>
+        <!-- Thin scholarly eyebrows -->
+        <rect x="46" y="28" width="10" height="1" fill="#2a2520"/>
+        <rect x="72" y="28" width="10" height="1" fill="#2a2520"/>
+        <!-- Mouth (serious) -->
+        <rect x="58" y="42" width="12" height="1" fill="#a13d2d"/>
+        <!-- Goatee -->
+        <rect x="60" y="44" width="8" height="6" fill="#2a2520"/>
+        <!-- Heian period court robe (sokutai) - white with blue trim -->
+        <rect x="22" y="50" width="84" height="64" fill="#fff"/>
+        <rect x="24" y="52" width="80" height="60" fill="#f4f4f4"/>
+        <!-- Blue accent panels -->
+        <rect x="22" y="50" width="84" height="4" fill="#b8d8d8"/>
+        <rect x="22" y="50" width="6" height="64" fill="#b8d8d8"/>
+        <rect x="100" y="50" width="6" height="64" fill="#b8d8d8"/>
+        <!-- Scholar emblem on chest -->
+        <rect x="50" y="64" width="28" height="28" fill="#fff" stroke="#3d342c" stroke-width="1"/>
+        <text x="64" y="84" text-anchor="middle" font-family="Noto Serif JP, serif" font-size="20" fill="#3d342c" font-weight="900">学</text>
+        <!-- Wide sleeves -->
+        <rect x="6" y="56" width="18" height="50" fill="#fff" stroke="#b8d8d8" stroke-width="1"/>
+        <rect x="104" y="56" width="18" height="50" fill="#fff" stroke="#b8d8d8" stroke-width="1"/>
+        <rect x="6" y="56" width="18" height="4" fill="#b8d8d8"/>
+        <rect x="104" y="56" width="18" height="4" fill="#b8d8d8"/>
+        <rect x="6" y="102" width="18" height="4" fill="#b8d8d8"/>
+        <rect x="104" y="102" width="18" height="4" fill="#b8d8d8"/>
+        <!-- Left hand holding book -->
+        <rect x="6" y="100" width="18" height="20" fill="#a13d2d" stroke="#3d342c" stroke-width="1"/>
+        <line x1="15" y1="100" x2="15" y2="120" stroke="#3d342c" stroke-width="0.5"/>
+        <text x="15" y="116" text-anchor="middle" font-size="6" fill="#d4af37" font-weight="900">論</text>
+        <!-- Right hand holding shaku (ceremonial scepter) -->
+        <rect x="108" y="60" width="6" height="52" fill="#5c4030"/>
+        <rect x="106" y="58" width="10" height="4" fill="#3d342c"/>
+        <rect x="108" y="62" width="6" height="2" fill="#d4af37"/>
+        <!-- Plum blossom (Tenjin's symbol!) -->
+        <g transform="translate(108, 18)">
+          <circle cx="0" cy="0" r="6" fill="#ff7eb6"/>
+          <circle cx="-4" cy="-2" r="3" fill="#ff9ec7"/>
+          <circle cx="4" cy="-2" r="3" fill="#ff9ec7"/>
+          <circle cx="-2" cy="4" r="3" fill="#ff9ec7"/>
+          <circle cx="2" cy="4" r="3" fill="#ff9ec7"/>
+          <circle cx="0" cy="-4" r="3" fill="#ff9ec7"/>
+          <circle cx="0" cy="0" r="1.5" fill="#ffd87a"/>
+        </g>
+        <!-- Legs -->
+        <rect x="38" y="112" width="52" height="30" fill="#fff"/>
+        <rect x="38" y="112" width="52" height="2" fill="#b8d8d8"/>
+        <!-- Shoes -->
+        <rect x="40" y="142" width="20" height="6" fill="#2a2520"/>
+        <rect x="68" y="142" width="20" height="6" fill="#2a2520"/>
+        <!-- Floating chars -->
+        <text x="6" y="40" font-family="Noto Serif JP, serif" font-size="9" fill="#b8d8d8" opacity="0.7" font-weight="700">学</text>
+        <text x="14" y="138" font-family="Noto Serif JP, serif" font-size="8" fill="#b8d8d8" opacity="0.6" font-weight="700">問</text>
+      </svg>
+      <div class="deity-label">
+        <span class="thai">เทนจิน</span>
+        <span class="en">TENJIN 天神</span>
+        <span class="role">GNAS · JP</span>
+      </div>
+    </button>
 
-      <button class="shrine" data-deity="saraswati" style="--accent: #b8d8d8;">
-        <div class="shrine-roof"></div>
-        <div class="shrine-pillars"></div>
-        <div class="shrine-body">
-          <div class="sprite-frame">
-            <svg viewBox="0 0 64 64" shape-rendering="crispEdges" class="char-svg">
-              <circle cx="32" cy="20" r="13" fill="none" stroke="#b8d8d8" stroke-width="1" opacity="0.7"/>
-              <!-- crown -->
-              <rect x="26" y="4" width="12" height="3" fill="#d4af37"/>
-              <!-- head -->
-              <rect x="26" y="8" width="12" height="12" fill="#e8c79a"/>
-              <rect x="24" y="20" width="16" height="2" fill="#3d342c"/>
-              <rect x="28" y="12" width="2" height="2" fill="#2a2520"/>
-              <rect x="34" y="12" width="2" height="2" fill="#2a2520"/>
-              <rect x="30" y="16" width="4" height="1" fill="#a13d2d"/>
-              <!-- long hair -->
-              <rect x="20" y="10" width="4" height="20" fill="#2a2520"/>
-              <rect x="40" y="10" width="4" height="20" fill="#2a2520"/>
-              <!-- white robe -->
-              <rect x="20" y="22" width="24" height="22" fill="#fff"/>
-              <rect x="22" y="24" width="20" height="18" fill="#e8e8e8"/>
-              <rect x="20" y="22" width="24" height="3" fill="#b8d8d8"/>
-              <!-- veena across body -->
-              <rect x="6" y="30" width="34" height="3" fill="#8b6240"/>
-              <ellipse cx="8" cy="32" rx="6" ry="5" fill="#8b6240"/>
-              <ellipse cx="40" cy="32" rx="4" ry="3" fill="#8b6240"/>
-              <line x1="14" y1="30" x2="38" y2="30" stroke="#d4af37" stroke-width="0.5"/>
-              <line x1="14" y1="32" x2="38" y2="32" stroke="#d4af37" stroke-width="0.5"/>
-              <!-- arms -->
-              <rect x="16" y="26" width="3" height="10" fill="#e8c79a"/>
-              <rect x="45" y="26" width="3" height="10" fill="#e8c79a"/>
-              <!-- swan companion -->
-              <ellipse cx="52" cy="50" rx="8" ry="4" fill="#fff" stroke="#3d342c" stroke-width="0.6"/>
-              <ellipse cx="58" cy="46" rx="3" ry="4" fill="#fff" stroke="#3d342c" stroke-width="0.6"/>
-              <rect x="56" y="44" width="6" height="3" fill="#fff"/>
-              <polygon points="61,47 64,46 64,48" fill="#d4af37"/>
-              <circle cx="60" cy="46" r="0.5" fill="#2a2520"/>
-              <!-- legs -->
-              <rect x="22" y="44" width="20" height="10" fill="#fff"/>
-            </svg>
-          </div>
-          <div class="info">
-            <div class="deity-name">สรัสวดี <span class="en">Saraswati</span></div>
-            <div class="deity-role">GNAS School</div>
-            <div class="deity-status">
-              <span class="dot ok"></span>
-              <span>visa ครู ต่อ 12 ก.ค.</span>
-            </div>
-          </div>
-        </div>
-        <div class="shrine-base"></div>
-      </button>
-
-      <button class="shrine" data-deity="krishna" style="--accent: #82b3d9;">
-        <div class="shrine-roof"></div>
-        <div class="shrine-pillars"></div>
-        <div class="shrine-body">
-          <div class="sprite-frame">
-            <svg viewBox="0 0 64 64" shape-rendering="crispEdges" class="char-svg">
-              <!-- peacock feather crown -->
-              <ellipse cx="32" cy="4" rx="3" ry="2" fill="#5ee3d8"/>
-              <ellipse cx="32" cy="3" rx="1.5" ry="1" fill="#2a2520"/>
-              <rect x="31" y="4" width="2" height="6" fill="#5ee3d8"/>
-              <!-- head (blue krishna) -->
-              <rect x="26" y="8" width="12" height="12" fill="#82b3d9"/>
-              <rect x="24" y="20" width="16" height="2" fill="#3d342c"/>
-              <rect x="28" y="12" width="2" height="2" fill="#2a2520"/>
-              <rect x="34" y="12" width="2" height="2" fill="#2a2520"/>
-              <rect x="30" y="16" width="4" height="1" fill="#a13d2d"/>
-              <!-- hair -->
-              <rect x="22" y="6" width="20" height="4" fill="#2a2520"/>
-              <rect x="24" y="4" width="16" height="2" fill="#2a2520"/>
-              <!-- body yellow dhoti -->
-              <rect x="22" y="22" width="20" height="14" fill="#d4af37"/>
-              <rect x="24" y="24" width="16" height="10" fill="#c69a26"/>
-              <!-- arms holding flute horizontal -->
-              <rect x="14" y="22" width="4" height="10" fill="#82b3d9"/>
-              <rect x="46" y="22" width="4" height="10" fill="#82b3d9"/>
-              <!-- flute (bansuri) -->
-              <rect x="8" y="22" width="20" height="3" fill="#b58e5d" transform="rotate(-10 18 23)"/>
-              <circle cx="11" cy="23" r="0.5" fill="#2a2520"/>
-              <circle cx="14" cy="23" r="0.5" fill="#2a2520"/>
-              <circle cx="17" cy="23" r="0.5" fill="#2a2520"/>
-              <!-- yogurt pot on floor -->
-              <rect x="44" y="44" width="10" height="10" fill="#fff" stroke="#3d342c" stroke-width="0.6"/>
-              <rect x="42" y="42" width="14" height="3" fill="#fff" stroke="#3d342c" stroke-width="0.6"/>
-              <text x="49" y="52" text-anchor="middle" font-size="5" fill="#82b3d9">N14</text>
-              <!-- legs (sitting cross) -->
-              <rect x="20" y="36" width="24" height="10" fill="#d4af37"/>
-              <ellipse cx="32" cy="44" rx="14" ry="3" fill="#c69a26"/>
-              <!-- musical notes -->
-              <text x="6" y="14" font-size="8" fill="#82b3d9" opacity="0.7">♪</text>
-              <text x="52" y="18" font-size="6" fill="#82b3d9" opacity="0.5">♫</text>
-            </svg>
-          </div>
-          <div class="info">
-            <div class="deity-name">กฤษณะ <span class="en">Krishna</span></div>
-            <div class="deity-role">North14 Yogurt</div>
-            <div class="deity-status">
-              <span class="dot idle"></span>
-              <span>ไม่มีงานค้าง</span>
-            </div>
-          </div>
-        </div>
-        <div class="shrine-base"></div>
-      </button>
-    </div>
+    <!-- NIU WANG (Chinese) - North14 - lower right -->
+    <button class="deity niuwang" data-deity="niuwang" aria-label="Niu Wang — Yogurt" style="--x: 70%; --y: 78%; --accent: #82b3d9;">
+      <div class="deity-glow"></div>
+      <svg viewBox="0 0 128 160" class="char-svg" shape-rendering="crispEdges">
+        <circle cx="64" cy="34" r="28" fill="none" stroke="#82b3d9" stroke-width="1.2" opacity="0.6"/>
+        <!-- Ox horns (he's the cow king!) -->
+        <path d="M40,18 Q30,8 36,2 Q42,4 44,18 Z" fill="#fff" stroke="#3d342c" stroke-width="1"/>
+        <path d="M88,18 Q98,8 92,2 Q86,4 84,18 Z" fill="#fff" stroke="#3d342c" stroke-width="1"/>
+        <path d="M40,18 Q30,8 36,2 Q42,4 44,18 Z" fill="#e8e8e8" opacity="0.3"/>
+        <!-- Cow ears -->
+        <ellipse cx="36" cy="22" rx="6" ry="4" fill="#82b3d9" transform="rotate(-30 36 22)"/>
+        <ellipse cx="92" cy="22" rx="6" ry="4" fill="#82b3d9" transform="rotate(30 92 22)"/>
+        <ellipse cx="36" cy="22" rx="3" ry="2" fill="#ff9ec7" opacity="0.6" transform="rotate(-30 36 22)"/>
+        <ellipse cx="92" cy="22" rx="3" ry="2" fill="#ff9ec7" opacity="0.6" transform="rotate(30 92 22)"/>
+        <!-- Hair (blue/dark) -->
+        <rect x="46" y="14" width="36" height="8" fill="#2a3850"/>
+        <rect x="44" y="20" width="40" height="4" fill="#2a3850"/>
+        <!-- Face (light blue tint) -->
+        <rect x="42" y="22" width="44" height="28" fill="#e8d8b8"/>
+        <rect x="40" y="24" width="2" height="24" fill="#c8b898"/>
+        <rect x="86" y="24" width="2" height="24" fill="#c8b898"/>
+        <!-- Eyes (strong) -->
+        <rect x="48" y="32" width="6" height="4" fill="#fff"/>
+        <rect x="50" y="33" width="3" height="3" fill="#2a5b7a"/>
+        <rect x="74" y="32" width="6" height="4" fill="#fff"/>
+        <rect x="76" y="33" width="3" height="3" fill="#2a5b7a"/>
+        <!-- Eyebrows -->
+        <rect x="46" y="30" width="10" height="1" fill="#2a3850"/>
+        <rect x="72" y="30" width="10" height="1" fill="#2a3850"/>
+        <!-- Smile -->
+        <path d="M54,42 Q64,48 74,42" stroke="#a13d2d" stroke-width="1.5" fill="none"/>
+        <rect x="58" y="44" width="12" height="2" fill="#fff" opacity="0.8"/>
+        <!-- Cow nose ring -->
+        <circle cx="64" cy="46" r="3" fill="none" stroke="#d4af37" stroke-width="1.5"/>
+        <!-- Cowherd robe (blue/white) -->
+        <rect x="26" y="52" width="76" height="60" fill="#82b3d9"/>
+        <rect x="28" y="54" width="72" height="56" fill="#5a8db8"/>
+        <!-- Highlight -->
+        <rect x="30" y="56" width="20" height="2" fill="#a0c5e0"/>
+        <!-- Dairy farmer's apron -->
+        <rect x="40" y="60" width="48" height="40" fill="#fff" stroke="#3d342c" stroke-width="1"/>
+        <text x="64" y="84" text-anchor="middle" font-family="Noto Serif JP, serif" font-size="22" fill="#3d342c" font-weight="900">牛</text>
+        <!-- Belt -->
+        <rect x="26" y="98" width="76" height="5" fill="#5c4030"/>
+        <!-- Arms -->
+        <rect x="14" y="56" width="12" height="44" fill="#e8d8b8"/>
+        <rect x="102" y="56" width="12" height="44" fill="#e8d8b8"/>
+        <rect x="12" y="58" width="2" height="40" fill="#c8b898"/>
+        <rect x="114" y="58" width="2" height="40" fill="#c8b898"/>
+        <!-- Holding a pot of yogurt (left) -->
+        <ellipse cx="14" cy="106" rx="12" ry="4" fill="#fff" stroke="#3d342c" stroke-width="1"/>
+        <rect x="2" y="100" width="24" height="8" fill="#fff" stroke="#3d342c" stroke-width="1"/>
+        <text x="14" y="107" text-anchor="middle" font-size="6" fill="#5a8db8" font-weight="900">N14</text>
+        <!-- Steam/yogurt drips -->
+        <circle cx="8" cy="98" r="1" fill="#fff"/>
+        <circle cx="20" cy="98" r="1" fill="#fff"/>
+        <!-- Bamboo flute/staff (right) -->
+        <rect x="108" y="40" width="3" height="64" fill="#8b6240"/>
+        <rect x="107" y="40" width="5" height="2" fill="#d4af37"/>
+        <rect x="107" y="50" width="5" height="1" fill="#3d342c"/>
+        <rect x="107" y="60" width="5" height="1" fill="#3d342c"/>
+        <rect x="107" y="70" width="5" height="1" fill="#3d342c"/>
+        <rect x="107" y="80" width="5" height="1" fill="#3d342c"/>
+        <!-- Small cow companion -->
+        <g transform="translate(96, 130)">
+          <ellipse cx="0" cy="0" rx="14" ry="8" fill="#fff" stroke="#3d342c" stroke-width="1"/>
+          <ellipse cx="0" cy="0" rx="14" ry="8" fill="none" stroke="#3d342c" stroke-width="0.8"/>
+          <ellipse cx="-6" cy="-3" rx="3" ry="2" fill="#3d342c"/>
+          <ellipse cx="6" cy="-3" rx="3" ry="2" fill="#3d342c"/>
+          <rect x="-2" y="-8" width="4" height="3" fill="#fff" stroke="#3d342c" stroke-width="0.5"/>
+          <circle cx="-3" cy="-8" r="0.8" fill="#3d342c"/>
+          <circle cx="3" cy="-8" r="0.8" fill="#3d342c"/>
+          <!-- Cow legs -->
+          <rect x="-12" y="6" width="3" height="6" fill="#3d342c"/>
+          <rect x="-4" y="6" width="3" height="6" fill="#3d342c"/>
+          <rect x="2" y="6" width="3" height="6" fill="#3d342c"/>
+          <rect x="10" y="6" width="3" height="6" fill="#3d342c"/>
+        </g>
+        <!-- Legs -->
+        <rect x="40" y="104" width="20" height="34" fill="#5a8db8"/>
+        <rect x="68" y="104" width="20" height="34" fill="#5a8db8"/>
+        <!-- Boots -->
+        <rect x="38" y="138" width="24" height="8" fill="#5c4030"/>
+        <rect x="66" y="138" width="24" height="8" fill="#5c4030"/>
+      </svg>
+      <div class="deity-label">
+        <span class="thai">หนิวหวัง</span>
+        <span class="en">NIU WANG 牛王</span>
+        <span class="role">NORTH14 · CN</span>
+      </div>
+    </button>
   </main>
 
   <!-- ===== ACTIVITY LOG DRAWER ===== -->
