@@ -193,7 +193,7 @@ const WORLD_W = 2400, WORLD_H = 1600;
 const MINI_W = 180, MINI_H = 120, MINI_SCALE = MINI_W / WORLD_W; // 0.075
 
 let scale = 1, tx = 0, ty = 0;
-const MIN_SCALE = 0.35, MAX_SCALE = 2.2;
+const MIN_SCALE = 0.18, MAX_SCALE = 2.2;
 
 function clampPan() {
   const vw = viewport.clientWidth, vh = viewport.clientHeight;
@@ -237,7 +237,8 @@ function zoomAt(cx, cy, newScale) {
 // Fit world to viewport, centered on plaza
 function fitView() {
   const vw = viewport.clientWidth, vh = viewport.clientHeight;
-  scale = Math.min(vw / WORLD_W, vh / WORLD_H) * 0.98;
+  // 0.86 leaves a comfortable margin so the whole garden is visible
+  scale = Math.min(vw / WORLD_W, vh / WORLD_H) * 0.86;
   scale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, scale));
   tx = (vw - WORLD_W * scale) / 2;
   ty = (vh - WORLD_H * scale) / 2;
@@ -333,8 +334,10 @@ document.getElementById('minimap').addEventListener('click', (e) => {
 });
 
 window.addEventListener('resize', applyTransform);
-// init after layout
+// init after layout — fit reliably even if fonts/layout settle late
 requestAnimationFrame(fitView);
+window.addEventListener('load', fitView);
+setTimeout(fitView, 250);
 
 // ===== Modal =====
 const modal = document.getElementById('modal');
