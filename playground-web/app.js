@@ -1,0 +1,722 @@
+// ============================================================
+// BUSINESS PLAYGROUND v3 — Eden Pantheon
+// Roman × Japanese × Chinese deity roster
+// ============================================================
+
+const DEITIES = {
+  mercury: {
+    name: 'เมอร์คิวรี', en: 'Mercury · Mercurius', role: 'Orchestrator', emoji: '⚡',
+    pantheon: 'โรมัน',
+    desc: 'เทพผู้ส่งสารและกลยุทธ์ — รับคำสั่งจากเก้าแล้วกระจายงานให้เทพทั้ง 9 องค์ สวมปีกที่หมวกและรองเท้า ถือคทาแห่งงู (caduceus) อยู่ใต้ torii gate กลางสวน',
+    stats: [{ v: '9', l: 'เทพในสังกัด' }, { v: '24h', l: 'ทำงาน' }, { v: '∞', l: 'speed' }],
+    tasks: [
+      'ส่งคำสั่งให้อูซูเมะเตรียม live 19:00',
+      'แจ้งฉางเจี๋ยเขียน carousel หัวข้อ #43',
+      '✓ ส่งสรุปยอดวันนี้ให้ไฉเสิน'
+    ]
+  },
+  uzume: {
+    name: 'อูซูเมะ', en: 'Ame-no-Uzume 天鈿女命', role: 'TikTok Live', emoji: '🎭',
+    pantheon: 'ญี่ปุ่น',
+    desc: 'เทพีญี่ปุ่นแห่งการเต้นรำและความสนุก — เคยเต้นจนเทพีอามาเทราซุออกจากถ้ำ ทำให้โลกกลับมามีแสง ตอนนี้รับผิดชอบ live ทุกครั้ง ดึงคนดูด้วยพลังเดียวกัน',
+    stats: [{ v: '19:00', l: 'live ถัดไป' }, { v: '127', l: 'avg viewer' }, { v: '12', l: 'live เดือนนี้' }],
+    tasks: [
+      'เตรียม script สำหรับ live 19:00',
+      'หา top 5 product สำหรับ live',
+      '✓ เปิด OBS preset ไว้แล้ว'
+    ]
+  },
+  cangjie: {
+    name: 'ฉางเจี๋ย', en: 'Cangjie 倉頡', role: 'Content + Wiki Keeper', emoji: '📿',
+    pantheon: 'จีน',
+    desc: 'เทพจีนผู้คิดอักษรจีนทั้งหมด มี 4 ตาเห็นทุกอย่างในจักรวาล — เขียน carousel "7 ข้อคิดจากธรรมชาติ" + ดูแล Obsidian vault (wiki, knowledge graph, cross-link, _stats.md SSOT)',
+    stats: [{ v: '#43', l: 'หัวข้อล่าสุด' }, { v: '827', l: 'follower' }, { v: 'Obsidian', l: 'vault keeper' }],
+    tasks: [
+      'เขียน carousel #43 หัวข้อพระอาทิตย์',
+      'อัปเดต wiki/_stats.md หลังโพสต์',
+      'cross-link entity ใหม่ใน Obsidian',
+      '✓ โพสต์ #42 → 234 view'
+    ]
+  },
+  ebisu: {
+    name: 'เอบิสุ', en: 'Ebisu 恵比寿', role: 'Product Hunter', emoji: '💰',
+    pantheon: 'ญี่ปุ่น',
+    desc: '1 ใน 7 เทพแห่งโชคลาภญี่ปุ่น เทพแห่งพ่อค้าและชาวประมง ยิ้มเสมอ ถือปลาตาเดียว — หา product trend ใน Shopee/Lazada/1688/TikTok Shop ที่ทำกำไรสูง',
+    stats: [{ v: '5', l: 'lead ใหม่' }, { v: '38%', l: 'avg margin' }, { v: '247', l: 'product tracked' }],
+    tasks: [
+      'review 5 product lead จาก TikTok Shop',
+      'คำนวณ margin + shipping',
+      'ส่ง shortlist เข้า Telegram'
+    ]
+  },
+  cupid: {
+    name: 'คิวปิด', en: 'Cupid · Cupido', role: 'Facebook Ads', emoji: '💘',
+    pantheon: 'โรมัน',
+    desc: 'บุตรของ Venus ยิงธนูแห่งความรัก ใครถูกยิงตกหลุมรักทันที — ผูกกับ Facebook ads, ยิง creative เข้าหัวใจลูกค้า, คำนวณ ROAS',
+    stats: [{ v: '2.3x', l: 'ROAS' }, { v: '฿8,400', l: 'spend วันนี้' }, { v: '3', l: 'active' }],
+    tasks: [
+      'เสนอ creative ใหม่ 3 ชิ้น',
+      'หยุด campaign B (ROAS 1.2)',
+      '✓ สรุป weekly report'
+    ]
+  },
+  vulcan: {
+    name: 'วัลแคน', en: 'Vulcan · Vulcanus', role: 'Inventory', emoji: '🔧',
+    pantheon: 'โรมัน',
+    desc: 'เทพช่างตีเหล็กโรมัน ผู้สร้างอาวุธของเทพทั้งหมด มีโรงตีเหล็กในภูเขาไฟ — ดูแลสต็อกร้านและคลังบ้าน เตือนเมื่อ stock ต่ำ',
+    stats: [{ v: '247', l: 'SKU' }, { v: '2', l: 'low stock' }, { v: '฿128k', l: 'value' }],
+    tasks: [
+      '⚠ สั่ง yogurt cup 100ml (เหลือ 18)',
+      '⚠ สั่ง straw biodegradable (เหลือ 50)',
+      'นับสต็อกประจำสัปดาห์'
+    ]
+  },
+  caishen: {
+    name: 'ไฉเสิน', en: 'Caishen 財神', role: 'Accountant', emoji: '💎',
+    pantheon: 'จีน',
+    desc: 'เทพจีนแห่งทรัพย์สิน ขี่เสือ ถือทองคำแท่ง (yuanbao) ผู้บันดาลความร่ำรวยให้คนทำธุรกิจ — บันทึก ledger ทุกธุรกิจ + สรุปกำไรขาดทุน',
+    stats: [{ v: '฿42,580', l: 'รายได้' }, { v: '฿18,200', l: 'ค่าใช้จ่าย' }, { v: '+฿24,380', l: 'กำไร' }],
+    tasks: [
+      'บันทึกรายรับจาก Grab order',
+      'export ledger ไป Google Sheet',
+      'review รายจ่ายของคิวปิด'
+    ]
+  },
+  ceres: {
+    name: 'เซเรส', en: 'Ceres', role: 'Delivery', emoji: '🍱',
+    pantheon: 'โรมัน',
+    desc: 'เทพีโรมันแห่งธัญพืชและความอุดมสมบูรณ์ สวมมงกุฎข้าวสาลี ถือ cornucopia (เขาแห่งความอุดมสมบูรณ์) — รับ order จาก LINE/Grab/LineMan + จัดคิวครัว',
+    stats: [{ v: '12', l: 'order รอ' }, { v: '8', l: 'อยู่ครัว' }, { v: '23 นาที', l: 'avg time' }],
+    tasks: [
+      'แจ้งครัวเตรียม 3 order Grab',
+      'ติดต่อไรเดอร์ LineMan',
+      '✓ ส่ง 8 order สำเร็จเช้านี้'
+    ]
+  },
+  tenjin: {
+    name: 'เทนจิน', en: 'Tenjin 天神', role: 'GNAS School', emoji: '📚',
+    pantheon: 'ญี่ปุ่น',
+    desc: 'Sugawara Michizane นักวิชาการเอกในประวัติศาสตร์ที่ถูกบูชาเป็นเทพแห่งการศึกษา นักเรียนญี่ปุ่นไหว้ก่อนสอบ — ดูแลตารางครู Tsuguji & Erina + visa + student intake',
+    stats: [{ v: '12 ก.ค.', l: 'visa' }, { v: '18', l: 'นักเรียน' }, { v: '4', l: 'ห้อง' }],
+    tasks: [
+      'เตรียมเอกสาร visa Tsuguji',
+      'review student application 3 คน',
+      'ออก invoice เดือน มิ.ย.'
+    ]
+  },
+  niuwang: {
+    name: 'หนิวหวัง', en: 'Niu Wang 牛王', role: 'North14 Yogurt', emoji: '🐄',
+    pantheon: 'จีน',
+    desc: 'ราชาวัวในตำนานจีน เทพคุ้มครองโคและฟาร์มเลี้ยงสัตว์ มีเขาวัวสีขาวสง่างาม — ประสานพี่ป้องเรื่อง Greek Yogurt ที่โคราช + content ใหม่',
+    stats: [{ v: '฿14,200', l: 'ยอดสัปดาห์' }, { v: '0', l: 'งานค้าง' }, { v: '7', l: 'โพสต์' }],
+    tasks: [
+      'รอ update content ใหม่จากพี่ป้อง',
+      'review ยอดขายโคราชวีคนี้'
+    ]
+  },
+  konohana: {
+    name: 'โคโนะฮานะซากุยะ', en: 'Konohanasakuya 木花開耶姫', role: 'HR & People', emoji: '🌸',
+    pantheon: 'ญี่ปุ่น',
+    desc: 'เจ้าหญิงดอกซากุระแห่งภูเขาฟูจิ เทพีแห่งความงาม ครอบครัว และคน — ดูแลอาจารย์ญี่ปุ่น GNAS, สัญญาจ้าง, visa, สวัสดิการ, onboarding ทีม + พิธีต้อนรับลูกค้า',
+    stats: [{ v: '2', l: 'อาจารย์ JP' }, { v: '12 ก.ค.', l: 'visa next' }, { v: '0', l: 'ค้างเงินเดือน' }],
+    tasks: [
+      'review สัญญา Tsuguji + Erina',
+      'เตรียมเอกสาร visa Tsuguji ครบกำหนด',
+      'welcome flow ลูกค้าใหม่ NORTH14',
+      '✓ จ่ายเงินเดือน ฿16,500 × 2 คน'
+    ]
+  },
+  baozheng: {
+    name: 'เปาเจิ้ง', en: 'Bao Zheng 包公', role: 'QA & Justice Gate', emoji: '⚖',
+    pantheon: 'จีน',
+    desc: 'ผู้พิพากษาตงฉินแห่งราชวงศ์ซ่ง หน้าดำมีรอยพระจันทร์เสี้ยวบนหน้าผาก เทพแห่งความยุติธรรม — gate อนุมัติงานก่อนปล่อย ตรวจคุณภาพ content/product/legal ป้องกัน PDPA + scam',
+    stats: [{ v: '42', l: 'งานอนุมัติ' }, { v: '3', l: 'รอตรวจ' }, { v: '1', l: 'ตีกลับ' }],
+    tasks: [
+      'ตรวจ carousel #43 ก่อนโพสต์',
+      'review disclaimer NORTH14 yogurt',
+      'audit PDPA Telegram bot',
+      '✓ อนุมัติ carousel #42 (pass)'
+    ]
+  }
+};
+
+// ===== Live clock + phase =====
+function updateClock() {
+  const now = new Date();
+  const hh = String(now.getHours()).padStart(2, '0');
+  const mm = String(now.getMinutes()).padStart(2, '0');
+  document.getElementById('clock').textContent = `${hh}:${mm}`;
+  const hour = now.getHours();
+  let phase, icon;
+  if (hour >= 5 && hour < 12) { phase = 'เช้า'; icon = '☀'; }
+  else if (hour >= 12 && hour < 17) { phase = 'บ่าย'; icon = '🌤'; }
+  else if (hour >= 17 && hour < 20) { phase = 'เย็น'; icon = '🌅'; }
+  else { phase = 'ค่ำ'; icon = '🌙'; }
+  const el = document.getElementById('phaseIndicator');
+  el.querySelector('.phase-icon').textContent = icon;
+  el.querySelector('.phase-text').textContent = phase;
+}
+updateClock();
+setInterval(updateClock, 30000);
+
+// ===== Activity log =====
+const LOG_MESSAGES = [
+  { d: 'uzume', m: 'เตรียม script สำหรับ live 19:00 เสร็จแล้ว' },
+  { d: 'cangjie', m: 'โพสต์ carousel #42 สำเร็จ → 234 view ใน 30 นาที' },
+  { d: 'ebisu', m: 'เจอ product trend ใหม่ 5 ตัวจาก TikTok Shop' },
+  { d: 'cupid', m: 'campaign A: ROAS 2.3 — ขออนุญาตเพิ่ม budget' },
+  { d: 'vulcan', m: '⚠ yogurt cup เหลือ 18 หน่วย — แนะนำสั่งใหม่' },
+  { d: 'caishen', m: 'บันทึก +฿1,200 จาก Grab order #4821' },
+  { d: 'ceres', m: 'รับ order ใหม่ 3 รายการจาก LINE OA' },
+  { d: 'tenjin', m: 'เตือน: visa Tsuguji ครบ 12 ก.ค. (33 วัน)' },
+  { d: 'niuwang', m: 'พี่ป้องส่ง content ใหม่ 2 reel มาให้' },
+  { d: 'mercury', m: 'สรุปยอด 9 เทพ → ส่งเข้า Telegram ของเก้า' },
+  { d: 'uzume', m: 'top product live: นาฬิกาลายกระดูก, มู่ลี่ผ้า, หินสี' },
+  { d: 'cangjie', m: 'เริ่มเขียน carousel #43 หัวข้อพระอาทิตย์' },
+  { d: 'caishen', m: 'รายได้วันนี้แตะ ฿42,580 (เกินเป้า 18%)' },
+  { d: 'cupid', m: 'หยุด campaign B อัตโนมัติ (ROAS 1.2)' },
+  { d: 'ceres', m: 'ส่ง order สำเร็จ 8 จาก 12 รายการเช้านี้' },
+  { d: 'konohana', m: 'อาจารย์ Erina ต่อสัญญา 2569 เรียบร้อย' },
+  { d: 'baozheng', m: '✓ อนุมัติ carousel #42 — pass legal + brand' },
+  { d: 'konohana', m: 'visa Tsuguji ครบ 12 ก.ค. — เตือนล่วงหน้า 33 วัน' },
+  { d: 'baozheng', m: '⚠ ตีกลับ caption ใหม่ (มีคำที่ดู misleading)' }
+];
+
+const feed = document.getElementById('logFeed');
+let logIdx = 0;
+
+function addLogEntry(msgObj, animate = true) {
+  const d = DEITIES[msgObj.d] || { name: 'ระบบ' };
+  const now = new Date();
+  const time = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  const entry = document.createElement('div');
+  entry.className = 'log-entry';
+  entry.innerHTML = `
+    <span class="log-time">${time}</span>
+    <span class="log-deity">${d.name}</span>
+    <span class="log-msg">${msgObj.m}</span>
+  `;
+  if (animate) feed.insertBefore(entry, feed.firstChild);
+  else feed.appendChild(entry);
+  while (feed.children.length > 20) feed.removeChild(feed.lastChild);
+}
+
+for (let i = 0; i < 6; i++) {
+  addLogEntry(LOG_MESSAGES[i], false);
+  logIdx = i + 1;
+}
+
+function streamLog() {
+  const next = LOG_MESSAGES[logIdx % LOG_MESSAGES.length];
+  addLogEntry(next);
+  if (next.d && next.d !== 'mercury' && typeof sendPulse === 'function') sendPulse(next.d);
+  logIdx++;
+  setTimeout(streamLog, 4000 + Math.random() * 3000);
+}
+setTimeout(streamLog, 3000);
+
+// ===== Pan / Zoom world engine =====
+const viewport = document.getElementById('viewport');
+const world = document.getElementById('world');
+const miniView = document.getElementById('miniView');
+const WORLD_W = 2400, WORLD_H = 1600;
+const MINI_W = 180, MINI_H = 120, MINI_SCALE = MINI_W / WORLD_W; // 0.075
+
+let scale = 1, tx = 0, ty = 0;
+const MIN_SCALE = 0.18, MAX_SCALE = 2.2;
+
+function clampPan() {
+  const vw = viewport.clientWidth, vh = viewport.clientHeight;
+  const worldW = WORLD_W * scale, worldH = WORLD_H * scale;
+  // allow some margin; keep world from drifting fully off-screen
+  if (worldW <= vw) tx = (vw - worldW) / 2;
+  else tx = Math.min(0, Math.max(vw - worldW, tx));
+  if (worldH <= vh) ty = (vh - worldH) / 2;
+  else ty = Math.min(0, Math.max(vh - worldH, ty));
+}
+
+function applyTransform() {
+  clampPan();
+  world.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+  // minimap viewport rectangle
+  const vw = viewport.clientWidth, vh = viewport.clientHeight;
+  const viewWorldX = -tx / scale, viewWorldY = -ty / scale;
+  const viewWorldW = vw / scale, viewWorldH = vh / scale;
+  // clamp the minimap rectangle inside the minimap bounds
+  let mx = Math.max(0, viewWorldX * MINI_SCALE);
+  let my = Math.max(0, viewWorldY * MINI_SCALE);
+  let mw = Math.min(MINI_W - mx, viewWorldW * MINI_SCALE);
+  let mh = Math.min(MINI_H - my, viewWorldH * MINI_SCALE);
+  miniView.style.left = mx + 'px';
+  miniView.style.top = my + 'px';
+  miniView.style.width = Math.max(0, mw) + 'px';
+  miniView.style.height = Math.max(0, mh) + 'px';
+}
+
+function zoomAt(cx, cy, newScale) {
+  newScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, newScale));
+  // keep the world point under cursor fixed
+  const worldX = (cx - tx) / scale;
+  const worldY = (cy - ty) / scale;
+  scale = newScale;
+  tx = cx - worldX * scale;
+  ty = cy - worldY * scale;
+  applyTransform();
+}
+
+// Fit world to viewport, centered on plaza
+function fitView() {
+  const vw = viewport.clientWidth, vh = viewport.clientHeight;
+  // 0.86 leaves a comfortable margin so the whole garden is visible
+  scale = Math.min(vw / WORLD_W, vh / WORLD_H) * 0.86;
+  scale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, scale));
+  tx = (vw - WORLD_W * scale) / 2;
+  ty = (vh - WORLD_H * scale) / 2;
+  applyTransform();
+}
+
+// Focus a world coordinate at a given scale (used when opening a deity)
+function focusWorld(wx, wy, targetScale) {
+  const vw = viewport.clientWidth, vh = viewport.clientHeight;
+  scale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, targetScale));
+  tx = vw / 2 - wx * scale;
+  ty = vh / 2 - wy * scale;
+  applyTransform();
+}
+
+// Wheel zoom
+viewport.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const rect = viewport.getBoundingClientRect();
+  const cx = e.clientX - rect.left, cy = e.clientY - rect.top;
+  const factor = e.deltaY < 0 ? 1.12 : 0.89;
+  zoomAt(cx, cy, scale * factor);
+}, { passive: false });
+
+// Drag to pan (pointer events) — suppress click if dragged
+let dragging = false, dragMoved = false, startX = 0, startY = 0, startTx = 0, startTy = 0;
+let pointers = new Map();
+let pinchDist = 0;
+
+viewport.addEventListener('pointerdown', (e) => {
+  pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (pointers.size === 1) {
+    dragging = true; dragMoved = false;
+    startX = e.clientX; startY = e.clientY;
+    startTx = tx; startTy = ty;
+    viewport.classList.add('grabbing');
+  } else if (pointers.size === 2) {
+    const pts = [...pointers.values()];
+    pinchDist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+  }
+});
+
+viewport.addEventListener('pointermove', (e) => {
+  if (!pointers.has(e.pointerId)) return;
+  pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+  if (pointers.size === 2) {
+    const pts = [...pointers.values()];
+    const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+    if (pinchDist > 0) {
+      const rect = viewport.getBoundingClientRect();
+      const midX = (pts[0].x + pts[1].x) / 2 - rect.left;
+      const midY = (pts[0].y + pts[1].y) / 2 - rect.top;
+      zoomAt(midX, midY, scale * (dist / pinchDist));
+    }
+    pinchDist = dist;
+    dragMoved = true;
+    return;
+  }
+
+  if (dragging) {
+    const dx = e.clientX - startX, dy = e.clientY - startY;
+    if (Math.abs(dx) > 4 || Math.abs(dy) > 4) dragMoved = true;
+    tx = startTx + dx; ty = startTy + dy;
+    applyTransform();
+  }
+});
+
+function endPointer(e) {
+  pointers.delete(e.pointerId);
+  if (pointers.size < 2) pinchDist = 0;
+  if (pointers.size === 0) { dragging = false; viewport.classList.remove('grabbing'); }
+}
+viewport.addEventListener('pointerup', endPointer);
+viewport.addEventListener('pointercancel', endPointer);
+viewport.addEventListener('pointerleave', (e) => { if (pointers.size === 0) { dragging = false; viewport.classList.remove('grabbing'); } });
+
+// Zoom buttons
+document.getElementById('zoomIn').addEventListener('click', () => {
+  zoomAt(viewport.clientWidth / 2, viewport.clientHeight / 2, scale * 1.25);
+});
+document.getElementById('zoomOut').addEventListener('click', () => {
+  zoomAt(viewport.clientWidth / 2, viewport.clientHeight / 2, scale * 0.8);
+});
+document.getElementById('zoomReset').addEventListener('click', fitView);
+
+// Minimap click-to-navigate
+document.getElementById('minimap').addEventListener('click', (e) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const wx = (e.clientX - rect.left) / MINI_SCALE;
+  const wy = (e.clientY - rect.top) / MINI_SCALE;
+  focusWorld(wx, wy, Math.max(scale, 0.9));
+});
+
+window.addEventListener('resize', applyTransform);
+// init after layout — fit reliably even if fonts/layout settle late
+requestAnimationFrame(fitView);
+window.addEventListener('load', fitView);
+setTimeout(fitView, 250);
+
+// ===== Onboarding hint =====
+const onboardHint = document.getElementById('onboardHint');
+const onboardClose = document.getElementById('onboardClose');
+function dismissHint() { onboardHint.classList.add('hide'); }
+onboardClose.addEventListener('click', dismissHint);
+setTimeout(dismissHint, 8000);
+// also dismiss on first interaction
+viewport.addEventListener('pointerdown', dismissHint, { once: true });
+
+// ===== Day / night ambiance (tied to real clock) =====
+const daynight = document.getElementById('daynight');
+function updateDayNight() {
+  const h = new Date().getHours();
+  let bg, night = false;
+  if (h >= 5 && h < 8)        bg = 'rgba(255,190,130,0.16)';  // dawn
+  else if (h >= 8 && h < 16)  bg = 'rgba(255,250,230,0.03)';  // day
+  else if (h >= 16 && h < 19) bg = 'rgba(255,140,80,0.20)';   // dusk
+  else { bg = 'rgba(40,55,110,0.42)'; night = true; }         // night
+  daynight.style.background = bg;
+  document.body.classList.toggle('night', night);
+}
+updateDayNight();
+setInterval(updateDayNight, 60000);
+
+// ===== Orchestration pulse: Mercury -> deity along the paths =====
+const DEITY_POS = {
+  uzume:[320,360], cangjie:[600,320], cupid:[880,360],
+  ebisu:[1520,360], caishen:[1800,320], vulcan:[2080,360],
+  ceres:[560,1360], tenjin:[1200,1360], niuwang:[1840,1360],
+  konohana:[1000,880], baozheng:[1400,880]
+};
+function sendPulse(key) {
+  const t = DEITY_POS[key];
+  if (!t) return;
+  const p = document.createElement('div');
+  p.className = 'orch-pulse';
+  p.style.left = '1200px'; p.style.top = '860px';
+  world.appendChild(p);
+  requestAnimationFrame(() => {
+    p.style.left = t[0] + 'px';
+    p.style.top = t[1] + 'px';
+    p.style.opacity = '0.15';
+  });
+  setTimeout(() => p.remove(), 1300);
+}
+
+// ===== Council: summon the pantheon to the central plaza =====
+const councilBtn = document.getElementById('councilBtn');
+const councilBanner = document.getElementById('councilBanner');
+const councilEnd = document.getElementById('councilEnd');
+const CUSHIONS = [[1200,942],[1340,970],[1370,1032],[1320,1095],[1200,1122],[1080,1095],[1030,1032],[1060,970]];
+const COUNCIL_MEMBERS = [['uzume','🎭'],['cangjie','📿'],['ebisu','💰'],['vulcan','🔧'],['caishen','💎'],['ceres','🍱'],['konohana','🌸'],['baozheng','⚖']];
+let councilTokens = [], councilOn = false;
+function buildCouncilTokens() {
+  COUNCIL_MEMBERS.forEach(([key, emoji], i) => {
+    const t = document.createElement('div');
+    t.className = 'council-token';
+    t.textContent = emoji;
+    t.style.left = CUSHIONS[i][0] + 'px';
+    t.style.top = CUSHIONS[i][1] + 'px';
+    world.appendChild(t);
+    councilTokens.push(t);
+  });
+}
+function toggleCouncil() {
+  councilOn = !councilOn;
+  if (!councilOn) { endCouncil(); return; }
+  if (!councilTokens.length) buildCouncilTokens();
+  focusWorld(1200, 1010, 0.95);
+  councilBanner.hidden = false;
+  councilBtn.classList.add('active');
+  document.body.classList.add('council');
+  councilTokens.forEach((t, i) => setTimeout(() => t.classList.add('show'), 120 * i));
+  addLogEntry({ d: 'mercury', m: '⚖️ เรียกประชุมสภาเทพทั้งสิบ ณ ลานกลาง' });
+  COUNCIL_MEMBERS.forEach(([key], i) =>
+    setTimeout(() => addLogEntry({ d: key, m: 'เข้าร่วมประชุมสภา' }), 300 + 120 * i));
+}
+function endCouncil() {
+  councilOn = false;
+  councilBanner.hidden = true;
+  councilBtn.classList.remove('active');
+  document.body.classList.remove('council');
+  councilTokens.forEach(t => t.classList.remove('show'));
+}
+councilBtn.addEventListener('click', toggleCouncil);
+councilEnd.addEventListener('click', endCouncil);
+
+// ===== Modal =====
+const modal = document.getElementById('modal');
+const modalName = document.getElementById('modalName');
+const modalRole = document.getElementById('modalRole');
+const modalDesc = document.getElementById('modalDesc');
+const modalAvatar = document.getElementById('modalAvatar');
+const modalStats = document.getElementById('modalStats');
+const modalTasks = document.getElementById('modalTasks');
+const modalInput = document.getElementById('modalInput');
+const modalSend = document.getElementById('modalSend');
+
+const TASK_API = 'http://localhost:8766/api/tasks';
+let currentDeityKey = null;
+
+const STATUS_LABEL = {
+  todo: '⬜ ยังไม่เริ่ม',
+  in_progress: '🔵 กำลังทำ',
+  pending_qa: '🟡 รอ QA',
+  approved: '✅ อนุมัติ',
+  rejected: '🔴 ตีกลับ',
+};
+const STATUS_COLOR = {
+  todo: '#888', in_progress: '#5ee3d8', pending_qa: '#d4af37',
+  approved: '#6dd66b', rejected: '#c8553d',
+};
+
+async function apiFetch(url, opts = {}) {
+  try {
+    const r = await fetch(url, opts);
+    return r.ok ? r.json() : null;
+  } catch { return null; }
+}
+
+function taskItemHtml(t, viewerKey) {
+  const statusLabel = STATUS_LABEL[t.status] || t.status;
+  const color = STATUS_COLOR[t.status] || '#888';
+  let actions = '';
+  if (t.status === 'todo' && t.assignee === viewerKey) {
+    actions = `<button class="task-action-btn" onclick="updateTaskStatus('${t.id}','in_progress')">▶ เริ่ม</button>`;
+  } else if (t.status === 'in_progress' && t.assignee === viewerKey) {
+    actions = `<button class="task-action-btn submit" onclick="updateTaskStatus('${t.id}','pending_qa')">📤 ส่ง QA</button>`;
+  } else if (t.status === 'rejected' && t.assignee === viewerKey) {
+    const note = t.qa_note ? t.qa_note.replace(/^"|"$/g, '') : '';
+    actions = `<span class="qa-note">💬 ${note || 'ตีกลับ'}</span>
+      <button class="task-action-btn" onclick="updateTaskStatus('${t.id}','in_progress')">↩ แก้ไข</button>`;
+  }
+  return `<li class="task-item" data-id="${t.id}" data-status="${t.status}">
+    <span class="task-status-dot" style="background:${color}"></span>
+    <span class="task-title">${t.title}</span>
+    <span class="task-status-label" style="color:${color}">${statusLabel}</span>
+    ${actions}
+  </li>`;
+}
+
+async function updateTaskStatus(id, status, qaNote) {
+  const body = { status };
+  if (qaNote !== undefined) body.qa_note = qaNote;
+  await apiFetch(`${TASK_API}/${id}`, {
+    method: 'PUT', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  addLogEntry({ d: currentDeityKey || 'mercury', m: `สถานะงาน "${id.slice(-6)}" → ${STATUS_LABEL[status]}` });
+  refreshTaskBadge();
+  if (currentDeityKey) openDeityModal(currentDeityKey);
+}
+window.updateTaskStatus = updateTaskStatus;
+
+async function qaApprove(id) {
+  await apiFetch(`${TASK_API}/${id}`, {
+    method: 'PUT', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status: 'approved' }),
+  });
+  addLogEntry({ d: 'baozheng', m: `✅ อนุมัติงาน "${id.slice(-6)}"` });
+  refreshTaskBadge();
+  openDeityModal('baozheng');
+}
+window.qaApprove = qaApprove;
+
+async function qaReject(id) {
+  const note = prompt('เหตุผลที่ตีกลับ:');
+  if (note === null) return;
+  await apiFetch(`${TASK_API}/${id}`, {
+    method: 'PUT', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status: 'rejected', qa_note: note }),
+  });
+  addLogEntry({ d: 'baozheng', m: `🔴 ตีกลับงาน "${id.slice(-6)}": ${note}` });
+  refreshTaskBadge();
+  openDeityModal('baozheng');
+}
+window.qaReject = qaReject;
+
+async function refreshTaskBadge() {
+  const tasks = await apiFetch(`${TASK_API}?status=pending_qa`);
+  const count = tasks ? tasks.length : 0;
+  const badge = document.getElementById('qaQueueCount');
+  if (badge) badge.textContent = count;
+  // header badge
+  const hb = document.getElementById('queueCount');
+  if (hb) hb.textContent = count;
+}
+
+async function openDeityModal(key) {
+  const d = DEITIES[key];
+  if (!d) return;
+  currentDeityKey = key;
+
+  modalAvatar.textContent = d.emoji;
+  modalName.textContent = `${d.name} · ${d.en}`;
+  modalRole.textContent = `${d.role} · เทพ${d.pantheon}`;
+  modalDesc.textContent = d.desc;
+  modalStats.innerHTML = d.stats.map(s => `
+    <div class="modal-stat">
+      <div class="v">${s.v}</div>
+      <div class="l">${s.l}</div>
+    </div>
+  `).join('');
+
+  // show/hide special panels
+  document.getElementById('mercuryCreatePanel').style.display = key === 'mercury' ? 'block' : 'none';
+  document.getElementById('qaReviewPanel').style.display = key === 'baozheng' ? 'block' : 'none';
+  document.getElementById('caishenRevenuePanel').style.display = key === 'caishen' ? 'block' : 'none';
+
+  // load live tasks from Obsidian API
+  const tasks = await apiFetch(`${TASK_API}?assignee=${key}`) || [];
+  const activeTasks = tasks.filter(t => t.status !== 'approved');
+  const badge = document.getElementById('modalTaskBadge');
+  badge.textContent = activeTasks.length ? `${activeTasks.length}` : '';
+  badge.style.display = activeTasks.length ? 'inline-block' : 'none';
+  modalTasks.innerHTML = activeTasks.length
+    ? activeTasks.map(t => taskItemHtml(t, key)).join('')
+    : '<li class="task-empty">ไม่มีงานค้าง</li>';
+
+  // Bao Zheng QA queue
+  if (key === 'baozheng') {
+    const pending = await apiFetch(`${TASK_API}?status=pending_qa`) || [];
+    const qList = document.getElementById('qaReviewList');
+    const qCount = document.getElementById('qaQueueCount');
+    qCount.textContent = pending.length;
+    qList.innerHTML = pending.length
+      ? pending.map(t => `
+          <li class="task-item qa-item">
+            <span class="task-status-dot" style="background:#d4af37"></span>
+            <span class="task-title">${t.title}</span>
+            <span class="task-assignee">[${t.assignee}]</span>
+            <button class="task-action-btn submit" onclick="qaApprove('${t.id}')">✓ อนุมัติ</button>
+            <button class="task-action-btn reject" onclick="qaReject('${t.id}')">✗ ตีกลับ</button>
+          </li>`).join('')
+      : '<li class="task-empty">ไม่มีงานรอตรวจ</li>';
+  }
+
+  modalInput.value = '';
+  modal.hidden = false;
+  setTimeout(() => modalInput.focus(), 100);
+}
+
+// Mercury: create task
+document.getElementById('createTaskBtn')?.addEventListener('click', async () => {
+  const title = document.getElementById('newTaskTitle').value.trim();
+  if (!title) return;
+  const assignee = document.getElementById('newTaskAssignee').value;
+  const type = document.getElementById('newTaskType').value;
+  const body = document.getElementById('newTaskBody').value.trim();
+  const task = await apiFetch(TASK_API, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title, assignee, type, body, creator: 'mercury' }),
+  });
+  if (task) {
+    addLogEntry({ d: 'mercury', m: `📋 มอบหมายงาน "${title}" → ${DEITIES[assignee]?.name || assignee}` });
+    document.getElementById('newTaskTitle').value = '';
+    document.getElementById('newTaskBody').value = '';
+    openDeityModal('mercury');
+  }
+});
+
+document.querySelectorAll('[data-deity]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (dragMoved) return; // ignore click that ended a pan/pinch
+    openDeityModal(btn.dataset.deity);
+  });
+});
+
+document.getElementById('modalClose').addEventListener('click', () => modal.hidden = true);
+modal.addEventListener('click', (e) => { if (e.target === modal) modal.hidden = true; });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') modal.hidden = true; });
+
+modalSend.addEventListener('click', sendCmd);
+modalInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendCmd(); });
+
+function sendCmd() {
+  const text = modalInput.value.trim();
+  if (!text) return;
+  const deityKey = Object.keys(DEITIES).find(k => DEITIES[k].name === modalName.textContent.split(' · ')[0]);
+  addLogEntry({ d: deityKey || 'mercury', m: `📨 รับคำสั่ง: "${text}"` });
+  modalInput.value = '';
+  modal.hidden = true;
+}
+
+// ===== Log drawer =====
+const logbook = document.getElementById('logbook');
+const logToggle = document.getElementById('logToggle');
+const logClose = document.getElementById('logClose');
+logToggle.addEventListener('click', () => logbook.classList.toggle('open'));
+logClose.addEventListener('click', () => logbook.classList.remove('open'));
+
+// ===== Task badge (real pending_qa count) =====
+refreshTaskBadge();
+setInterval(refreshTaskBadge, 15000);
+
+// ===== Real stats feed (followers + revenue) =====
+const STATS_API = 'http://localhost:8766/api/stats';
+const STATS_STATIC = 'data/stats.json';
+
+async function refreshStats() {
+  // try live API first, fall back to pre-baked static JSON
+  let stats = await apiFetch(STATS_API);
+  if (!stats) stats = await apiFetch(STATS_STATIC + '?cb=' + Math.floor(Date.now()/3600000));
+  if (!stats) return;
+  // followers
+  if (stats.followers) {
+    const el = document.getElementById('queueCount');
+    // repurpose or find follower element — use header queue slot for followers
+    const followerEl = document.getElementById('followerCount');
+    if (followerEl) followerEl.textContent = stats.followers.toLocaleString();
+  }
+  // revenue
+  if (stats.revenue_today !== undefined && stats.revenue_today > 0) {
+    const revEl = document.getElementById('todayRevenue');
+    if (revEl) {
+      revEl.textContent = `฿${Number(stats.revenue_today).toLocaleString()}`;
+    }
+  }
+}
+
+refreshStats();
+setInterval(refreshStats, 2 * 60 * 1000);
+
+// Caishen update revenue
+document.getElementById('updateRevenueBtn')?.addEventListener('click', async () => {
+  const today = document.getElementById('revenueToday').value;
+  if (!today) return;
+  const month = document.getElementById('revenueMonth').value;
+  const payload = { revenue_today: Number(today) };
+  if (month) payload.revenue_month = Number(month);
+  await apiFetch(STATS_API, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  addLogEntry({ d: 'caishen', m: `💰 อัปเดตยอดวันนี้: ฿${Number(today).toLocaleString()}` });
+  document.getElementById('revenueToday').value = '';
+  document.getElementById('revenueMonth').value = '';
+  refreshStats();
+  modal.hidden = true;
+});
+
+const revEl = document.getElementById('todayRevenue');
+let revenue = 42580;
+setInterval(() => {
+  if (Math.random() < 0.5) {
+    revenue += Math.floor(Math.random() * 400) + 50;
+    revEl.textContent = `฿${revenue.toLocaleString()}`;
+    revEl.style.color = '#5ee3d8';
+    setTimeout(() => revEl.style.color = '', 600);
+  }
+}, 6000);

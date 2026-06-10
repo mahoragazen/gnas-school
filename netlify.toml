@@ -1,11 +1,16 @@
 # Netlify Configuration for Mahoraga ZEN
 
 [build]
-  # No build step needed - static HTML + inline React
   publish = "."
-  command = "echo 'Static site - no build needed'"
+  command = "mkdir -p playground && cp -r playground-web/* playground/"
 
-# Redirect all 404s to index.html (for SPA behavior)
+# PANTHEON playground SPA fallback
+[[redirects]]
+  from = "/playground/*"
+  to = "/playground/index.html"
+  status = 200
+
+# Root site SPA fallback
 [[redirects]]
   from = "/*"
   to = "/index.html"
