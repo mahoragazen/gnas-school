@@ -21,7 +21,73 @@ const TASKS_DIR = path.join(
   process.env.HOME,
   'internalMac/Obsidian/Obsidian Vault/wiki/tasks'
 );
+const STATS_FILE = path.join(
+  process.env.HOME,
+  'internalMac/Obsidian/Obsidian Vault/wiki/tasks/_stats.json'
+);
 const PORT = 8766;
+
+// ── Stats (followers + revenue) ───────────────────────────────────────────────
+function readStats() {
+  try { return JSON.parse(fs.readFileSync(STATS_FILE, 'utf8')); }
+  catch { return { followers: 0, revenue_today: 0, revenue_month: 0, updated: null, tiktok_scraped: null }; }
+}
+
+function writeStats(data) {
+  fs.writeFileSync(STATS_FILE, JSON.stringify({ ...readStats(), ...data, updated: new Date().toISOString() }, null, 2));
+}
+
+async function scrapeTikTokFollowers() {
+  return new Promise(resolve => {
+    const options = {
+      hostname: 'www.tiktok.com',
+      path: '/@mahoraga_zen',
+      method: 'GET',
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/120.0 Safari/537.36',
+        'Accept-Language': 'th-TH,th;q=0.9,en;q=0.8',
+      },
+    };
+    const req = https.request(options, res => {
+      let html = '';
+      res.on('data', c => html += c);
+      res.on('end', () => {
+        const patterns = [
+          /followerCount[":\s]+(\d+)/,
+          /(\d[\d,]+)\s*Followers/,
+          /"follower_count":(\d+)/,
+          /"fans":(\d+)/,
+        ];
+        let count = null;
+        for (const p of patterns) {
+          const m = html.match(p);
+          if (m) { count = parseInt(m[1].replace(/,/g, ''), 10); break; }
+        }
+        resolve(count);
+      });
+    });
+    req.on('error', () => resolve(null));
+    req.setTimeout(10000, () => { req.destroy(); resolve(null); });
+    req.end();
+  });
+}
+
+async function refreshFollowers() {
+  const count = await scrapeTikTokFollowers();
+  if (count !== null) {
+    const prev = readStats().followers || 0;
+    writeStats({ followers: count, tiktok_scraped: new Date().toISOString() });
+    console.log(`[stats] TikTok followers: ${count}${count !== prev ? ` (was ${prev})` : ''}`);
+    if (count !== prev && prev > 0) {
+      const diff = count - prev;
+      tgSend(`📊 <b>PANTHEON · TikTok อัปเดต</b>\n@mahoraga_zen: <b>${count.toLocaleString()}</b> followers ${diff > 0 ? `(+${diff} 🎉)` : `(${diff})`}`);
+    }
+  }
+}
+
+// Scrape on start + every 30 min
+refreshFollowers();
+setInterval(refreshFollowers, 30 * 60 * 1000);
 
 // ── Telegram notify ───────────────────────────────────────────────────────────
 const TG_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
@@ -154,6 +220,21 @@ const server = http.createServer(async (req, res) => {
   const parts = url.pathname.split('/').filter(Boolean); // ['api','tasks',id?]
 
   if (req.method === 'OPTIONS') return send(res, 200, {});
+
+  // GET /api/stats
+  if (req.method === 'GET' && parts[1] === 'stats') {
+    return send(res, 200, readStats());
+  }
+
+  // POST /api/stats — update revenue from Caishen modal
+  if (req.method === 'POST' && parts[1] === 'stats') {
+    const body = await readBody(req);
+    writeStats(body);
+    if (body.revenue_today !== undefined) {
+      tgSend(`💰 <b>PANTHEON · ไฉเสินอัปเดตยอด</b>\nรายได้วันนี้: <b>฿${Number(body.revenue_today).toLocaleString()}</b>${body.revenue_month ? `\nเดือนนี้: ฿${Number(body.revenue_month).toLocaleString()}` : ''}`);
+    }
+    return send(res, 200, readStats());
+  }
 
   // GET /api/tasks[?assignee=X&status=Y]
   if (req.method === 'GET' && parts[1] === 'tasks' && !parts[2]) {

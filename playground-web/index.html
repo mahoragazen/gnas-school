@@ -22,11 +22,15 @@
     <div class="stats">
       <div class="stat">
         <span class="stat-label">รายได้วันนี้</span>
-        <span class="stat-value" id="todayRevenue">฿42,580</span>
+        <span class="stat-value" id="todayRevenue">฿—</span>
       </div>
       <div class="stat">
-        <span class="stat-label">งานคิว</span>
-        <span class="stat-value neon-teal" id="queueCount">7</span>
+        <span class="stat-label">ผู้ติดตาม</span>
+        <span class="stat-value neon-pink" id="followerCount">—</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">คิว QA</span>
+        <span class="stat-value neon-teal" id="queueCount">—</span>
       </div>
       <div class="stat">
         <span class="stat-label">เวลา</span>
@@ -1264,6 +1268,16 @@
           <span class="task-badge" id="modalTaskBadge"></span>
         </div>
         <ul class="task-list" id="modalTasks"></ul>
+
+        <!-- ── Caishen only: update revenue ── -->
+        <div id="caishenRevenuePanel" style="display:none">
+          <h3 class="modal-section">อัปเดตยอดรายได้</h3>
+          <div class="create-task-form">
+            <input id="revenueToday" type="number" placeholder="รายได้วันนี้ (฿)">
+            <input id="revenueMonth" type="number" placeholder="รายได้เดือนนี้ (฿) — ไม่บังคับ">
+            <button class="cmd-btn" id="updateRevenueBtn">💰 บันทึกยอด</button>
+          </div>
+        </div>
 
         <!-- ── Mercury only: create task form ── -->
         <div id="mercuryCreatePanel" style="display:none">

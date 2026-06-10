@@ -576,6 +576,7 @@ async function openDeityModal(key) {
   // show/hide special panels
   document.getElementById('mercuryCreatePanel').style.display = key === 'mercury' ? 'block' : 'none';
   document.getElementById('qaReviewPanel').style.display = key === 'baozheng' ? 'block' : 'none';
+  document.getElementById('caishenRevenuePanel').style.display = key === 'caishen' ? 'block' : 'none';
 
   // load live tasks from Obsidian API
   const tasks = await apiFetch(`${TASK_API}?assignee=${key}`) || [];
@@ -662,6 +663,49 @@ logClose.addEventListener('click', () => logbook.classList.remove('open'));
 // ===== Task badge (real pending_qa count) =====
 refreshTaskBadge();
 setInterval(refreshTaskBadge, 15000);
+
+// ===== Real stats feed (followers + revenue) =====
+const STATS_API = 'http://localhost:8766/api/stats';
+
+async function refreshStats() {
+  const stats = await apiFetch(STATS_API);
+  if (!stats) return;
+  // followers
+  if (stats.followers) {
+    const el = document.getElementById('queueCount');
+    // repurpose or find follower element — use header queue slot for followers
+    const followerEl = document.getElementById('followerCount');
+    if (followerEl) followerEl.textContent = stats.followers.toLocaleString();
+  }
+  // revenue
+  if (stats.revenue_today !== undefined && stats.revenue_today > 0) {
+    const revEl = document.getElementById('todayRevenue');
+    if (revEl) {
+      revEl.textContent = `฿${Number(stats.revenue_today).toLocaleString()}`;
+    }
+  }
+}
+
+refreshStats();
+setInterval(refreshStats, 2 * 60 * 1000);
+
+// Caishen update revenue
+document.getElementById('updateRevenueBtn')?.addEventListener('click', async () => {
+  const today = document.getElementById('revenueToday').value;
+  if (!today) return;
+  const month = document.getElementById('revenueMonth').value;
+  const payload = { revenue_today: Number(today) };
+  if (month) payload.revenue_month = Number(month);
+  await apiFetch(STATS_API, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  addLogEntry({ d: 'caishen', m: `💰 อัปเดตยอดวันนี้: ฿${Number(today).toLocaleString()}` });
+  document.getElementById('revenueToday').value = '';
+  document.getElementById('revenueMonth').value = '';
+  refreshStats();
+  modal.hidden = true;
+});
 
 const revEl = document.getElementById('todayRevenue');
 let revenue = 42580;
