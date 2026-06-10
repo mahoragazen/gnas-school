@@ -666,9 +666,12 @@ setInterval(refreshTaskBadge, 15000);
 
 // ===== Real stats feed (followers + revenue) =====
 const STATS_API = 'http://localhost:8766/api/stats';
+const STATS_STATIC = 'data/stats.json';
 
 async function refreshStats() {
-  const stats = await apiFetch(STATS_API);
+  // try live API first, fall back to pre-baked static JSON
+  let stats = await apiFetch(STATS_API);
+  if (!stats) stats = await apiFetch(STATS_STATIC + '?cb=' + Math.floor(Date.now()/3600000));
   if (!stats) return;
   // followers
   if (stats.followers) {

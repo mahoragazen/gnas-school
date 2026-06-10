@@ -1,0 +1,78 @@
+name: Update PANTHEON stats
+
+on:
+  schedule:
+    # Every 6 hours (00:00, 06:00, 12:00, 18:00 UTC = 07:00, 13:00, 19:00, 01:00 ICT)
+    - cron: '0 0,6,12,18 * * *'
+  workflow_dispatch: # allow manual trigger
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Scrape TikTok followers
+        id: scrape
+        run: |
+          python3 << 'EOF'
+          import urllib.request, re, json, os
+          from datetime import datetime, timezone
+
+          url = "https://www.tiktok.com/@mahoraga_zen"
+          req = urllib.request.Request(url, headers={
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/120.0 Safari/537.36",
+            "Accept-Language": "th-TH,th;q=0.9,en;q=0.8",
+          })
+          try:
+            with urllib.request.urlopen(req, timeout=15) as r:
+              html = r.read().decode("utf-8", errors="ignore")
+          except Exception as e:
+            print(f"fetch error: {e}")
+            html = ""
+
+          followers = None
+          for pattern in [
+            r'followerCount[":\s]+(\d+)',
+            r'(\d[\d,]+)\s*Followers',
+            r'"follower_count":(\d+)',
+            r'"fans":(\d+)',
+          ]:
+            m = re.search(pattern, html)
+            if m:
+              followers = int(m.group(1).replace(",", ""))
+              break
+
+          stats_path = "playground-web/data/stats.json"
+          try:
+            with open(stats_path) as f:
+              stats = json.load(f)
+          except:
+            stats = {}
+
+          now = datetime.now(timezone.utc).isoformat()
+          if followers is not None:
+            stats["followers"] = followers
+            stats["tiktok_scraped"] = now
+          stats["updated"] = now
+
+          with open(stats_path, "w") as f:
+            json.dump(stats, f, indent=2, ensure_ascii=False)
+
+          print(f"followers={followers}, updated={now}")
+          if followers:
+            print(f"::set-output name=followers::{followers}")
+          EOF
+
+      - name: Commit updated stats
+        run: |
+          git config user.name "PANTHEON Bot"
+          git config user.email "pantheon-bot@mahoraga.zen"
+          git add playground-web/data/stats.json
+          git diff --staged --quiet || git commit -m "chore: update stats $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push origin main
