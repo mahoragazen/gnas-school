@@ -545,6 +545,83 @@ h1, h2, h3 { font-weight: 800; line-height: 1.2; }
 .log-deity { color: var(--neon-pink); font-weight: 600; min-width: 92px; flex-shrink: 0; }
 .log-msg { color: var(--parchment); flex: 1; }
 
+/* ===== Day / night ambiance ===== */
+.daynight {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 8;
+  mix-blend-mode: multiply;
+  background: rgba(255,250,230,0.04);
+  transition: background 4s ease;
+}
+/* gods glow brighter in the dark */
+body.night .deity-glow { opacity: 0.65 !important; }
+body.night .daynight { box-shadow: inset 0 0 200px rgba(20,30,70,0.5); }
+
+/* ===== Orchestration pulse (Mercury -> deity) ===== */
+.orch-pulse {
+  position: absolute;
+  width: 18px; height: 18px; margin: -9px 0 0 -9px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #5ee3d8 0%, rgba(94,227,216,0.4) 50%, transparent 70%);
+  box-shadow: 0 0 14px #5ee3d8;
+  pointer-events: none;
+  z-index: 7;
+  transition: left 1.15s ease-in, top 1.15s ease-in, opacity 1.15s ease-in;
+}
+
+/* ===== Council ===== */
+.council-btn { color: var(--gold); }
+.council-btn.active { background: var(--torii); color: var(--parchment); }
+.council-banner {
+  position: fixed;
+  top: 104px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px 10px 18px;
+  background: linear-gradient(180deg, rgba(193,77,58,0.96), rgba(122,42,31,0.96));
+  color: var(--parchment);
+  border: 3px solid var(--gold);
+  box-shadow: 4px 4px 0 var(--border), 0 0 24px rgba(212,175,55,0.5);
+  font-family: 'Sarabun', sans-serif;
+  font-size: 15px;
+  z-index: 90;
+  animation: council-drop 0.4s ease-out;
+}
+@keyframes council-drop {
+  from { transform: translate(-50%, -20px); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
+}
+.council-icon { font-size: 20px; }
+.council-banner b { color: var(--gold); }
+.council-banner button {
+  padding: 5px 10px;
+  background: var(--ink-deep);
+  color: var(--parchment);
+  font-family: 'VT323', monospace;
+  font-size: 15px;
+  border: 2px solid var(--gold);
+}
+.council-banner button:hover { background: var(--crimson); }
+/* deity tokens that gather on the cushions */
+.council-token {
+  position: absolute;
+  width: 44px; height: 44px; margin: -22px 0 0 -22px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  background: rgba(244,236,216,0.95);
+  border: 3px solid var(--torii);
+  border-radius: 50%;
+  box-shadow: 0 0 14px rgba(212,175,55,0.6), 2px 2px 0 var(--border);
+  opacity: 0; transform: scale(0.4);
+  transition: opacity 0.4s, transform 0.4s;
+  z-index: 6;
+  pointer-events: none;
+}
+.council-token.show { opacity: 1; transform: scale(1); }
+/* highlight the meeting ring while council is in session */
+body.council .deity.mercury .deity-glow { opacity: 0.7 !important; animation-duration: 1.4s; }
+
 /* ===== Modal ===== */
 .modal-backdrop {
   position: fixed; inset: 0;

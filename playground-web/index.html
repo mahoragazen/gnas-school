@@ -44,6 +44,14 @@
     <button id="zoomIn" aria-label="ซูมเข้า">+</button>
     <button id="zoomOut" aria-label="ซูมออก">−</button>
     <button id="zoomReset" aria-label="รีเซ็ต">⤢</button>
+    <button id="councilBtn" class="council-btn" aria-label="เรียกประชุมสภา">⚖</button>
+  </div>
+
+  <!-- Council banner -->
+  <div class="council-banner" id="councilBanner" hidden>
+    <span class="council-icon">🏛️</span>
+    <span class="council-text">สภาเทพกำลังประชุม · <b>Mercury</b> เป็นประธาน</span>
+    <button id="councilEnd" aria-label="ปิดประชุม">ปิดประชุม ✕</button>
   </div>
 
   <!-- Minimap -->
@@ -275,6 +283,7 @@
       </div>
     </button>
     </div>
+    <div class="daynight" id="daynight"></div>
   </div>
 
   <!-- ===== ACTIVITY LOG DRAWER ===== -->

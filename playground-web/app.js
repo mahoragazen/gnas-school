@@ -180,6 +180,7 @@ for (let i = 0; i < 6; i++) {
 function streamLog() {
   const next = LOG_MESSAGES[logIdx % LOG_MESSAGES.length];
   addLogEntry(next);
+  if (next.d && next.d !== 'mercury' && typeof sendPulse === 'function') sendPulse(next.d);
   logIdx++;
   setTimeout(streamLog, 4000 + Math.random() * 3000);
 }
@@ -347,6 +348,83 @@ onboardClose.addEventListener('click', dismissHint);
 setTimeout(dismissHint, 8000);
 // also dismiss on first interaction
 viewport.addEventListener('pointerdown', dismissHint, { once: true });
+
+// ===== Day / night ambiance (tied to real clock) =====
+const daynight = document.getElementById('daynight');
+function updateDayNight() {
+  const h = new Date().getHours();
+  let bg, night = false;
+  if (h >= 5 && h < 8)        bg = 'rgba(255,190,130,0.16)';  // dawn
+  else if (h >= 8 && h < 16)  bg = 'rgba(255,250,230,0.03)';  // day
+  else if (h >= 16 && h < 19) bg = 'rgba(255,140,80,0.20)';   // dusk
+  else { bg = 'rgba(40,55,110,0.42)'; night = true; }         // night
+  daynight.style.background = bg;
+  document.body.classList.toggle('night', night);
+}
+updateDayNight();
+setInterval(updateDayNight, 60000);
+
+// ===== Orchestration pulse: Mercury -> deity along the paths =====
+const DEITY_POS = {
+  uzume:[320,360], cangjie:[600,320], cupid:[880,360],
+  ebisu:[1520,360], caishen:[1800,320], vulcan:[2080,360],
+  ceres:[560,1360], tenjin:[1200,1360], niuwang:[1840,1360]
+};
+function sendPulse(key) {
+  const t = DEITY_POS[key];
+  if (!t) return;
+  const p = document.createElement('div');
+  p.className = 'orch-pulse';
+  p.style.left = '1200px'; p.style.top = '860px';
+  world.appendChild(p);
+  requestAnimationFrame(() => {
+    p.style.left = t[0] + 'px';
+    p.style.top = t[1] + 'px';
+    p.style.opacity = '0.15';
+  });
+  setTimeout(() => p.remove(), 1300);
+}
+
+// ===== Council: summon the pantheon to the central plaza =====
+const councilBtn = document.getElementById('councilBtn');
+const councilBanner = document.getElementById('councilBanner');
+const councilEnd = document.getElementById('councilEnd');
+const CUSHIONS = [[1200,952],[1320,997],[1320,1067],[1200,1112],[1080,1067],[1080,997]];
+const COUNCIL_MEMBERS = [['uzume','🎭'],['cangjie','📿'],['ebisu','💰'],['vulcan','🔧'],['caishen','💎'],['ceres','🍱']];
+let councilTokens = [], councilOn = false;
+function buildCouncilTokens() {
+  COUNCIL_MEMBERS.forEach(([key, emoji], i) => {
+    const t = document.createElement('div');
+    t.className = 'council-token';
+    t.textContent = emoji;
+    t.style.left = CUSHIONS[i][0] + 'px';
+    t.style.top = CUSHIONS[i][1] + 'px';
+    world.appendChild(t);
+    councilTokens.push(t);
+  });
+}
+function toggleCouncil() {
+  councilOn = !councilOn;
+  if (!councilOn) { endCouncil(); return; }
+  if (!councilTokens.length) buildCouncilTokens();
+  focusWorld(1200, 1010, 0.95);
+  councilBanner.hidden = false;
+  councilBtn.classList.add('active');
+  document.body.classList.add('council');
+  councilTokens.forEach((t, i) => setTimeout(() => t.classList.add('show'), 120 * i));
+  addLogEntry({ d: 'mercury', m: '⚖️ เรียกประชุมสภาเทพทั้งสิบ ณ ลานกลาง' });
+  COUNCIL_MEMBERS.forEach(([key], i) =>
+    setTimeout(() => addLogEntry({ d: key, m: 'เข้าร่วมประชุมสภา' }), 300 + 120 * i));
+}
+function endCouncil() {
+  councilOn = false;
+  councilBanner.hidden = true;
+  councilBtn.classList.remove('active');
+  document.body.classList.remove('council');
+  councilTokens.forEach(t => t.classList.remove('show'));
+}
+councilBtn.addEventListener('click', toggleCouncil);
+councilEnd.addEventListener('click', endCouncil);
 
 // ===== Modal =====
 const modal = document.getElementById('modal');
