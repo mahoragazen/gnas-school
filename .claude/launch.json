@@ -6,6 +6,12 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8765", "-d", "playground-web"],
       "port": 8765
+    },
+    {
+      "name": "task-api",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["playground-web/task-api.js"],
+      "port": 8766
     }
   ]
 }
