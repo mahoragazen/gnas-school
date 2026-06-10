@@ -2,13 +2,6 @@
 
 [build]
   publish = "."
-  command = "mkdir -p playground && cp -r playground-web/* playground/"
-
-# PANTHEON playground SPA fallback
-[[redirects]]
-  from = "/playground/*"
-  to = "/playground/index.html"
-  status = 200
 
 # Root site SPA fallback
 [[redirects]]
