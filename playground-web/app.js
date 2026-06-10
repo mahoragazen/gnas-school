@@ -419,8 +419,8 @@ function sendPulse(key) {
 const councilBtn = document.getElementById('councilBtn');
 const councilBanner = document.getElementById('councilBanner');
 const councilEnd = document.getElementById('councilEnd');
-const CUSHIONS = [[1200,952],[1320,997],[1320,1067],[1200,1112],[1080,1067],[1080,997]];
-const COUNCIL_MEMBERS = [['uzume','🎭'],['cangjie','📿'],['ebisu','💰'],['vulcan','🔧'],['caishen','💎'],['ceres','🍱']];
+const CUSHIONS = [[1200,942],[1340,970],[1370,1032],[1320,1095],[1200,1122],[1080,1095],[1030,1032],[1060,970]];
+const COUNCIL_MEMBERS = [['uzume','🎭'],['cangjie','📿'],['ebisu','💰'],['vulcan','🔧'],['caishen','💎'],['ceres','🍱'],['konohana','🌸'],['baozheng','⚖']];
 let councilTokens = [], councilOn = false;
 function buildCouncilTokens() {
   COUNCIL_MEMBERS.forEach(([key, emoji], i) => {
