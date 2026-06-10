@@ -467,9 +467,101 @@ const modalTasks = document.getElementById('modalTasks');
 const modalInput = document.getElementById('modalInput');
 const modalSend = document.getElementById('modalSend');
 
-function openDeityModal(key) {
+const TASK_API = 'http://localhost:8766/api/tasks';
+let currentDeityKey = null;
+
+const STATUS_LABEL = {
+  todo: '⬜ ยังไม่เริ่ม',
+  in_progress: '🔵 กำลังทำ',
+  pending_qa: '🟡 รอ QA',
+  approved: '✅ อนุมัติ',
+  rejected: '🔴 ตีกลับ',
+};
+const STATUS_COLOR = {
+  todo: '#888', in_progress: '#5ee3d8', pending_qa: '#d4af37',
+  approved: '#6dd66b', rejected: '#c8553d',
+};
+
+async function apiFetch(url, opts = {}) {
+  try {
+    const r = await fetch(url, opts);
+    return r.ok ? r.json() : null;
+  } catch { return null; }
+}
+
+function taskItemHtml(t, viewerKey) {
+  const statusLabel = STATUS_LABEL[t.status] || t.status;
+  const color = STATUS_COLOR[t.status] || '#888';
+  let actions = '';
+  if (t.status === 'todo' && t.assignee === viewerKey) {
+    actions = `<button class="task-action-btn" onclick="updateTaskStatus('${t.id}','in_progress')">▶ เริ่ม</button>`;
+  } else if (t.status === 'in_progress' && t.assignee === viewerKey) {
+    actions = `<button class="task-action-btn submit" onclick="updateTaskStatus('${t.id}','pending_qa')">📤 ส่ง QA</button>`;
+  } else if (t.status === 'rejected' && t.assignee === viewerKey) {
+    const note = t.qa_note ? t.qa_note.replace(/^"|"$/g, '') : '';
+    actions = `<span class="qa-note">💬 ${note || 'ตีกลับ'}</span>
+      <button class="task-action-btn" onclick="updateTaskStatus('${t.id}','in_progress')">↩ แก้ไข</button>`;
+  }
+  return `<li class="task-item" data-id="${t.id}" data-status="${t.status}">
+    <span class="task-status-dot" style="background:${color}"></span>
+    <span class="task-title">${t.title}</span>
+    <span class="task-status-label" style="color:${color}">${statusLabel}</span>
+    ${actions}
+  </li>`;
+}
+
+async function updateTaskStatus(id, status, qaNote) {
+  const body = { status };
+  if (qaNote !== undefined) body.qa_note = qaNote;
+  await apiFetch(`${TASK_API}/${id}`, {
+    method: 'PUT', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  addLogEntry({ d: currentDeityKey || 'mercury', m: `สถานะงาน "${id.slice(-6)}" → ${STATUS_LABEL[status]}` });
+  refreshTaskBadge();
+  if (currentDeityKey) openDeityModal(currentDeityKey);
+}
+window.updateTaskStatus = updateTaskStatus;
+
+async function qaApprove(id) {
+  await apiFetch(`${TASK_API}/${id}`, {
+    method: 'PUT', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status: 'approved' }),
+  });
+  addLogEntry({ d: 'baozheng', m: `✅ อนุมัติงาน "${id.slice(-6)}"` });
+  refreshTaskBadge();
+  openDeityModal('baozheng');
+}
+window.qaApprove = qaApprove;
+
+async function qaReject(id) {
+  const note = prompt('เหตุผลที่ตีกลับ:');
+  if (note === null) return;
+  await apiFetch(`${TASK_API}/${id}`, {
+    method: 'PUT', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status: 'rejected', qa_note: note }),
+  });
+  addLogEntry({ d: 'baozheng', m: `🔴 ตีกลับงาน "${id.slice(-6)}": ${note}` });
+  refreshTaskBadge();
+  openDeityModal('baozheng');
+}
+window.qaReject = qaReject;
+
+async function refreshTaskBadge() {
+  const tasks = await apiFetch(`${TASK_API}?status=pending_qa`);
+  const count = tasks ? tasks.length : 0;
+  const badge = document.getElementById('qaQueueCount');
+  if (badge) badge.textContent = count;
+  // header badge
+  const hb = document.getElementById('queueCount');
+  if (hb) hb.textContent = count;
+}
+
+async function openDeityModal(key) {
   const d = DEITIES[key];
   if (!d) return;
+  currentDeityKey = key;
+
   modalAvatar.textContent = d.emoji;
   modalName.textContent = `${d.name} · ${d.en}`;
   modalRole.textContent = `${d.role} · เทพ${d.pantheon}`;
@@ -480,14 +572,62 @@ function openDeityModal(key) {
       <div class="l">${s.l}</div>
     </div>
   `).join('');
-  modalTasks.innerHTML = d.tasks.map(t => {
-    const done = t.startsWith('✓');
-    return `<li class="${done ? 'done' : ''}">${t}</li>`;
-  }).join('');
+
+  // show/hide special panels
+  document.getElementById('mercuryCreatePanel').style.display = key === 'mercury' ? 'block' : 'none';
+  document.getElementById('qaReviewPanel').style.display = key === 'baozheng' ? 'block' : 'none';
+
+  // load live tasks from Obsidian API
+  const tasks = await apiFetch(`${TASK_API}?assignee=${key}`) || [];
+  const activeTasks = tasks.filter(t => t.status !== 'approved');
+  const badge = document.getElementById('modalTaskBadge');
+  badge.textContent = activeTasks.length ? `${activeTasks.length}` : '';
+  badge.style.display = activeTasks.length ? 'inline-block' : 'none';
+  modalTasks.innerHTML = activeTasks.length
+    ? activeTasks.map(t => taskItemHtml(t, key)).join('')
+    : '<li class="task-empty">ไม่มีงานค้าง</li>';
+
+  // Bao Zheng QA queue
+  if (key === 'baozheng') {
+    const pending = await apiFetch(`${TASK_API}?status=pending_qa`) || [];
+    const qList = document.getElementById('qaReviewList');
+    const qCount = document.getElementById('qaQueueCount');
+    qCount.textContent = pending.length;
+    qList.innerHTML = pending.length
+      ? pending.map(t => `
+          <li class="task-item qa-item">
+            <span class="task-status-dot" style="background:#d4af37"></span>
+            <span class="task-title">${t.title}</span>
+            <span class="task-assignee">[${t.assignee}]</span>
+            <button class="task-action-btn submit" onclick="qaApprove('${t.id}')">✓ อนุมัติ</button>
+            <button class="task-action-btn reject" onclick="qaReject('${t.id}')">✗ ตีกลับ</button>
+          </li>`).join('')
+      : '<li class="task-empty">ไม่มีงานรอตรวจ</li>';
+  }
+
   modalInput.value = '';
   modal.hidden = false;
   setTimeout(() => modalInput.focus(), 100);
 }
+
+// Mercury: create task
+document.getElementById('createTaskBtn')?.addEventListener('click', async () => {
+  const title = document.getElementById('newTaskTitle').value.trim();
+  if (!title) return;
+  const assignee = document.getElementById('newTaskAssignee').value;
+  const type = document.getElementById('newTaskType').value;
+  const body = document.getElementById('newTaskBody').value.trim();
+  const task = await apiFetch(TASK_API, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title, assignee, type, body, creator: 'mercury' }),
+  });
+  if (task) {
+    addLogEntry({ d: 'mercury', m: `📋 มอบหมายงาน "${title}" → ${DEITIES[assignee]?.name || assignee}` });
+    document.getElementById('newTaskTitle').value = '';
+    document.getElementById('newTaskBody').value = '';
+    openDeityModal('mercury');
+  }
+});
 
 document.querySelectorAll('[data-deity]').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -519,13 +659,9 @@ const logClose = document.getElementById('logClose');
 logToggle.addEventListener('click', () => logbook.classList.toggle('open'));
 logClose.addEventListener('click', () => logbook.classList.remove('open'));
 
-// ===== Tickers =====
-const queueEl = document.getElementById('queueCount');
-let queue = 7;
-setInterval(() => {
-  queue = Math.max(0, queue + (Math.random() < 0.4 ? -1 : Math.random() < 0.6 ? 0 : 1));
-  queueEl.textContent = queue;
-}, 5000);
+// ===== Task badge (real pending_qa count) =====
+refreshTaskBadge();
+setInterval(refreshTaskBadge, 15000);
 
 const revEl = document.getElementById('todayRevenue');
 let revenue = 42580;

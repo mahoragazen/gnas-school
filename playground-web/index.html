@@ -1254,11 +1254,57 @@
           <p id="modalRole">บทบาท</p>
         </div>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="modalBody">
         <p class="modal-desc" id="modalDesc">รายละเอียดเทพ</p>
         <div class="modal-stats" id="modalStats"></div>
-        <h3 class="modal-section">งานวันนี้</h3>
+
+        <!-- ── Live task list (from Obsidian) ── -->
+        <div class="modal-tasks-header">
+          <h3 class="modal-section">งานที่รับผิดชอบ</h3>
+          <span class="task-badge" id="modalTaskBadge"></span>
+        </div>
         <ul class="task-list" id="modalTasks"></ul>
+
+        <!-- ── Mercury only: create task form ── -->
+        <div id="mercuryCreatePanel" style="display:none">
+          <h3 class="modal-section">มอบหมายงานใหม่</h3>
+          <div class="create-task-form">
+            <input id="newTaskTitle" type="text" placeholder="ชื่องาน เช่น เขียน carousel #44">
+            <div class="create-task-row">
+              <select id="newTaskAssignee">
+                <option value="cangjie">ฉางเจี๋ย — Content</option>
+                <option value="uzume">อูซูเมะ — Live</option>
+                <option value="cupid">คิวปิด — Ads</option>
+                <option value="ebisu">เอบิสุ — Product</option>
+                <option value="caishen">ไฉเสิน — Finance</option>
+                <option value="vulcan">วัลแคน — Inventory</option>
+                <option value="ceres">เซเรส — Delivery</option>
+                <option value="tenjin">เทนจิน — GNAS</option>
+                <option value="niuwang">หนิวหวัง — North14</option>
+                <option value="konohana">โคโนะฮานะ — HR</option>
+                <option value="baozheng">เปาเจิ้ง — QA</option>
+              </select>
+              <select id="newTaskType">
+                <option value="content">content</option>
+                <option value="ads">ads</option>
+                <option value="finance">finance</option>
+                <option value="hr">hr</option>
+                <option value="legal">legal</option>
+                <option value="ops">ops</option>
+                <option value="general">general</option>
+              </select>
+            </div>
+            <textarea id="newTaskBody" rows="2" placeholder="รายละเอียดเพิ่มเติม (ไม่บังคับ)"></textarea>
+            <button class="cmd-btn" id="createTaskBtn">✦ มอบหมายงาน</button>
+          </div>
+        </div>
+
+        <!-- ── Bao Zheng only: QA review queue ── -->
+        <div id="qaReviewPanel" style="display:none">
+          <h3 class="modal-section">รอตรวจสอบ <span id="qaQueueCount" class="task-badge">0</span></h3>
+          <ul class="task-list" id="qaReviewList"></ul>
+        </div>
+
         <div class="modal-cmd">
           <input type="text" placeholder="สั่งงานเทพองค์นี้ (เช่น 'เขียน carousel หัวข้อพระอาทิตย์')" id="modalInput">
           <button class="cmd-btn" id="modalSend">ส่งคำสั่ง ✨</button>

@@ -859,15 +859,77 @@ body.council .deity.mercury .deity-glow { opacity: 0.7 !important; animation-dur
   margin-bottom: 10px;
   letter-spacing: 1px;
 }
-.task-list { list-style: none; }
-.task-list li {
-  padding: 9px 12px;
+.modal-tasks-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.modal-tasks-header .modal-section { margin-bottom: 0; }
+.task-badge {
+  display: inline-block;
+  background: var(--crimson);
+  color: #fff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  padding: 2px 7px;
+  border: 2px solid var(--border);
+  border-radius: 2px;
+}
+
+.task-list { list-style: none; margin-bottom: 10px; }
+.task-item {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: 8px 10px;
   background: rgba(244,236,216,0.7);
-  border-left: var(--pixel) solid var(--neon-teal);
-  margin-bottom: 6px;
-  font-size: 13px;
+  border-left: 4px solid var(--neon-teal);
+  margin-bottom: 5px;
+  font-size: 12px;
   color: var(--ink-deep);
 }
+.task-item[data-status="pending_qa"] { border-left-color: var(--gold); }
+.task-item[data-status="rejected"]   { border-left-color: var(--crimson); background: rgba(200,85,61,0.08); }
+.task-item[data-status="approved"]   { border-left-color: #6dd66b; opacity: 0.6; }
+.task-status-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.task-title { flex: 1; font-size: 13px; }
+.task-status-label { font-size: 10px; font-family: 'Press Start 2P', monospace; letter-spacing: 0; }
+.task-assignee { font-size: 10px; color: var(--ink-light); }
+.task-empty { color: var(--ink-light); font-style: italic; padding: 8px; }
+.qa-note { font-size: 11px; color: var(--crimson); }
+
+.task-action-btn {
+  padding: 3px 9px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  background: var(--parchment-dark);
+  border: 2px solid var(--border);
+  box-shadow: 2px 2px 0 var(--border);
+  cursor: pointer; white-space: nowrap;
+}
+.task-action-btn:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--border); }
+.task-action-btn:active { transform: translate(1px,1px); box-shadow: none; }
+.task-action-btn.submit { background: var(--neon-teal); }
+.task-action-btn.reject { background: var(--crimson); color: #fff; }
+
+/* Mercury create-task form */
+.create-task-form { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.create-task-form input[type="text"],
+.create-task-form textarea {
+  padding: 8px 12px;
+  font-family: 'Sarabun', sans-serif; font-size: 13px;
+  background: var(--parchment-dark);
+  border: 3px solid var(--border);
+  outline: none; color: var(--ink-deep);
+  resize: vertical;
+}
+.create-task-form input:focus,
+.create-task-form textarea:focus { background: var(--parchment); }
+.create-task-row { display: flex; gap: 8px; }
+.create-task-row select {
+  flex: 1; padding: 7px 10px;
+  font-family: 'Sarabun', sans-serif; font-size: 12px;
+  background: var(--parchment-dark);
+  border: 3px solid var(--border);
+  color: var(--ink-deep); outline: none;
+}
+
 .task-list li.done { opacity: 0.5; text-decoration: line-through; border-left-color: var(--ink-light); }
 .modal-cmd {
   margin-top: 18px;

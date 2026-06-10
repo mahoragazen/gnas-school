@@ -1,0 +1,156 @@
+#!/usr/bin/env node
+// PANTHEON Task API — bridges PANTHEON UI ↔ Obsidian wiki/tasks/*.md
+// Port 8766. Reads/writes markdown files with YAML frontmatter.
+
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
+
+const TASKS_DIR = path.join(
+  process.env.HOME,
+  'internalMac/Obsidian/Obsidian Vault/wiki/tasks'
+);
+const PORT = 8766;
+
+// ── YAML frontmatter helpers ──────────────────────────────────────────────────
+function parseFrontmatter(content) {
+  const m = content.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+  if (!m) return { meta: {}, body: content };
+  const meta = {};
+  m[1].split('\n').forEach(line => {
+    const [k, ...v] = line.split(':');
+    if (k) meta[k.trim()] = v.join(':').trim().replace(/^"(.*)"$/, '$1');
+  });
+  return { meta, body: m[2].trim() };
+}
+
+function buildFrontmatter(meta, body) {
+  const fm = Object.entries(meta).map(([k, v]) => `${k}: ${v}`).join('\n');
+  return `---\n${fm}\n---\n${body ? '\n' + body : ''}`;
+}
+
+// ── File I/O ──────────────────────────────────────────────────────────────────
+function listTasks() {
+  if (!fs.existsSync(TASKS_DIR)) return [];
+  return fs.readdirSync(TASKS_DIR)
+    .filter(f => f.endsWith('.md'))
+    .map(f => {
+      const raw = fs.readFileSync(path.join(TASKS_DIR, f), 'utf8');
+      const { meta, body } = parseFrontmatter(raw);
+      return { ...meta, body, _file: f };
+    })
+    .sort((a, b) => (b.created || '').localeCompare(a.created || ''));
+}
+
+function getTask(id) {
+  const all = listTasks();
+  return all.find(t => t.id === id);
+}
+
+function writeTask(meta, body = '') {
+  const filename = `${meta.id}.md`;
+  fs.writeFileSync(path.join(TASKS_DIR, filename), buildFrontmatter(meta, body));
+}
+
+function deleteTask(id) {
+  const task = getTask(id);
+  if (!task) return false;
+  fs.unlinkSync(path.join(TASKS_DIR, task._file));
+  return true;
+}
+
+// ── HTTP server ───────────────────────────────────────────────────────────────
+function send(res, status, data) {
+  const body = JSON.stringify(data);
+  res.writeHead(status, {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  });
+  res.end(body);
+}
+
+function readBody(req) {
+  return new Promise(resolve => {
+    let data = '';
+    req.on('data', c => data += c);
+    req.on('end', () => { try { resolve(JSON.parse(data)); } catch { resolve({}); } });
+  });
+}
+
+const server = http.createServer(async (req, res) => {
+  const url = new URL(req.url, `http://localhost:${PORT}`);
+  const parts = url.pathname.split('/').filter(Boolean); // ['api','tasks',id?]
+
+  if (req.method === 'OPTIONS') return send(res, 200, {});
+
+  // GET /api/tasks[?assignee=X&status=Y]
+  if (req.method === 'GET' && parts[1] === 'tasks' && !parts[2]) {
+    let tasks = listTasks();
+    const assignee = url.searchParams.get('assignee');
+    const status = url.searchParams.get('status');
+    if (assignee) tasks = tasks.filter(t => t.assignee === assignee);
+    if (status) tasks = tasks.filter(t => t.status === status);
+    return send(res, 200, tasks);
+  }
+
+  // GET /api/tasks/:id
+  if (req.method === 'GET' && parts[1] === 'tasks' && parts[2]) {
+    const task = getTask(parts[2]);
+    return task ? send(res, 200, task) : send(res, 404, { error: 'not found' });
+  }
+
+  // POST /api/tasks — create
+  if (req.method === 'POST' && parts[1] === 'tasks') {
+    const body = await readBody(req);
+    const now = new Date().toISOString();
+    const id = 'task-' + now.slice(0, 10).replace(/-/g, '') + '-' + crypto.randomBytes(3).toString('hex');
+    const meta = {
+      id,
+      title: body.title || 'งานใหม่',
+      assignee: body.assignee || 'mercury',
+      creator: body.creator || 'mercury',
+      status: 'todo',
+      type: body.type || 'general',
+      created: now,
+      updated: now,
+      qa_note: '""',
+    };
+    writeTask(meta, body.body || '');
+    return send(res, 201, { ...meta, body: body.body || '' });
+  }
+
+  // PUT /api/tasks/:id — update status/note
+  if (req.method === 'PUT' && parts[1] === 'tasks' && parts[2]) {
+    const existing = getTask(parts[2]);
+    if (!existing) return send(res, 404, { error: 'not found' });
+    const body = await readBody(req);
+    const { _file, body: existingBody, ...meta } = existing;
+    const updated = {
+      ...meta,
+      ...Object.fromEntries(
+        Object.entries(body).filter(([k]) => !['id','created','_file','body'].includes(k))
+      ),
+      updated: new Date().toISOString(),
+    };
+    if (body.qa_note !== undefined) updated.qa_note = `"${body.qa_note}"`;
+    writeTask(updated, body.body ?? existingBody);
+    return send(res, 200, { ...updated, body: body.body ?? existingBody });
+  }
+
+  // DELETE /api/tasks/:id
+  if (req.method === 'DELETE' && parts[1] === 'tasks' && parts[2]) {
+    return deleteTask(parts[2])
+      ? send(res, 200, { deleted: parts[2] })
+      : send(res, 404, { error: 'not found' });
+  }
+
+  send(res, 404, { error: 'route not found' });
+});
+
+server.listen(PORT, () => {
+  console.log(`[PANTHEON Task API] running on http://localhost:${PORT}`);
+  console.log(`[PANTHEON Task API] tasks dir: ${TASKS_DIR}`);
+});
