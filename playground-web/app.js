@@ -27,13 +27,14 @@ const DEITIES = {
     ]
   },
   cangjie: {
-    name: 'ฉางเจี๋ย', en: 'Cangjie 倉頡', role: 'Content Carousel', emoji: '📿',
+    name: 'ฉางเจี๋ย', en: 'Cangjie 倉頡', role: 'Content + Wiki Keeper', emoji: '📿',
     pantheon: 'จีน',
-    desc: 'เทพจีนผู้คิดอักษรจีนทั้งหมด มี 4 ตาเห็นทุกอย่างในจักรวาล — ใช้พรสวรรค์เขียน carousel "7 ข้อคิดจากธรรมชาติ" ทุกสัปดาห์',
-    stats: [{ v: '#43', l: 'หัวข้อล่าสุด' }, { v: '827', l: 'follower' }, { v: '6am', l: 'โพสต์พรุ่งนี้' }],
+    desc: 'เทพจีนผู้คิดอักษรจีนทั้งหมด มี 4 ตาเห็นทุกอย่างในจักรวาล — เขียน carousel "7 ข้อคิดจากธรรมชาติ" + ดูแล Obsidian vault (wiki, knowledge graph, cross-link, _stats.md SSOT)',
+    stats: [{ v: '#43', l: 'หัวข้อล่าสุด' }, { v: '827', l: 'follower' }, { v: 'Obsidian', l: 'vault keeper' }],
     tasks: [
       'เขียน carousel #43 หัวข้อพระอาทิตย์',
-      'ส่งภาพให้ Telegram bot gen',
+      'อัปเดต wiki/_stats.md หลังโพสต์',
+      'cross-link entity ใหม่ใน Obsidian',
       '✓ โพสต์ #42 → 234 view'
     ]
   },
@@ -112,6 +113,30 @@ const DEITIES = {
       'รอ update content ใหม่จากพี่ป้อง',
       'review ยอดขายโคราชวีคนี้'
     ]
+  },
+  konohana: {
+    name: 'โคโนะฮานะซากุยะ', en: 'Konohanasakuya 木花開耶姫', role: 'HR & People', emoji: '🌸',
+    pantheon: 'ญี่ปุ่น',
+    desc: 'เจ้าหญิงดอกซากุระแห่งภูเขาฟูจิ เทพีแห่งความงาม ครอบครัว และคน — ดูแลอาจารย์ญี่ปุ่น GNAS, สัญญาจ้าง, visa, สวัสดิการ, onboarding ทีม + พิธีต้อนรับลูกค้า',
+    stats: [{ v: '2', l: 'อาจารย์ JP' }, { v: '12 ก.ค.', l: 'visa next' }, { v: '0', l: 'ค้างเงินเดือน' }],
+    tasks: [
+      'review สัญญา Tsuguji + Erina',
+      'เตรียมเอกสาร visa Tsuguji ครบกำหนด',
+      'welcome flow ลูกค้าใหม่ NORTH14',
+      '✓ จ่ายเงินเดือน ฿16,500 × 2 คน'
+    ]
+  },
+  baozheng: {
+    name: 'เปาเจิ้ง', en: 'Bao Zheng 包公', role: 'QA & Justice Gate', emoji: '⚖',
+    pantheon: 'จีน',
+    desc: 'ผู้พิพากษาตงฉินแห่งราชวงศ์ซ่ง หน้าดำมีรอยพระจันทร์เสี้ยวบนหน้าผาก เทพแห่งความยุติธรรม — gate อนุมัติงานก่อนปล่อย ตรวจคุณภาพ content/product/legal ป้องกัน PDPA + scam',
+    stats: [{ v: '42', l: 'งานอนุมัติ' }, { v: '3', l: 'รอตรวจ' }, { v: '1', l: 'ตีกลับ' }],
+    tasks: [
+      'ตรวจ carousel #43 ก่อนโพสต์',
+      'review disclaimer NORTH14 yogurt',
+      'audit PDPA Telegram bot',
+      '✓ อนุมัติ carousel #42 (pass)'
+    ]
   }
 };
 
@@ -150,7 +175,11 @@ const LOG_MESSAGES = [
   { d: 'cangjie', m: 'เริ่มเขียน carousel #43 หัวข้อพระอาทิตย์' },
   { d: 'caishen', m: 'รายได้วันนี้แตะ ฿42,580 (เกินเป้า 18%)' },
   { d: 'cupid', m: 'หยุด campaign B อัตโนมัติ (ROAS 1.2)' },
-  { d: 'ceres', m: 'ส่ง order สำเร็จ 8 จาก 12 รายการเช้านี้' }
+  { d: 'ceres', m: 'ส่ง order สำเร็จ 8 จาก 12 รายการเช้านี้' },
+  { d: 'konohana', m: 'อาจารย์ Erina ต่อสัญญา 2569 เรียบร้อย' },
+  { d: 'baozheng', m: '✓ อนุมัติ carousel #42 — pass legal + brand' },
+  { d: 'konohana', m: 'visa Tsuguji ครบ 12 ก.ค. — เตือนล่วงหน้า 33 วัน' },
+  { d: 'baozheng', m: '⚠ ตีกลับ caption ใหม่ (มีคำที่ดู misleading)' }
 ];
 
 const feed = document.getElementById('logFeed');
@@ -368,7 +397,8 @@ setInterval(updateDayNight, 60000);
 const DEITY_POS = {
   uzume:[320,360], cangjie:[600,320], cupid:[880,360],
   ebisu:[1520,360], caishen:[1800,320], vulcan:[2080,360],
-  ceres:[560,1360], tenjin:[1200,1360], niuwang:[1840,1360]
+  ceres:[560,1360], tenjin:[1200,1360], niuwang:[1840,1360],
+  konohana:[1000,880], baozheng:[1400,880]
 };
 function sendPulse(key) {
   const t = DEITY_POS[key];
