@@ -339,6 +339,15 @@ requestAnimationFrame(fitView);
 window.addEventListener('load', fitView);
 setTimeout(fitView, 250);
 
+// ===== Onboarding hint =====
+const onboardHint = document.getElementById('onboardHint');
+const onboardClose = document.getElementById('onboardClose');
+function dismissHint() { onboardHint.classList.add('hide'); }
+onboardClose.addEventListener('click', dismissHint);
+setTimeout(dismissHint, 8000);
+// also dismiss on first interaction
+viewport.addEventListener('pointerdown', dismissHint, { once: true });
+
 // ===== Modal =====
 const modal = document.getElementById('modal');
 const modalName = document.getElementById('modalName');

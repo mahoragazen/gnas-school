@@ -87,6 +87,7 @@
         <g transform="translate(1525,508)"><ellipse rx="13" ry="5" fill="#fff"/><ellipse cx="-3" cy="-1" rx="3" ry="2" fill="#ff7a4a"/></g>
 
         <!-- ===== Central meeting circle ===== -->
+        <g transform="translate(0,52)">
         <!-- stone ground ring -->
         <circle cx="1200" cy="980" r="180" fill="#cdbfa0" opacity="0.45"/>
         <circle cx="1200" cy="980" r="180" fill="none" stroke="#b8a982" stroke-width="6" opacity="0.6"/>
@@ -108,6 +109,7 @@
         <!-- stone lanterns flanking -->
         <g transform="translate(1010,900)"><rect x="-8" y="0" width="16" height="8" fill="#8a7e72"/><rect x="-6" y="-14" width="12" height="14" fill="#a8987c"/><polygon points="-10,-14 10,-14 0,-24" fill="#8a7e72"/><circle cx="0" cy="-7" r="3" fill="#ffb84d"/></g>
         <g transform="translate(1390,900)"><rect x="-8" y="0" width="16" height="8" fill="#8a7e72"/><rect x="-6" y="-14" width="12" height="14" fill="#a8987c"/><polygon points="-10,-14 10,-14 0,-24" fill="#8a7e72"/><circle cx="0" cy="-7" r="3" fill="#ffb84d"/></g>
+        </g>
 
         <!-- mist at top -->
         <ellipse cx="700" cy="60" rx="400" ry="50" fill="#f4ecd8" opacity="0.5" filter="url(#softBlur)"/>
@@ -316,6 +318,12 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- ===== Onboarding hint ===== -->
+  <div class="onboard-hint" id="onboardHint">
+    <span>🖱️ ลากเพื่อเลื่อน · 🔍 สกรอลล์/ปุ่มเพื่อซูม · 👆 คลิกเทพเพื่อสั่งงาน</span>
+    <button id="onboardClose" aria-label="ปิด">✕</button>
   </div>
 
   <script src="app.js"></script>
