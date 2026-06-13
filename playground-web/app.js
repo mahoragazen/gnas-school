@@ -809,17 +809,14 @@ async function refreshStats() {
   if (!stats) return;
   // followers
   if (stats.followers) {
-    const el = document.getElementById('queueCount');
-    // repurpose or find follower element — use header queue slot for followers
     const followerEl = document.getElementById('followerCount');
     if (followerEl) followerEl.textContent = stats.followers.toLocaleString();
   }
-  // revenue
-  if (stats.revenue_today !== undefined && stats.revenue_today > 0) {
-    const revEl = document.getElementById('todayRevenue');
-    if (revEl) {
-      revEl.textContent = `฿${Number(stats.revenue_today).toLocaleString()}`;
-    }
+  // reach (30-day, from Prajna analytics)
+  if (stats.recent_reach) {
+    const el = document.getElementById('reachCount');
+    const v = stats.recent_reach;
+    if (el) el.textContent = v >= 1000 ? (v / 1000).toFixed(1).replace(/\.0$/, '') + 'K' : v;
   }
   // top post (from Prajna analytics)
   const tp = document.getElementById('topPost');
