@@ -137,6 +137,18 @@ const DEITIES = {
       'audit PDPA Telegram bot',
       '✓ อนุมัติ carousel #42 (pass)'
     ]
+  },
+  prajna: {
+    name: 'ปรัชญา', en: 'Prajñā 般若', role: 'Growth & Analytics', emoji: '📈',
+    pantheon: 'พุทธ',
+    desc: 'เทพีแห่งปัญญาอันลึกซึ้ง (般若波羅蜜) มีตาที่สามมองเห็นแก่นของทุกสิ่ง ถือคัมภีร์และม้วนข้อมูลเรืองแสง — scrape ยอดวิวทุกโพสต์ TikTok, หาโพสต์ปังสุด, วิเคราะห์ว่าธีมไหนชนะ แล้วบอกทีมว่าควรทำอะไรต่อ',
+    stats: [{ v: '#40', l: 'ปังสุด' }, { v: '7.4K', l: 'วิวสูงสุด' }, { v: '52', l: 'โพสต์ติดตาม' }],
+    tasks: [
+      'scrape ยอดวิวทุกโพสต์ (9:00 + 21:30)',
+      'อัปเดตคิวด้วย views จริง',
+      'หาธีมที่ viral → บอก Cangjie',
+      '✓ เต่า 7,434 · สิงโต 6,759 ครองท็อป'
+    ]
   }
 };
 
@@ -188,7 +200,7 @@ let logIdx = 0;
 function addLogEntry(msgObj, animate = true) {
   const d = DEITIES[msgObj.d] || { name: 'ระบบ' };
   const now = new Date();
-  const time = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  const time = msgObj.time || `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
   const entry = document.createElement('div');
   entry.className = 'log-entry';
   entry.innerHTML = `
@@ -201,10 +213,15 @@ function addLogEntry(msgObj, animate = true) {
   while (feed.children.length > 20) feed.removeChild(feed.lastChild);
 }
 
-for (let i = 0; i < 6; i++) {
-  addLogEntry(LOG_MESSAGES[i], false);
-  logIdx = i + 1;
-}
+// Real feed from agents (local) — demo rotation only as deployed fallback
+const FEED_API = 'http://localhost:8766/api/feed';
+let feedLive = false;
+const seenFeed = new Set();
+const feedKey = it => `${it.t}|${it.m}`;
+const feedTime = iso => {
+  const d = new Date(iso);
+  return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+};
 
 function streamLog() {
   const next = LOG_MESSAGES[logIdx % LOG_MESSAGES.length];
@@ -213,7 +230,35 @@ function streamLog() {
   logIdx++;
   setTimeout(streamLog, 4000 + Math.random() * 3000);
 }
-setTimeout(streamLog, 3000);
+
+async function pollFeed() {
+  const items = await fetch(FEED_API + '?limit=15').then(r => r.ok ? r.json() : null).catch(() => null);
+  if (!items) return;
+  items.slice().reverse().forEach(it => {
+    if (seenFeed.has(feedKey(it))) return;
+    seenFeed.add(feedKey(it));
+    addLogEntry({ d: it.d, m: it.m, time: feedTime(it.t) });
+    if (it.d && it.d !== 'mercury' && typeof sendPulse === 'function') sendPulse(it.d);
+  });
+}
+
+(async () => {
+  const items = await fetch(FEED_API + '?limit=20').then(r => r.ok ? r.json() : null).catch(() => null);
+  if (items && items.length) {
+    feedLive = true;
+    items.forEach(it => {
+      seenFeed.add(feedKey(it));
+      addLogEntry({ d: it.d, m: it.m, time: feedTime(it.t) }, false);
+    });
+    setInterval(pollFeed, 20000);
+  } else {
+    for (let i = 0; i < 6; i++) {
+      addLogEntry(LOG_MESSAGES[i], false);
+      logIdx = i + 1;
+    }
+    setTimeout(streamLog, 3000);
+  }
+})();
 
 // ===== Pan / Zoom world engine =====
 const viewport = document.getElementById('viewport');
@@ -398,7 +443,7 @@ const DEITY_POS = {
   uzume:[320,360], cangjie:[600,320], cupid:[880,360],
   ebisu:[1520,360], caishen:[1800,320], vulcan:[2080,360],
   ceres:[560,1360], tenjin:[1200,1360], niuwang:[1840,1360],
-  konohana:[1000,880], baozheng:[1400,880]
+  konohana:[1000,880], baozheng:[1400,880], prajna:[1200,1075]
 };
 function sendPulse(key) {
   const t = DEITY_POS[key];
@@ -579,7 +624,13 @@ async function openDeityModal(key) {
   document.getElementById('caishenRevenuePanel').style.display = key === 'caishen' ? 'block' : 'none';
 
   // load live tasks from Obsidian API
-  const tasks = await apiFetch(`${TASK_API}?assignee=${key}`) || [];
+  const tasksRaw = await apiFetch(`${TASK_API}?assignee=${key}`);
+  renderAgentRunPanel(key, tasksRaw !== null);
+  const tasks = tasksRaw || [];
+  // deity level from real approved work (1 level per 3 approved tasks)
+  const approvedCount = tasks.filter(t => t.status === 'approved').length;
+  const lvl = 1 + Math.floor(approvedCount / 3);
+  modalRole.textContent = `${d.role} · เทพ${d.pantheon} · ⭐ Lv.${lvl}${approvedCount ? ` (ผ่านงาน ${approvedCount})` : ''}`;
   const activeTasks = tasks.filter(t => t.status !== 'approved');
   const badge = document.getElementById('modalTaskBadge');
   badge.textContent = activeTasks.length ? `${activeTasks.length}` : '';
@@ -610,6 +661,89 @@ async function openDeityModal(key) {
   modal.hidden = false;
   setTimeout(() => modalInput.focus(), 100);
 }
+
+// ===== Agent run buttons (พลังสั่งงานจริง — local only) =====
+const RUN_API = 'http://localhost:8766/api/run';
+const RUN_AGENTS = {
+  cangjie: { label: '🖋 เสนอ topic ใหม่เดี๋ยวนี้', desc: 'DeepSeek คิดหัวข้อ carousel ใหม่ → รออนุมัติ' },
+  raphael: { label: '📝 เขียน script จาก topic ที่อนุมัติ', desc: 'ขยาย topic เป็น 7 slides เต็ม' },
+  bezalel: { label: '🎨 Render carousel ที่รออยู่', desc: 'สร้าง HTML + PNG 7 ใบ ส่ง Telegram' },
+  mercury: { label: '📨 ส่ง briefing สรุปตอนนี้', desc: 'followers + งานค้าง + คิวโพสต์ → Telegram' },
+  prajna: { label: '📈 ดึงสถิติ TikTok', desc: 'scrape ยอดวิวทุกโพสต์ → หาโพสต์ปังสุด + อัปเดตคิว' },
+};
+
+function wireRunBtn(btn, agentKey) {
+  btn.addEventListener('click', async () => {
+    btn.disabled = true;
+    const orig = btn.textContent;
+    btn.textContent = '⏳ กำลังรัน…';
+    const r = await apiFetch(`${RUN_API}/${agentKey}`, { method: 'POST' });
+    if (r && r.started) {
+      btn.textContent = '✓ เริ่มแล้ว — ดูผลใน log + Telegram';
+      addLogEntry({ d: agentKey, m: '▶ เริ่มทำงาน (สั่งจากเทวาลัย)' });
+      setTimeout(pollFeed, 5000);
+      setTimeout(() => { if (agentKey === 'prajna') refreshStats(); }, 9000);
+    } else {
+      btn.textContent = r && r.error === 'already running' ? '⏳ กำลังรันอยู่แล้ว' : '✗ รันไม่สำเร็จ';
+      setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 2500);
+    }
+  });
+}
+
+function renderAgentRunPanel(key, apiAlive) {
+  const panel = document.getElementById('agentRunPanel');
+  const cfg = RUN_AGENTS[key];
+  if (!cfg || !apiAlive) { panel.style.display = 'none'; panel.innerHTML = ''; return; }
+  panel.style.display = 'block';
+  panel.innerHTML = `
+    <div class="agent-run-row">
+      <button class="agent-run-btn" id="agentRunBtn">${cfg.label}</button>
+      <span class="agent-run-desc">${cfg.desc}</span>
+    </div>`;
+  wireRunBtn(document.getElementById('agentRunBtn'), key);
+}
+
+// ===== Content calendar =====
+const QUEUE_API = 'http://localhost:8766/api/queue';
+const calendarPanel = document.getElementById('calendarPanel');
+const calendarBody = document.getElementById('calendarBody');
+document.getElementById('calendarBtn').addEventListener('click', async () => {
+  if (!calendarPanel.hidden) { calendarPanel.hidden = true; return; }
+  calendarPanel.hidden = false;
+  calendarBody.innerHTML = '<p class="calendar-empty">กำลังโหลด…</p>';
+  const data = await apiFetch(QUEUE_API);
+  if (!data || !data.items || !data.items.length) {
+    calendarBody.innerHTML = '<p class="calendar-empty">เปิดได้เฉพาะตอนรันในเครื่อง (task-api)<br>หรือยังไม่มีข้อมูลคิวใน Obsidian</p>';
+    return;
+  }
+  // map MM-DD -> item (queue/production/ready sections only)
+  const byDate = {};
+  data.items.forEach(it => {
+    if (it.date && it.section !== 'posted') byDate[it.date] = it;
+  });
+  const now = new Date();
+  const days = [];
+  const TH_DAYS = ['อา','จ','อ','พ','พฤ','ศ','ส'];
+  for (let i = 0; i < 14; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i);
+    const key = `${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    const it = byDate[key];
+    days.push(`
+      <div class="cal-day ${i === 0 ? 'today' : ''} ${it ? '' : 'empty'}">
+        <span class="cal-date">${TH_DAYS[d.getDay()]} ${d.getDate()}/${d.getMonth()+1}</span>
+        ${it
+          ? `<span class="cal-item">#${it.num} ${it.name}</span><span class="cal-status cal-${it.section}">${
+              {queue:'🎨 คิวไอเดีย', production:'🔧 กำลังผลิต', ready:'✅ พร้อมโพสต์'}[it.section] || it.section}</span>`
+          : '<span class="cal-item none">⬜ ว่าง — ยังไม่มีของ</span>'}
+      </div>`);
+  }
+  const readyCount = data.items.filter(i => i.section === 'ready').length;
+  const prodCount = data.items.filter(i => i.section === 'production').length;
+  calendarBody.innerHTML = `
+    <div class="cal-summary">✅ พร้อมโพสต์ ${readyCount} · 🔧 กำลังผลิต ${prodCount} · 🎨 คิวรอ ${data.items.filter(i=>i.section==='queue').length}</div>
+    <div class="cal-grid">${days.join('')}</div>`;
+});
+document.getElementById('calendarClose').addEventListener('click', () => calendarPanel.hidden = true);
 
 // Mercury: create task
 document.getElementById('createTaskBtn')?.addEventListener('click', async () => {
@@ -687,6 +821,17 @@ async function refreshStats() {
       revEl.textContent = `฿${Number(stats.revenue_today).toLocaleString()}`;
     }
   }
+  // top post (from Prajna analytics)
+  const tp = document.getElementById('topPost');
+  if (tp && stats.top_post && stats.top_post.views) {
+    const v = stats.top_post.views;
+    const short = v >= 1000 ? (v/1000).toFixed(1).replace(/\.0$/,'') + 'K' : v;
+    tp.textContent = `#${stats.top_post.series || '?'} · ${short}`;
+    tp.title = `${stats.top_post.desc || ''} (${v.toLocaleString()} วิว)`;
+  }
+  // garden growth (initialized further down the file)
+  window.__lastStats = stats;
+  if (window.__growthReady) updateGrowth(stats);
 }
 
 refreshStats();
@@ -710,13 +855,282 @@ document.getElementById('updateRevenueBtn')?.addEventListener('click', async () 
   modal.hidden = true;
 });
 
-const revEl = document.getElementById('todayRevenue');
-let revenue = 42580;
+// ============================================================
+// LIVING DEITIES — wander, emotes, sleep, greetings
+// ============================================================
+
+// wrap each char-img so we can flip without fighting the gait keyframes
+document.querySelectorAll('.deity .char-img').forEach(img => {
+  const wrap = document.createElement('span');
+  wrap.className = 'char-wrap';
+  img.parentNode.insertBefore(wrap, img);
+  wrap.appendChild(img);
+});
+
+// emote bubble per deity
+const emoteEls = {};
+document.querySelectorAll('.deity').forEach(el => {
+  const key = el.dataset.deity;
+  const e = document.createElement('span');
+  e.className = 'emote';
+  el.appendChild(e);
+  emoteEls[key] = e;
+});
+
+const EMOTE_POOL = {
+  uzume:   ['🎤','💃','✨','📱'],
+  cangjie: ['✍️','📜','🖋','💡'],
+  cupid:   ['💘','📣','💖','📊'],
+  ebisu:   ['🎣','📦','💡','🔎'],
+  caishen: ['🧮','💰','📈','🪙'],
+  vulcan:  ['🔧','⚙️','📦','🔥'],
+  ceres:   ['🍱','🛵','📦','🌾'],
+  tenjin:  ['📚','🎓','🗓','✏️'],
+  niuwang: ['🥛','🐄','🌾','🧀'],
+  konohana:['🌸','🤝','📋','🍵'],
+  baozheng:['⚖️','🔍','✅','📋'],
+  mercury: ['📨','🗺','⚡','📡'],
+  prajna:  ['📈','👁','📊','🔮'],
+};
+const emoteTimers = {};
+function showEmote(key, symbol, ms = 2400) {
+  const el = emoteEls[key];
+  if (!el) return;
+  clearTimeout(emoteTimers[key]);
+  el.textContent = symbol;
+  el.classList.add('show');
+  emoteTimers[key] = setTimeout(() => el.classList.remove('show'), ms);
+}
+
+// task-driven mood: poll real tasks (works locally; silently skips when deployed)
+let taskMood = {}; // assignee -> emote
+async function refreshTaskMood() {
+  const tasks = await apiFetch(TASK_API);
+  if (!tasks) { taskMood = {}; return; }
+  const mood = {};
+  tasks.forEach(t => {
+    if (t.status === 'in_progress') mood[t.assignee] = '✍️';
+    else if (t.status === 'rejected' && !mood[t.assignee]) mood[t.assignee] = '😣';
+  });
+  const qaCount = tasks.filter(t => t.status === 'pending_qa').length;
+  if (qaCount > 0) mood.baozheng = '⏳';
+  taskMood = mood;
+}
+refreshTaskMood();
+setInterval(refreshTaskMood, 45000);
+
+// ambient emote loop
+const DEITY_KEYS = Object.keys(EMOTE_POOL);
 setInterval(() => {
-  if (Math.random() < 0.5) {
-    revenue += Math.floor(Math.random() * 400) + 50;
-    revEl.textContent = `฿${revenue.toLocaleString()}`;
-    revEl.style.color = '#5ee3d8';
-    setTimeout(() => revEl.style.color = '', 600);
+  const key = DEITY_KEYS[Math.floor(Math.random() * DEITY_KEYS.length)];
+  if (document.body.classList.contains('night')) {
+    if (key !== 'mercury' && Math.random() < 0.8) { showEmote(key, '💤', 3000); return; }
   }
-}, 6000);
+  if (taskMood[key] && Math.random() < 0.65) { showEmote(key, taskMood[key]); return; }
+  const pool = EMOTE_POOL[key];
+  showEmote(key, pool[Math.floor(Math.random() * pool.length)]);
+}, 4200);
+
+// ===== wander engine =====
+const WANDER_RADIUS = { x: 75, y: 26 };
+const WALK_SPEED = 30; // px per second
+const wanderers = [];
+document.querySelectorAll('.deity:not(.mercury)').forEach(el => {
+  const key = el.dataset.deity;
+  const home = DEITY_POS[key];
+  if (!home) return;
+  wanderers.push({
+    key, el,
+    x: home[0], y: home[1],
+    hx: home[0], hy: home[1],
+    tx: home[0], ty: home[1],
+    state: 'idle',
+    waitUntil: performance.now() + 2000 + Math.random() * 6000,
+  });
+});
+const greetCooldown = {};
+
+function wanderTick(now, dt) {
+  const paused = document.body.classList.contains('night') ||
+                 document.body.classList.contains('council');
+  wanderers.forEach(w => {
+    if (w.state === 'idle') {
+      w.el.classList.remove('walking');
+      if (paused || now < w.waitUntil) return;
+      // pick a new stroll target near home
+      w.tx = w.hx + (Math.random() * 2 - 1) * WANDER_RADIUS.x;
+      w.ty = w.hy + (Math.random() * 2 - 1) * WANDER_RADIUS.y;
+      w.state = 'walking';
+      w.el.classList.add('walking');
+      const wrap = w.el.querySelector('.char-wrap');
+      if (wrap) wrap.classList.toggle('face-left', w.tx < w.x);
+    } else {
+      const dx = w.tx - w.x, dy = w.ty - w.y;
+      const dist = Math.hypot(dx, dy);
+      const step = WALK_SPEED * dt;
+      if (dist <= step) {
+        w.x = w.tx; w.y = w.ty;
+        w.state = 'idle';
+        w.el.classList.remove('walking');
+        w.waitUntil = now + 2500 + Math.random() * 7000;
+        checkGreeting(w, now);
+      } else {
+        w.x += (dx / dist) * step;
+        w.y += (dy / dist) * step;
+      }
+      w.el.style.setProperty('--x', w.x.toFixed(1) + 'px');
+      w.el.style.setProperty('--y', w.y.toFixed(1) + 'px');
+    }
+  });
+}
+
+function checkGreeting(w, now) {
+  wanderers.forEach(o => {
+    if (o === w) return;
+    if (Math.hypot(o.x - w.x, o.y - w.y) > 150) return;
+    const pairKey = [w.key, o.key].sort().join('-');
+    if (greetCooldown[pairKey] && now - greetCooldown[pairKey] < 90000) return;
+    greetCooldown[pairKey] = now;
+    showEmote(w.key, '👋', 2000);
+    setTimeout(() => showEmote(o.key, '💬', 2000), 400);
+    // face each other
+    const wWrap = w.el.querySelector('.char-wrap');
+    const oWrap = o.el.querySelector('.char-wrap');
+    if (wWrap) wWrap.classList.toggle('face-left', o.x < w.x);
+    if (oWrap) oWrap.classList.toggle('face-left', w.x < o.x);
+  });
+}
+
+let lastTick = performance.now();
+function livingLoop(now) {
+  const dt = Math.min((now - lastTick) / 1000, 0.1);
+  lastTick = now;
+  if (!document.hidden) wanderTick(now, dt);
+  requestAnimationFrame(livingLoop);
+}
+requestAnimationFrame(livingLoop);
+
+// ============================================================
+// GROWTH — the garden grows with real success
+// ============================================================
+const TREE_SPOTS = [
+  [160,95],[420,90],[700,95],[980,88],[1420,88],[1700,95],[1980,90],[2240,95],
+  [320,615],[560,615],[1840,615],[2080,615],
+  [80,860],[2320,860],[300,1565],[2100,1565],
+];
+const LANTERN_SPOTS = [
+  [1140,300],[1260,460],[900,618],[1500,618],
+  [450,1232],[1950,1232],[160,860],[2240,860],
+];
+const SVG_NS = 'http://www.w3.org/2000/svg';
+
+function makeTree([x, y], i) {
+  const g = document.createElementNS(SVG_NS, 'g');
+  g.setAttribute('class', 'g-tree');
+  g.setAttribute('transform', `translate(${x} ${y})`);
+  g.innerHTML = `
+    <g class="g-tree-body">
+      <rect x="-5" y="-20" width="10" height="24" fill="#7a5a3a"/>
+      <rect x="-2" y="-30" width="5" height="14" fill="#6e5030" transform="rotate(24 0 -20)"/>
+      <circle cx="-15" cy="-28" r="14" fill="#f5a8c8"/>
+      <circle cx="11" cy="-32" r="16" fill="#ff9ec7"/>
+      <circle cx="-2" cy="-44" r="15" fill="#ffc1da"/>
+      <circle cx="19" cy="-19" r="10" fill="#f5a8c8"/>
+      <circle cx="-22" cy="-16" r="8" fill="#ffc1da"/>
+    </g>`;
+  g.style.transitionDelay = `${(i % 8) * 0.12}s`;
+  return g;
+}
+
+function makeGrowthLantern([x, y]) {
+  const g = document.createElementNS(SVG_NS, 'g');
+  g.setAttribute('class', 'lantern g-lantern');
+  g.setAttribute('transform', `translate(${x} ${y})`);
+  g.innerHTML = `
+    <g class="g-tree-body">
+      <rect x="-7" y="22" width="14" height="10" fill="#8a7e72"/>
+      <rect x="-4" y="6" width="8" height="18" fill="#9a8e80"/>
+      <rect x="-13" y="-2" width="26" height="9" fill="#8a7e72"/>
+      <rect class="lamp" x="-8" y="-16" width="16" height="14" fill="#6e6356"/>
+      <rect class="lamp-glow" x="-5" y="-13" width="10" height="9" fill="#3d342c"/>
+      <path d="M -14 -16 L 0 -26 L 14 -16 Z" fill="#7a6e5f"/>
+    </g>`;
+  return g;
+}
+
+const treesGroup = document.getElementById('growthTrees');
+const lanternsGroup = document.getElementById('growthLanterns');
+TREE_SPOTS.forEach((s, i) => treesGroup.appendChild(makeTree(s, i)));
+LANTERN_SPOTS.forEach(s => lanternsGroup.appendChild(makeGrowthLantern(s)));
+
+function updateGrowth(stats) {
+  const followers = stats.followers || 0;
+  const revenueMonth = stats.revenue_month || 0;
+
+  // sakura: 1 tree per 100 followers
+  const treeCount = Math.min(Math.floor(followers / 100), TREE_SPOTS.length);
+  [...treesGroup.children].forEach((t, i) => t.classList.toggle('grown', i < treeCount));
+
+  // lanterns: 1 per ฿10k monthly revenue
+  const lanternCount = Math.min(Math.floor(revenueMonth / 10000), LANTERN_SPOTS.length);
+  [...lanternsGroup.children].forEach((l, i) => l.classList.toggle('grown', i < lanternCount));
+
+  // milestone stone
+  const mt = document.getElementById('milestoneText');
+  if (mt) mt.textContent = `${followers.toLocaleString()} / 1,500`;
+
+  // celebrate new trees in the log (once per growth)
+  const prevTrees = Number(localStorage.getItem('pantheon-trees') || 0);
+  if (treeCount > prevTrees && prevTrees > 0) {
+    addLogEntry({ d: 'konohana', m: `🌸 ซากุระต้นที่ ${treeCount} งอกแล้ว! (${followers.toLocaleString()} followers)` });
+  }
+  localStorage.setItem('pantheon-trees', treeCount);
+}
+window.__growthReady = true;
+if (window.__lastStats) updateGrowth(window.__lastStats);
+
+// ============================================================
+// AMBIENT SOUND — wind by day, zen bamboo by night
+// ============================================================
+const soundBtn = document.getElementById('soundBtn');
+let soundOn = false;
+const ambient = {
+  day: new Audio('assets/sounds/wind-gentle.mp3'),
+  night: new Audio('assets/sounds/zen-bamboo.mp3'),
+};
+Object.values(ambient).forEach(a => { a.loop = true; a.volume = 0; a.preload = 'none'; });
+
+function currentTrack() {
+  return document.body.classList.contains('night') ? ambient.night : ambient.day;
+}
+function fadeTo(audio, target, ms = 1200) {
+  const start = audio.volume, t0 = performance.now();
+  function step(now) {
+    const k = Math.min((now - t0) / ms, 1);
+    audio.volume = start + (target - start) * k;
+    if (k < 1) requestAnimationFrame(step);
+    else if (target === 0) audio.pause();
+  }
+  requestAnimationFrame(step);
+}
+function syncAmbient() {
+  if (!soundOn) return;
+  const want = currentTrack();
+  const other = want === ambient.day ? ambient.night : ambient.day;
+  if (!other.paused) fadeTo(other, 0);
+  if (want.paused) { want.play().catch(() => {}); }
+  fadeTo(want, 0.22);
+}
+soundBtn.addEventListener('click', () => {
+  soundOn = !soundOn;
+  soundBtn.textContent = soundOn ? '🔊' : '🔇';
+  soundBtn.classList.toggle('active', soundOn);
+  if (soundOn) syncAmbient();
+  else Object.values(ambient).forEach(a => fadeTo(a, 0));
+  localStorage.setItem('pantheon-sound', soundOn ? 'on' : 'off');
+});
+setInterval(syncAmbient, 30000); // follow day/night switches
+// restore preference visually (audio still needs a click — browser policy)
+if (localStorage.getItem('pantheon-sound') === 'on') {
+  soundBtn.classList.add('hint');
+}

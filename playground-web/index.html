@@ -29,6 +29,10 @@
         <span class="stat-value neon-pink" id="followerCount">—</span>
       </div>
       <div class="stat">
+        <span class="stat-label">ปังสุด</span>
+        <span class="stat-value neon-amber" id="topPost">—</span>
+      </div>
+      <div class="stat">
         <span class="stat-label">คิว QA</span>
         <span class="stat-value neon-teal" id="queueCount">—</span>
       </div>
@@ -49,6 +53,19 @@
     <button id="zoomOut" aria-label="ซูมออก">−</button>
     <button id="zoomReset" aria-label="รีเซ็ต">⤢</button>
     <button id="councilBtn" class="council-btn" aria-label="เรียกประชุมสภา">⚖</button>
+    <button id="calendarBtn" class="council-btn" aria-label="ปฏิทินคอนเทนต์">📅</button>
+    <button id="soundBtn" class="council-btn" aria-label="เสียงบรรยากาศ">🔇</button>
+  </div>
+
+  <!-- Content calendar panel -->
+  <div class="calendar-panel" id="calendarPanel" hidden>
+    <div class="calendar-head">
+      <h3>📅 ปฏิทินคอนเทนต์ · Mahoraga ZEN</h3>
+      <button id="calendarClose" aria-label="ปิด">✕</button>
+    </div>
+    <div class="calendar-body" id="calendarBody">
+      <p class="calendar-empty">กำลังโหลด…</p>
+    </div>
   </div>
 
   <!-- Council banner -->
@@ -214,6 +231,145 @@
         </svg>
       </div>
 
+      <!-- ===== GARDEN LANDSCAPE: stream, moat, bridges, paths, lanterns ===== -->
+      <svg class="garden-svg" viewBox="0 0 2400 1600" aria-hidden="true">
+        <defs>
+          <linearGradient id="waterG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#9ec8d8"/>
+            <stop offset="1" stop-color="#7aaec4"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Stone paths (under water layer so bridges read on top) -->
+        <g class="stone-paths" stroke-linecap="round" fill="none">
+          <!-- plaza -> content zone (west-north) -->
+          <path class="path-base" d="M 980 880 C 820 880 700 760 640 600" />
+          <path class="path-dash" d="M 980 880 C 820 880 700 760 640 600" />
+          <!-- plaza -> commerce zone (east-north) -->
+          <path class="path-base" d="M 1420 880 C 1580 880 1700 760 1760 600" />
+          <path class="path-dash" d="M 1420 880 C 1580 880 1700 760 1760 600" />
+          <!-- plaza -> ops (south-west) -->
+          <path class="path-base" d="M 1080 1100 C 980 1180 820 1220 660 1240" />
+          <path class="path-dash" d="M 1080 1100 C 980 1180 820 1220 660 1240" />
+          <!-- plaza -> ops (south-east) -->
+          <path class="path-base" d="M 1320 1100 C 1420 1180 1580 1220 1740 1240" />
+          <path class="path-dash" d="M 1320 1100 C 1420 1180 1580 1220 1740 1240" />
+        </g>
+
+        <!-- Stream: flows from top between the two zones into the moat -->
+        <g class="water">
+          <path class="stream-bed" d="M 1200 0 C 1190 160 1215 320 1200 480 C 1192 540 1200 580 1200 620" />
+          <path class="stream-flow" d="M 1200 0 C 1190 160 1215 320 1200 480 C 1192 540 1200 580 1200 620" />
+          <!-- Moat ring around the plaza (840,640 -> 1560,1120 with margin) -->
+          <rect class="moat-bed"  x="806" y="606" width="788" height="548" rx="64"/>
+          <rect class="moat-flow" x="806" y="606" width="788" height="548" rx="64"/>
+          <!-- koi: swim laps around the moat -->
+          <g class="koi koi-1"><ellipse rx="11" ry="4.5" fill="#e86a3a"/><circle r="2.4" cx="-9" fill="#e86a3a"/>
+            <animateMotion dur="46s" repeatCount="indefinite" rotate="auto"
+              path="M 870 606 H 1530 Q 1594 606 1594 670 V 1090 Q 1594 1154 1530 1154 H 870 Q 806 1154 806 1090 V 670 Q 806 606 870 606 Z"/>
+          </g>
+          <g class="koi koi-2"><ellipse rx="10" ry="4" fill="#f4ecd8"/><circle r="2.2" cx="-8" fill="#f4ecd8"/>
+            <animateMotion dur="58s" begin="-20s" repeatCount="indefinite" rotate="auto"
+              path="M 870 606 H 1530 Q 1594 606 1594 670 V 1090 Q 1594 1154 1530 1154 H 870 Q 806 1154 806 1090 V 670 Q 806 606 870 606 Z"/>
+          </g>
+          <g class="koi koi-3"><ellipse rx="9" ry="4" fill="#d4af37"/><circle r="2" cx="-7" fill="#d4af37"/>
+            <animateMotion dur="52s" begin="-37s" repeatCount="indefinite" rotate="auto"
+              path="M 870 606 H 1530 Q 1594 606 1594 670 V 1090 Q 1594 1154 1530 1154 H 870 Q 806 1154 806 1090 V 670 Q 806 606 870 606 Z"/>
+          </g>
+        </g>
+
+        <!-- Red bridges: north entrance + south entrance -->
+        <g class="bridge" transform="translate(1200 614)">
+          <path d="M -54 18 Q 0 -16 54 18" fill="none" stroke="#7a2a1f" stroke-width="22"/>
+          <path d="M -54 12 Q 0 -22 54 12" fill="none" stroke="#c14d3a" stroke-width="12"/>
+          <g stroke="#7a2a1f" stroke-width="5">
+            <line x1="-48" y1="14" x2="-48" y2="-12"/><line x1="-16" y1="2" x2="-16" y2="-26"/>
+            <line x1="16"  y1="2" x2="16"  y2="-26"/><line x1="48"  y1="14" x2="48"  y2="-12"/>
+          </g>
+          <path d="M -52 -12 Q 0 -40 52 -12" fill="none" stroke="#c14d3a" stroke-width="6"/>
+        </g>
+        <g class="bridge" transform="translate(1200 1148)">
+          <path d="M -54 18 Q 0 -16 54 18" fill="none" stroke="#7a2a1f" stroke-width="22"/>
+          <path d="M -54 12 Q 0 -22 54 12" fill="none" stroke="#c14d3a" stroke-width="12"/>
+          <g stroke="#7a2a1f" stroke-width="5">
+            <line x1="-48" y1="14" x2="-48" y2="-12"/><line x1="-16" y1="2" x2="-16" y2="-26"/>
+            <line x1="16"  y1="2" x2="16"  y2="-26"/><line x1="48"  y1="14" x2="48"  y2="-12"/>
+          </g>
+          <path d="M -52 -12 Q 0 -40 52 -12" fill="none" stroke="#c14d3a" stroke-width="6"/>
+        </g>
+
+        <!-- Stone lanterns (tōrō) at path junctions -->
+        <g class="lantern" transform="translate(700 640)">
+          <rect x="-7" y="22" width="14" height="10" fill="#8a7e72"/>
+          <rect x="-4" y="6"  width="8"  height="18" fill="#9a8e80"/>
+          <rect x="-13" y="-2" width="26" height="9" fill="#8a7e72"/>
+          <rect class="lamp" x="-8" y="-16" width="16" height="14" fill="#6e6356"/>
+          <rect class="lamp-glow" x="-5" y="-13" width="10" height="9" fill="#3d342c"/>
+          <path d="M -14 -16 L 0 -26 L 14 -16 Z" fill="#7a6e5f"/>
+        </g>
+        <g class="lantern" transform="translate(1700 640)">
+          <rect x="-7" y="22" width="14" height="10" fill="#8a7e72"/>
+          <rect x="-4" y="6"  width="8"  height="18" fill="#9a8e80"/>
+          <rect x="-13" y="-2" width="26" height="9" fill="#8a7e72"/>
+          <rect class="lamp" x="-8" y="-16" width="16" height="14" fill="#6e6356"/>
+          <rect class="lamp-glow" x="-5" y="-13" width="10" height="9" fill="#3d342c"/>
+          <path d="M -14 -16 L 0 -26 L 14 -16 Z" fill="#7a6e5f"/>
+        </g>
+        <g class="lantern" transform="translate(760 1190)">
+          <rect x="-7" y="22" width="14" height="10" fill="#8a7e72"/>
+          <rect x="-4" y="6"  width="8"  height="18" fill="#9a8e80"/>
+          <rect x="-13" y="-2" width="26" height="9" fill="#8a7e72"/>
+          <rect class="lamp" x="-8" y="-16" width="16" height="14" fill="#6e6356"/>
+          <rect class="lamp-glow" x="-5" y="-13" width="10" height="9" fill="#3d342c"/>
+          <path d="M -14 -16 L 0 -26 L 14 -16 Z" fill="#7a6e5f"/>
+        </g>
+        <g class="lantern" transform="translate(1640 1190)">
+          <rect x="-7" y="22" width="14" height="10" fill="#8a7e72"/>
+          <rect x="-4" y="6"  width="8"  height="18" fill="#9a8e80"/>
+          <rect x="-13" y="-2" width="26" height="9" fill="#8a7e72"/>
+          <rect class="lamp" x="-8" y="-16" width="16" height="14" fill="#6e6356"/>
+          <rect class="lamp-glow" x="-5" y="-13" width="10" height="9" fill="#3d342c"/>
+          <path d="M -14 -16 L 0 -26 L 14 -16 Z" fill="#7a6e5f"/>
+        </g>
+
+        <!-- Zen rocks + bushes filling empty corners -->
+        <g fill="#9a8e80">
+          <ellipse cx="180" cy="700" rx="34" ry="18"/>
+          <ellipse cx="232" cy="712" rx="20" ry="11" fill="#8a7e72"/>
+          <ellipse cx="2220" cy="700" rx="34" ry="18"/>
+          <ellipse cx="2168" cy="712" rx="20" ry="11" fill="#8a7e72"/>
+          <ellipse cx="350" cy="1130" rx="26" ry="14" fill="#8a7e72"/>
+          <ellipse cx="2050" cy="1130" rx="26" ry="14" fill="#8a7e72"/>
+        </g>
+        <g class="bush" fill="#6da06b">
+          <circle cx="300" cy="660" r="20"/><circle cx="326" cy="668" r="15" fill="#5c8f5a"/>
+          <circle cx="2100" cy="660" r="20"/><circle cx="2074" cy="668" r="15" fill="#5c8f5a"/>
+          <circle cx="120" cy="1080" r="17" fill="#5c8f5a"/><circle cx="2280" cy="1080" r="17"/>
+          <circle cx="640" cy="560" r="14" fill="#5c8f5a"/><circle cx="1760" cy="560" r="14"/>
+        </g>
+        <!-- raked sand circles (zen garden, SW corner) -->
+        <g fill="none" stroke="#d8c498" stroke-width="3" opacity="0.8">
+          <circle cx="430" cy="780" r="26"/><circle cx="430" cy="780" r="40"/>
+          <circle cx="520" cy="830" r="18"/><circle cx="520" cy="830" r="30"/>
+        </g>
+        <g fill="none" stroke="#d8c498" stroke-width="3" opacity="0.8">
+          <circle cx="1960" cy="800" r="26"/><circle cx="1960" cy="800" r="40"/>
+        </g>
+
+        <!-- ===== GROWTH: sakura trees sprout per 100 followers ===== -->
+        <g id="growthTrees"></g>
+        <!-- GROWTH: extra lanterns per ฿10k monthly revenue -->
+        <g id="growthLanterns"></g>
+
+        <!-- Milestone stone (followers / goal) by the south bridge -->
+        <g class="milestone" transform="translate(1318 1216)">
+          <ellipse cx="0" cy="26" rx="58" ry="10" fill="rgba(42,37,32,0.18)"/>
+          <path d="M -52 26 Q -56 -8 -30 -20 Q 0 -34 32 -20 Q 56 -8 52 26 Z" fill="#9a8e80" stroke="#7d7264" stroke-width="3"/>
+          <text id="milestoneText" x="0" y="2" text-anchor="middle" font-family="'Sarabun',sans-serif" font-weight="800" font-size="19" fill="#f4ecd8">— / 1,500</text>
+          <text x="0" y="19" text-anchor="middle" font-family="'Sarabun',sans-serif" font-weight="600" font-size="11" fill="#e6d6b2">FOLLOWERS</text>
+        </g>
+      </svg>
+
       <!-- ===== ZONES ===== -->
       <div class="zone zone-content" style="left:120px; top:120px; width:960px; height:460px;">
         <div class="zone-bg-wrap">
@@ -302,6 +458,7 @@
         <div class="petal"       style="left:675px; animation-duration:5.9s; animation-delay:1.8s; --dx:-18px"></div>
         <div class="petal small" style="left:785px; animation-duration:7.4s; animation-delay:4.3s; --dx:32px"></div>
         <div class="petal pale"  style="left:868px; animation-duration:6.5s; animation-delay:0.4s; --dx:-24px"></div>
+        <i class="fence f-t"></i><i class="fence f-b"></i><i class="fence f-l"></i><i class="fence f-r"></i>
         <div class="zone-banner">🎭 Content &amp; Marketing</div>
         <div class="zone-prop prop-stage" style="left:60px; bottom:30px;">🎤 Live Stage</div>
         <div class="zone-prop prop-desk" style="left:380px; bottom:30px;">📜 โต๊ะเขียน</div>
@@ -373,6 +530,7 @@
         <div class="coin-spark" style="left:480px; bottom:105px; animation-duration:5.1s; animation-delay:2.9s; --dx:20px"></div>
         <div class="coin-spark" style="left:700px; bottom:72px;  animation-duration:4.6s; animation-delay:0.6s; --dx:-14px"></div>
         <div class="coin-spark" style="left:850px; bottom:92px;  animation-duration:3.5s; animation-delay:3.4s; --dx:16px"></div>
+        <i class="fence f-t"></i><i class="fence f-b"></i><i class="fence f-l"></i><i class="fence f-r"></i>
         <div class="zone-banner">💰 Commerce</div>
         <div class="zone-prop prop-dock" style="left:60px; bottom:30px;">🎣 ท่าตกปลา</div>
         <div class="zone-prop prop-vault" style="left:380px; bottom:30px;">🏦 คลังทรัพย์</div>
@@ -436,6 +594,7 @@
         <div class="shrine-ember" style="left:342px; top:265px; animation-duration:7.0s; animation-delay:0.5s; --dx:-16px; --dy:-135px"></div>
         <div class="shrine-ember" style="left:405px; top:345px; animation-duration:5.3s; animation-delay:3.8s; --dx:22px;  --dy:-115px"></div>
         <div class="shrine-ember" style="left:295px; top:310px; animation-duration:6.5s; animation-delay:1.7s; --dx:28px;  --dy:-152px"></div>
+        <i class="stonewall w-t"></i><i class="stonewall w-b"></i><i class="stonewall w-l"></i><i class="stonewall w-r"></i>
         <div class="zone-banner plaza-banner">⛩ ลานประชุมกลาง</div>
       </div>
       <div class="zone zone-ops" style="left:120px; top:1180px; width:2160px; height:360px;">
@@ -507,6 +666,7 @@
         <div class="leaf dark" style="right:80px;  top:80px;  animation-duration:5.8s; animation-delay:0.7s; --wx:-500px; --wy:70px"></div>
         <div class="leaf"      style="right:160px; top:175px; animation-duration:7.6s; animation-delay:3.5s; --wx:-470px; --wy:35px"></div>
         <div class="leaf dark" style="right:250px; top:120px; animation-duration:6.5s; animation-delay:1.9s; --wx:-440px; --wy:58px"></div>
+        <i class="fence f-t"></i><i class="fence f-b"></i><i class="fence f-l"></i><i class="fence f-r"></i>
         <div class="zone-banner">🛠 Operations</div>
         <div class="zone-prop prop-kitchen" style="left:340px; bottom:24px;">🍱 ครัวเดลิเวอรี่</div>
         <div class="zone-prop prop-school" style="left:50%; bottom:24px; transform:translateX(-50%);">🏫 โรงเรียน GNAS</div>
@@ -1224,6 +1384,17 @@
         <span class="role">QA · CN</span>
       </div>
     </button>
+
+    <!-- PRAJNA (Buddhist) - Growth & Analytics - plaza south -->
+    <button class="deity prajna" data-deity="prajna" aria-label="Prajna — Growth &amp; Analytics" style="--x: 1200px; --y: 1075px; --accent: #4ec9b0;">
+      <div class="deity-glow"></div>
+      <img class="char-img" src="assets/characters/prajna.png" alt="" draggable="false">
+      <div class="deity-label">
+        <span class="thai">ปรัชญา</span>
+        <span class="en">PRAJÑĀ 般若</span>
+        <span class="role">ANALYTICS · BUDDH</span>
+      </div>
+    </button>
     </div>
     <div class="daynight" id="daynight"></div>
   </div>
@@ -1268,6 +1439,9 @@
           <span class="task-badge" id="modalTaskBadge"></span>
         </div>
         <ul class="task-list" id="modalTasks"></ul>
+
+        <!-- ── Agent run buttons (live only when task-api is up) ── -->
+        <div id="agentRunPanel" style="display:none"></div>
 
         <!-- ── Caishen only: update revenue ── -->
         <div id="caishenRevenuePanel" style="display:none">

@@ -83,6 +83,8 @@ h1, h2, h3 { font-weight: 800; line-height: 1.2; }
   transition: color 0.3s;
 }
 .stat-value.neon-teal { color: var(--neon-teal); text-shadow: 0 0 6px rgba(94,227,216,0.5), 2px 2px 0 var(--ink-deep); }
+.stat-value.neon-pink { color: var(--neon-pink); text-shadow: 0 0 6px rgba(255,126,182,0.5), 2px 2px 0 var(--ink-deep); }
+.stat-value.neon-amber { color: var(--neon-amber); text-shadow: 0 0 6px rgba(255,184,77,0.5), 2px 2px 0 var(--ink-deep); }
 .phase {
   display: flex; align-items: center; gap: 6px;
   padding: 6px 12px;
@@ -143,7 +145,7 @@ body.night .petal { filter: drop-shadow(0 0 3px rgba(255,158,199,0.8)); }
 /* ===== Zones ===== */
 .zone {
   position: absolute;
-  border: 4px dashed;
+  border: none;
   border-radius: 24px;
   pointer-events: none;
 }
@@ -186,9 +188,6 @@ body.night .petal { filter: drop-shadow(0 0 3px rgba(255,158,199,0.8)); }
     0 0 80px rgba(212,175,55,0.12);
 }
 .zone-plaza {
-  border-color: rgba(193,77,58,0.9);
-  border-style: solid;
-  border-width: 5px;
   box-shadow:
     inset 0 0 120px rgba(193,77,58,0.1),
     0 0 36px rgba(193,77,58,0.32),
@@ -218,7 +217,7 @@ body.night .petal { filter: drop-shadow(0 0 3px rgba(255,158,199,0.8)); }
 .zone-commerce .zone-banner { background: rgba(80,58,0,0.92);    color: #d4af37; border-color: rgba(212,175,55,0.6);  }
 .zone-ops      .zone-banner { background: rgba(15,55,15,0.92);   color: #9de89b; border-color: rgba(109,214,107,0.5); }
 .plaza-banner {
-  left: 50%; transform: translateX(-50%);
+  left: 24px; /* keep clear of the north bridge at center */
   background: var(--torii);
   color: var(--gold);
 }
@@ -520,6 +519,8 @@ body.night .petal { filter: drop-shadow(0 0 3px rgba(255,158,199,0.8)); }
 .deity.tenjin   .char-img { animation: work-read   2.4s ease-in-out infinite; }
 .deity.niuwang  .char-img { animation: work-bob    2.6s ease-in-out infinite; }
 .deity.mercury  .char-img { animation: work-float  3.2s ease-in-out infinite; }
+.deity.prajna   .char-img { animation: work-breathe 4.2s ease-in-out infinite; }
+@keyframes work-breathe { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-3px) scale(1.015); } }
 @keyframes work-hammer { 0%,100% { transform: rotate(-4deg); } 50% { transform: rotate(5deg) translateY(-2px); } }
 @keyframes work-dance  { 0%,100% { transform: rotate(-5deg) translateX(-3px); } 50% { transform: rotate(5deg) translateX(3px); } }
 @keyframes work-write  { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-2px) rotate(1.5deg); } }
@@ -969,3 +970,300 @@ body.council .deity.mercury .deity-glow { opacity: 0.7 !important; animation-dur
   .mini-plaza    { left:42px; top:32px;  width:36px; height:24px; }
   .mini-ops      { left:6px;  top:59px;  width:108px; height:18px; }
 }
+
+/* ============================================================
+   GARDEN LANDSCAPE v4 — stream, moat, bridges, paths, fences
+   ============================================================ */
+.garden-svg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 2400px; height: 1600px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* stone paths */
+.stone-paths .path-base {
+  stroke: #cdb88e;
+  stroke-width: 34;
+  opacity: 0.9;
+}
+.stone-paths .path-dash {
+  stroke: #b9a273;
+  stroke-width: 26;
+  stroke-dasharray: 22 16;
+  opacity: 0.55;
+}
+
+/* water */
+.stream-bed, .moat-bed {
+  fill: none;
+  stroke: url(#waterG);
+  stroke-width: 56;
+  opacity: 0.85;
+}
+.moat-bed { fill: none; stroke-width: 44; }
+.stream-flow, .moat-flow {
+  fill: none;
+  stroke: #d6ecf2;
+  stroke-width: 5;
+  stroke-dasharray: 30 46;
+  opacity: 0.75;
+  animation: water-flow 9s linear infinite;
+}
+.moat-flow { animation-duration: 26s; }
+@keyframes water-flow {
+  to { stroke-dashoffset: -760; }
+}
+body.night .stream-bed, body.night .moat-bed { opacity: 0.65; }
+body.night .stream-flow, body.night .moat-flow { stroke: #aee3f2; opacity: 0.9; }
+
+/* koi */
+.koi { opacity: 0.92; }
+.koi ellipse, .koi circle { filter: drop-shadow(0 1px 1px rgba(42,37,32,0.3)); }
+
+/* bridges & lanterns */
+.bridge { filter: drop-shadow(3px 5px 0 rgba(42,37,32,0.3)); }
+.lantern { filter: drop-shadow(2px 4px 0 rgba(42,37,32,0.25)); }
+.lantern .lamp-glow { transition: fill 1.5s; }
+body.night .lantern .lamp-glow {
+  fill: #ffd97a;
+  filter: drop-shadow(0 0 10px #ffb84d) drop-shadow(0 0 22px rgba(255,184,77,0.7));
+}
+
+/* ===== bamboo fences (zone borders) ===== */
+.fence, .stonewall { position: absolute; pointer-events: none; }
+.fence.f-t, .fence.f-b, .stonewall.w-t, .stonewall.w-b { left: 10px; right: 10px; height: 18px; }
+.fence.f-l, .fence.f-r, .stonewall.w-l, .stonewall.w-r { top: 10px; bottom: 10px; width: 18px; }
+.fence.f-t, .stonewall.w-t { top: -9px; }
+.fence.f-b, .stonewall.w-b { bottom: -9px; }
+.fence.f-l, .stonewall.w-l { left: -9px; }
+.fence.f-r, .stonewall.w-r { right: -9px; }
+/* horizontal fence: posts + two rails */
+.fence.f-t, .fence.f-b {
+  background:
+    repeating-linear-gradient(90deg,
+      transparent 0 9px,
+      #a8854f 9px 13px,
+      #8a6a3c 13px 15px,
+      transparent 15px 34px),
+    linear-gradient(180deg, transparent 3px, #b89058 3px 6px, transparent 6px 11px, #8a6a3c 11px 14px, transparent 14px);
+}
+/* vertical fence */
+.fence.f-l, .fence.f-r {
+  background:
+    repeating-linear-gradient(180deg,
+      transparent 0 9px,
+      #a8854f 9px 13px,
+      #8a6a3c 13px 15px,
+      transparent 15px 34px),
+    linear-gradient(90deg, transparent 3px, #b89058 3px 6px, transparent 6px 11px, #8a6a3c 11px 14px, transparent 14px);
+}
+/* gates: gaps where paths meet the zones (mask via zone-specific overrides) */
+.zone-content .fence.f-b {
+  -webkit-mask: linear-gradient(90deg, #000 0 49%, transparent 49% 62%, #000 62%);
+  mask: linear-gradient(90deg, #000 0 49%, transparent 49% 62%, #000 62%);
+}
+.zone-commerce .fence.f-b {
+  -webkit-mask: linear-gradient(90deg, #000 0 38%, transparent 38% 51%, #000 51%);
+  mask: linear-gradient(90deg, #000 0 38%, transparent 38% 51%, #000 51%);
+}
+.zone-ops      .fence.f-t {
+  -webkit-mask: linear-gradient(90deg, #000 0 22%, transparent 22% 30%, #000 30% 70%, transparent 70% 78%, #000 78%);
+  mask: linear-gradient(90deg, #000 0 22%, transparent 22% 30%, #000 30% 70%, transparent 70% 78%, #000 78%);
+}
+/* plaza stone wall (low, sacred) */
+.stonewall {
+  background: repeating-linear-gradient(90deg,
+    #b3a48e 0 26px, #9a8e80 26px 28px,
+    #a89a84 28px 52px, #9a8e80 52px 54px);
+  border-top: 3px solid #c4b59e;
+  border-bottom: 3px solid #7d7264;
+  opacity: 0.95;
+}
+.stonewall.w-l, .stonewall.w-r {
+  background: repeating-linear-gradient(180deg,
+    #b3a48e 0 26px, #9a8e80 26px 28px,
+    #a89a84 28px 52px, #9a8e80 52px 54px);
+  border-top: none; border-bottom: none;
+  border-left: 3px solid #c4b59e;
+  border-right: 3px solid #7d7264;
+}
+/* gaps in plaza wall for the two bridges (north + south at center) */
+.stonewall.w-t, .stonewall.w-b {
+  -webkit-mask: linear-gradient(90deg, #000 0 calc(50% - 70px), transparent calc(50% - 70px) calc(50% + 70px), #000 calc(50% + 70px));
+  mask: linear-gradient(90deg, #000 0 calc(50% - 70px), transparent calc(50% - 70px) calc(50% + 70px), #000 calc(50% + 70px));
+}
+
+/* ===== zone props -> wooden signposts ===== */
+.zone-prop {
+  background: linear-gradient(180deg, #c9a86a, #b08c4f);
+  border: 3px solid #6e5731;
+  border-radius: 4px;
+  color: #3d2f18;
+  font-weight: 700;
+  box-shadow: 2px 3px 0 rgba(42,37,32,0.35), inset 0 2px 0 rgba(255,255,255,0.25);
+  padding: 5px 14px 6px;
+}
+.zone-prop::after {
+  content: '';
+  position: absolute;
+  left: 50%; top: 100%;
+  transform: translateX(-50%);
+  width: 8px; height: 16px;
+  background: linear-gradient(90deg, #8a6a3c, #6e5731);
+  border-radius: 0 0 2px 2px;
+}
+.zone-content  .zone-prop, .zone-commerce .zone-prop, .zone-ops .zone-prop {
+  background: linear-gradient(180deg, #c9a86a, #b08c4f);
+  border-color: #6e5731;
+  color: #3d2f18;
+}
+
+/* ============================================================
+   LIVING DEITIES — emotes, walking, sleeping
+   ============================================================ */
+/* flip wrapper added at runtime */
+.char-wrap {
+  display: block;
+  transition: transform 0.35s ease;
+}
+.char-wrap.face-left { transform: scaleX(-1); }
+
+/* walking gait — applied to the deity while moving */
+.deity.walking .char-img { animation: walk-gait 0.55s ease-in-out infinite !important; }
+@keyframes walk-gait {
+  0%, 100% { transform: translateY(0) rotate(-2.5deg); }
+  50%      { transform: translateY(-5px) rotate(2.5deg); }
+}
+
+/* emote bubble */
+.emote {
+  position: absolute;
+  top: -34px; left: 58%;
+  font-size: 30px;
+  line-height: 1;
+  padding: 5px 8px;
+  background: rgba(255,255,255,0.95);
+  border: 3px solid var(--border);
+  border-radius: 12px 12px 12px 2px;
+  box-shadow: 2px 3px 0 rgba(42,37,32,0.3);
+  opacity: 0;
+  transform: scale(0.3) translateY(10px);
+  transform-origin: bottom left;
+  pointer-events: none;
+  z-index: 30;
+  transition: opacity 0.25s, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.emote.show {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+.deity.mercury .emote { top: -10px; font-size: 34px; }
+
+/* sleeping at night */
+body.night .deity:not(.mercury) .char-img {
+  animation-duration: 7s !important;
+  filter: drop-shadow(3px 6px 5px rgba(42,37,32,0.45)) brightness(0.82);
+}
+body.night .deity-glow { opacity: 0.15; }
+
+/* council: dim wanderers, focus plaza */
+body.council .deity:not(.mercury) { transition: opacity 0.6s; }
+
+/* ===== Agent run panel (modal) ===== */
+.agent-run-row {
+  display: flex; align-items: center; gap: 12px;
+  margin-top: 12px;
+  padding: 12px;
+  background: rgba(212,175,55,0.08);
+  border: 2px dashed rgba(212,175,55,0.4);
+}
+.agent-run-btn {
+  padding: 10px 16px;
+  background: var(--torii);
+  color: var(--parchment);
+  font-family: 'Sarabun', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  border: 3px solid var(--border);
+  box-shadow: 3px 3px 0 var(--border);
+  white-space: nowrap;
+}
+.agent-run-btn:hover:not(:disabled) { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--border); }
+.agent-run-btn:disabled { opacity: 0.75; cursor: default; }
+.agent-run-desc { font-size: 12px; color: var(--ink-mid); }
+
+/* ===== Content calendar panel ===== */
+.calendar-panel {
+  position: fixed;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(680px, 94vw);
+  max-height: 80vh;
+  background: linear-gradient(180deg, rgba(244,236,216,0.99), rgba(234,216,182,0.99));
+  border: var(--pixel) solid var(--border);
+  box-shadow: 8px 8px 0 var(--border), 0 24px 80px rgba(0,0,0,0.45);
+  z-index: 120;
+  display: flex; flex-direction: column;
+}
+.calendar-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 18px;
+  background: var(--ink-deep);
+  color: var(--parchment);
+  border-bottom: var(--pixel) solid var(--border);
+}
+.calendar-head h3 { font-size: 17px; }
+.calendar-head button {
+  width: 30px; height: 30px;
+  background: var(--ink-mid); color: var(--parchment);
+  border: 2px solid var(--border);
+  font-weight: 800;
+}
+.calendar-head button:hover { background: var(--crimson); }
+.calendar-body { padding: 16px 18px; overflow-y: auto; }
+.calendar-empty { text-align: center; color: var(--ink-mid); padding: 24px 0; font-size: 14px; }
+.cal-summary {
+  font-family: 'Sarabun', sans-serif; font-weight: 700; font-size: 14px;
+  color: var(--ink-deep);
+  padding: 8px 12px; margin-bottom: 12px;
+  background: rgba(212,175,55,0.15);
+  border: 2px solid rgba(212,175,55,0.4);
+}
+.cal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.cal-day {
+  display: flex; flex-direction: column; gap: 3px;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.55);
+  border: 2px solid rgba(61,52,44,0.25);
+}
+.cal-day.today { border-color: var(--torii); border-width: 3px; background: rgba(193,77,58,0.07); }
+.cal-day.empty { background: rgba(200,85,61,0.06); }
+.cal-date { font-family: 'VT323', monospace; font-size: 16px; color: var(--ink-mid); }
+.cal-day.today .cal-date::after { content: ' · วันนี้'; color: var(--torii); font-weight: 700; }
+.cal-item { font-weight: 800; font-size: 14px; color: var(--ink-deep); }
+.cal-item.none { color: var(--crimson); font-weight: 600; font-size: 13px; }
+.cal-status { font-size: 11px; font-weight: 700; }
+.cal-status.cal-queue { color: #a05a9e; }
+.cal-status.cal-production { color: #b07a1f; }
+.cal-status.cal-ready { color: #2d7a2a; }
+@media (max-width: 560px) { .cal-grid { grid-template-columns: 1fr; } }
+
+/* ===== Growth: sakura trees + revenue lanterns pop in ===== */
+.g-tree .g-tree-body, .g-lantern .g-tree-body {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s;
+}
+.g-tree.grown .g-tree-body, .g-lantern.grown .g-tree-body {
+  transform: scale(1);
+  opacity: 1;
+}
+.milestone { filter: drop-shadow(2px 4px 0 rgba(42,37,32,0.25)); }
+
+/* sound button */
+#soundBtn.active { background: var(--torii); color: var(--parchment); }
+#soundBtn.hint { box-shadow: 3px 3px 0 var(--border), 0 0 12px rgba(212,175,55,0.7); }
